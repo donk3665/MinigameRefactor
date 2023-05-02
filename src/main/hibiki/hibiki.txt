@@ -1,0 +1,647 @@
+
+[STATS]
+1300 1360
+100 260
+8
+Hibiki_122.png
+655
+905
+11
+Hibiki_Countdown1.png
+Hibiki_Countdown2.png
+Hibiki_Countdown3.png
+Hibiki_Countdown4.png
+Hibiki_Countdown5.png
+Hibiki_Countdown6.png
+Hibiki_Countdown7.png
+Hibiki_Countdown8.png
+Hibiki_Countdown9.png
+Hibiki_Countdown10.png
+Hibiki_Countdown11.png
+Hibiki_Hurt1.mp3
+Hibiki_Hurt2.mp3
+Hibiki_Hurt3.mp3
+[NAME]
+Hibiki
+14
+Hibiki_Idle1.png
+Hibiki_Idle2.png
+Hibiki_Idle3.png
+Hibiki_Idle4.png
+Hibiki_Idle5.png
+Hibiki_Idle6.png
+Hibiki_Idle7.png
+Hibiki_Idle8.png
+Hibiki_Idle9.png
+Hibiki_Idle10.png
+Hibiki_Idle11.png
+Hibiki_Idle12.png
+Hibiki_Idle13.png
+Hibiki_Idle14.png
+Hibiki_Crouch.png
+18
+Hibiki_Walk1.png
+Hibiki_Walk2.png
+Hibiki_Walk3.png
+Hibiki_Walk4.png
+Hibiki_Walk5.png
+Hibiki_Walk6.png
+Hibiki_Walk7.png
+Hibiki_Walk8.png
+Hibiki_Walk9.png
+Hibiki_Walk10.png
+Hibiki_Walk11.png
+Hibiki_Walk12.png
+Hibiki_Walk13.png
+Hibiki_Walk14.png
+Hibiki_Walk15.png
+Hibiki_Walk16.png
+Hibiki_Walk17.png
+Hibiki_Walk18.png
+18
+Hibiki_Walk18.png
+Hibiki_Walk17.png
+Hibiki_Walk16.png
+Hibiki_Walk15.png
+Hibiki_Walk14.png
+Hibiki_Walk13.png
+Hibiki_Walk12.png
+Hibiki_Walk11.png
+Hibiki_Walk10.png
+Hibiki_Walk9.png
+Hibiki_Walk8.png
+Hibiki_Walk7.png
+Hibiki_Walk6.png
+Hibiki_Walk5.png
+Hibiki_Walk4.png
+Hibiki_Walk3.png
+Hibiki_Walk2.png
+Hibiki_Walk1.png
+14
+Hibiki_Jump1.png
+Hibiki_Jump2.png
+Hibiki_Jump3.png
+Hibiki_Jump4.png
+Hibiki_Jump5.png
+Hibiki_Jump6.png
+Hibiki_Jump7.png
+Hibiki_Jump8.png
+Hibiki_Jump9.png
+Hibiki_Jump10.png
+Hibiki_Jump11.png
+Hibiki_Jump12.png
+Hibiki_Jump13.png
+Hibiki_Jump14.png
+Hibiki_Block.png
+Hibiki_LBlock.png
+Hibiki_MidHit3.png
+[ATTACKS]
+0
+25
+3
+4
+10
+1
+0
+3.mp3
+
+0
+10
+2
+25
+5
+0,0,0:0,0,0:0,0,0:0,0,0:0,0,0 -40,-120,100,250 0,0
+Hibiki_Light1.png
+0,0,0:0,0,0:0,0,0:0,0,0:0,0,0 -40,-120,100,250 0,0
+Hibiki_Light2.png
+NC
+NC
+NC
+NC
+260,-70,15:230,-70,15:200,-70,15:170,-70,15:140,-70,15 -40,-120,100,250 0,0
+Hibiki_Light3.png
+NC
+260,-70,15:230,-70,15:200,-70,15:170,-70,15:140,-70,15 -40,-120,100,250 0,0
+Hibiki_Light4.png
+NC
+0,0,0:0,0,0:0,0,0:0,0,0:0,0,0 -40,-120,100,250 0,0
+Hibiki_Light5.png
+NC
+NC
+NC
+NC
+NC
+NC
+0,0,0:0,0,0:0,0,0:0,0,0:0,0,0 -40,-120,100,250 0,0
+Hibiki_Light6.png
+NC
+NC
+NC
+0,0,0:0,0,0:0,0,0:0,0,0:0,0,0 -40,-120,100,250 0,0
+Hibiki_Light7.png
+NC
+NC
+NC
+
+1
+40
+10
+4
+10
+1
+0
+3V.mp3
+
+-30
+3
+2
+27
+3
+0,0,0:0,0,0:0,0,0 -40,-120,100,250 0,0
+Hibiki_Heavy1.png
+NC
+NC
+100,-40,30:0,0,0:0,0,0 -40,-120,100,250 0,0
+Hibiki_Heavy2.png
+100,-40,30:120,-110,100:0,0,0 -40,-120,100,250 0,0
+Hibiki_Heavy3.png
+NC
+NC
+NC
+100,-40,30:120,-110,100:0,0,0 -40,-120,100,250 0,0
+Hibiki_Heavy4.png
+100,-40,30:120,-110,100:0,0,0 -40,-120,100,250 0,0
+Hibiki_Heavy5.png
+100,-40,30:120,-110,100:0,0,0 -40,-120,100,250 0,0
+Hibiki_Heavy6.png
+0,0,0:0,0,0:0,0,0 -40,-120,100,250 0,0
+Hibiki_Heavy7a.png
+NC
+NC
+NC
+0,0,0:0,0,0:0,0,0 -40,-120,100,250 0,0
+Hibiki_Heavy8a.png
+NC
+NC
+NC
+0,0,0:0,0,0:0,0,0 -40,-120,100,250 0,0
+Hibiki_Heavy9a.png
+NC
+NC
+NC
+0,0,0:0,0,0:0,0,0 -40,-120,100,250 0,0
+Hibiki_Heavy10a.png
+NC
+NC
+NC
+
+2
+15
+5
+4
+10
+0
+0
+4.mp3
+
+0
+7
+7
+10
+1
+0,0,0 -40,0,100,150 0,0
+Hibiki_Cr.Light1.png
+NC
+NC
+140,60,40 -40,0,100,150 0,0
+Hibiki_Cr.Light2.png
+NC
+140,60,40 -40,0,100,150 0,0
+Hibiki_Cr.Light3.png
+NC
+0,0,0 -40,0,100,150 0,0
+Hibiki_Cr.Light4.png
+0,0,0 -40,0,100,150 0,0
+Hibiki_Cr.Light5.png
+NC
+
+3
+30
+10
+6
+15
+1
+0
+1.mp3
+
+-30
+4
+3
+25
+2
+0,0,0:0,0,0 -40,0,150,150 0,0
+Hibiki_342.png
+NC
+NC
+0,0,0:0,0,0 -40,0,150,150 0,0
+Hibiki_343.png
+NC
+180,40,70:220,-50,70 -40,0,150,150 0,0
+Hibiki_344.png
+NC
+180,40,70:220,-50,70 -40,0,150,150 0,0
+Hibiki_345.png
+NC
+0,0,0:0,0,0 -40,0,150,150 0,0
+Hibiki_346.png
+NC
+NC
+NC
+NC
+NC
+0,0,0:0,0,0 -40,0,150,150 0,0
+Hibiki_347.png
+NC
+NC
+0,0,0:0,0,0 -40,0,150,150 0,0
+Hibiki_348.png
+NC
+NC
+NC
+0,0,0:0,0,0 -40,0,150,150 0,0
+Hibiki_349.png
+NC
+NC
+
+4
+20
+5
+2
+15
+2
+0
+4.mp3
+
+0
+15
+3
+19
+2
+0,0,0:0,0,0 -40,-120,100,150 5,5
+Hibiki_J.Light1.png
+NC
+0,0,0:0,0,0 -40,-120,100,150 5,5
+Hibiki_J.Light2.png
+NC
+50,0,60:0,20,30 -40,-120,100,150 5,0
+Hibiki_J.Light3.png
+NC
+NC
+NC
+NC
+50,0,60:0,20,30 -40,-120,100,150 0,0
+Hibiki_J.Light4.png
+NC
+50,0,60:0,20,30 -40,-120,100,150 0,0
+Hibiki_J.Light5.png
+NC
+50,0,60:0,20,30 -40,-120,100,150 0,0
+Hibiki_J.Light4.png
+NC
+50,0,60:0,20,30 -40,-120,100,150 0,0
+Hibiki_J.Light5.png
+NC
+50,0,60:0,20,60 -40,-120,100,150 0,0
+Hibiki_J.Light4.png
+NC
+
+5
+40
+5
+10
+20
+2
+0
+3V.mp3
+
+20
+15
+3
+21
+3
+0,0,0:0,0,0:0,0,0 -40,-120,100,150 0,0
+Hibiki_J.Heavy1.png
+NC
+0,0,0:0,0,0:0,0,0 -40,-120,100,150 0,0
+Hibiki_J.Heavy2.png
+0,0,0:0,0,0:0,0,0 -40,-120,100,250 0,0
+Hibiki_J.Heavy3.png
+120,-100,80:60,0,20:80,-50,40 -40,-120,100,150 0,0
+Hibiki_J.Heavy4.png
+NC
+NC
+NC
+NC
+120,-100,80:60,0,20:80,-50,40 -40,-120,100,150 0,0
+Hibiki_J.Heavy5.png
+120,-100,80:60,0,20:80,-50,40 -40,-120,100,150 0,0
+Hibiki_J.Heavy6.png
+NC
+NC
+0,0,0:0,0,0:0,0,0 -40,-120,100,150 0,0
+Hibiki_J.Heavy7.png
+NC
+NC
+NC
+NC
+0,0,0:0,0,0:0,0,0 -40,-120,100,150 0,0
+Hibiki_J.Heavy8.png
+NC
+NC
+
+6
+50
+5
+10
+30
+1
+0
+5.mp3
+
+0
+18
+3
+35
+3
+0,0,0:0,0,0:0,0,0 -40,-120,100,225 0,0
+Hibiki_NSpecial1.png
+NC
+NC
+NC
+NC
+0,0,0:0,0,0:0,0,0 -40,-120,100,225 0,0
+Hibiki_NSpecial2.png
+335,-45,60:250,-45,80:150,-45,120 40,-50,100,200 0,0
+Hibiki_NSpecial3.png
+335,-45,60:250,-45,80:150,-45,120 40,-50,100,200 0,0
+Hibiki_NSpecial4.png
+335,-45,60:250,-45,80:150,-45,120 40,-50,100,200 0,0
+Hibiki_NSpecial5.png
+335,-45,60:250,-45,80:150,-45,120 40,-50,100,200 0,0
+Hibiki_NSpecial6.png
+0,0,0:0,0,0:0,0,0 40,-50,100,200 0,0
+Hibiki_NSpecial7.png
+NC
+0,0,0:0,0,0:0,0,0 40,-50,100,200 0,0
+Hibiki_NSpecial8.png
+NC
+0,0,0:0,0,0:0,0,0 40,-50,100,200 0,0
+Hibiki_NSpecial9.png
+NC
+NC
+NC
+NC
+NC
+NC
+NC
+NC
+NC
+NC
+0,0,0:0,0,0:0,0,0 40,-50,100,200 0,0
+Hibiki_NSpecial10.png
+NC
+0,0,0:0,0,0:0,0,0 40,-50,100,200 0,0
+Hibiki_NSpecial11.png
+NC
+0,0,0:0,0,0:0,0,0 40,-50,100,200 0,0
+Hibiki_NSpecial12.png
+NC
+0,0,0:0,0,0:0,0,0 40,-50,100,200 0,0
+Hibiki_NSpecial13.png
+NC
+0,0,0:0,0,0:0,0,0 40,-50,100,200 0,0
+Hibiki_NSpecial14.png
+NC
+
+7
+50
+10
+14
+30
+0
+0
+2.mp3
+
+0
+20
+3
+39
+3
+0,0,0:0,0,0:0,0,0 -40,-120,100,225 0,0
+Hibiki_DSpecial1.png
+NC
+NC
+NC
+NC
+0,0,0:0,0,0:0,0,0 -40,-120,100,225 0,0
+Hibiki_DSpecial2.png
+NC
+NC
+NC
+0,0,0:0,0,0:0,0,0 40,0,100,150 0,0
+Hibiki_DSpecial3.png
+NC
+345,30,60:250,30,70:160,30,80 40,0,100,150 0,0
+Hibiki_DSpecial4.png
+345,30,60:250,30,70:160,30,80 40,0,100,150 0,0
+Hibiki_DSpecial5.png
+345,30,60:250,30,70:160,30,80 40,0,100,150 0,0
+Hibiki_DSpecial6.png
+345,30,60:250,30,70:160,30,80 40,0,100,150 0,0
+Hibiki_DSpecial7.png
+0,0,0:0,0,0:0,0,0 40,0,100,150 0,0
+Hibiki_DSpecial8.png
+NC
+0,0,0:0,0,0:0,0,0 40,0,100,150 0,0
+Hibiki_DSpecial9.png
+NC
+0,0,0:0,0,0:0,0,0 40,0,100,150 0,0
+Hibiki_DSpecial10.png
+NC
+NC
+NC
+NC
+NC
+NC
+NC
+NC
+NC
+0,0,0:0,0,0:0,0,0 40,0,100,150 0,0
+Hibiki_DSpecial11.png
+NC
+0,0,0:0,0,0:0,0,0 40,0,100,150 0,0
+Hibiki_DSpecial12.png
+NC
+0,0,0:0,0,0:0,0,0 40,0,100,150 0,0
+Hibiki_DSpecial13.png
+NC
+0,0,0:0,0,0:0,0,0 40,0,100,150 0,0
+Hibiki_DSpecial14.png
+NC
+0,0,0:0,0,0:0,0,0 40,0,100,150 0,0
+Hibiki_DSpecial15.png
+NC
+
+8
+10
+10
+4
+10
+0
+0
+silent.wav
+
+0
+20
+0
+29
+1
+0,0,0 0,0,0,0 0,0
+Hibiki_BSpecial1.png
+NC
+NC
+NC
+0,0,0 0,0,0,0 0,0
+Hibiki_BSpecial2.png
+NC
+NC
+NC
+NC
+0,0,0 0,0,0,0 0,0
+Hibiki_BSpecial3.png
+NC
+NC
+NC
+NC
+NC
+NC
+NC
+NC
+NC
+NC
+0,0,0 -80,-120,150,250 0,0
+Hibiki_BSpecial4.png
+NC
+NC
+NC
+0,0,0 -80,-120,150,250 0,0
+Hibiki_BSpecial5.png
+NC
+NC
+NC
+NC
+
+9
+30
+20
+10
+20
+2
+0
+4V.mp3
+
+0
+30
+0
+35
+3
+0,0,0:0,0,0:0,0,0 -80,-120,150,250 0,0
+Hibiki_122.png
+NC
+NC
+0,0,0:0,0,0:0,0,0 -80,-120,150,250 0,0
+Hibiki_FSpecial1.png
+NC
+NC
+NC
+0,0,0:0,0,0:0,0,0 -80,-120,150,250 0,0
+Hibiki_FSpecial2.png
+NC
+NC
+NC
+NC
+0,0,0:0,0,0:0,0,0 -80,-120,150,250 10,0
+Hibiki_FSpecial3.png
+NC
+NC
+180,-20,50:120,-20,50:0,0,0 -80,-120,150,250 10,0
+Hibiki_FSpecial4.png
+NC
+NC
+0,0,0:0,0,0:0,0,0 -80,-120,150,250 0,0
+Hibiki_FSpecial5.png
+NC
+NC
+NC
+NC
+NC
+0,0,0:0,0,0:0,0,0 -80,-120,150,250 0,0
+Hibiki_FSpecial6.png
+NC
+NC
+0,0,0:0,0,0:0,0,0 -80,-120,150,250 0,0
+Hibiki_FSpecial7.png
+NC
+NC
+0,0,0:0,0,0:0,0,0 -80,-120,150,250 0,0
+Hibiki_FSpecial8.png
+NC
+NC
+0,0,0:0,0,0:0,0,0 -80,-120,150,250 0,0
+Hibiki_FSpecial9.png
+NC
+
+10
+50
+20
+20
+30
+2
+0
+3V.mp3
+
+0
+-20
+4
+23
+1
+0,0,0 -40,-120,100,150 0,0
+Hibiki_J.Special1.png
+NC
+NC
+0,0,0 -40,-120,100,150 0,0
+Hibiki_J.Special2.png
+NC
+NC
+0,0,0 -40,-120,100,150 0,0
+Hibiki_J.Special3.png
+NC
+NC
+0,90,60 -40,-120,100,150 0,0
+Hibiki_J.Special4.png
+NC
+0,90,60 -40,-120,100,150 0,0
+Hibiki_J.Special5.png
+NC
+0,0,0 -40,-120,100,150 0,0
+Hibiki_J.Special6.png
+NC
+NC
+NC
+0,0,0 -40,-120,100,150 0,0
+Hibiki_J.Special7.png
+NC
+NC
+NC
+NC
+NC
