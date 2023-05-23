@@ -7,10 +7,6 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 public class CrzRhyCtrlScene extends MasterScene{
-//    public CrzRhyCtrlScene(SceneFactory factory) {
-//        super(factory);
-//    }
-
     @Override
     Scene run(Stage primaryStage, SceneTransferData data){
 

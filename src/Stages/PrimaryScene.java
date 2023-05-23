@@ -45,9 +45,6 @@ public class PrimaryScene extends MasterScene{
                 menuMusic.play();
             }
         });
-//        //scene counter
-//        int count = 0;
-
         //setting up the stage to be a maximized, borderless window
         primaryStage.initStyle(StageStyle.UNDECORATED);
         primaryStage.setTitle("Crazy Minigames");
@@ -67,6 +64,7 @@ public class PrimaryScene extends MasterScene{
         LogoScreen.setTranslateX(400*widthAdjust);
         LogoScreen.setTranslateY(50*heightAdjust);
         // 3 Buttons
+
         // Play Button
         Button playButton = new Button();
         ImageView PlayBut = new ImageView(PlayButton);

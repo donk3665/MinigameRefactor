@@ -6,9 +6,11 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
+import javafx.scene.layout.GridPane;
 import javafx.scene.media.AudioClip;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -25,9 +27,49 @@ import java.io.IOException;
 import java.util.*;
 
 public class RhyGameScene extends MasterScene{
+    int animationCounter[] = new int[2];
+    ImageView[] resourcePane;
+    Image [] resources;
+
+
+    //variables and objects for the rhythm game
+    ArrayList<Queue<Note>>notesRead = new ArrayList<Queue<Note>>();
+    ArrayList<ArrayList<Note>>notesNow = new ArrayList<ArrayList<Note>>();
+    ArrayList<ArrayList<Note>>notesNow2 = new ArrayList<ArrayList<Note>>();
+    Queue<TimingPoints> timingPoints= new LinkedList<TimingPoints>();
+    ArrayList<TimingPoints> inheritingPoints= new ArrayList<TimingPoints>();
+    TimingPoints currentTimingPoint;
+    TimingPoints currentInheritingPoint;
+    int columnTotal;
+    double overallDifficulty;
+    boolean keyReady[] = new boolean[4];
+    boolean keyPress[] = new boolean[4];
+    boolean keyReady2[] = new boolean[4];
+    boolean keyPress2[] = new boolean[4];
+    int songTimer;
+    double readTimer;
+    double scrollSpeed;
+    double scrollConstant;
+    int realBoardLength = 1300;
+    MediaPlayer player;
+    AudioClip[] sounds = new AudioClip[3];
+    long[][] scores;
+    double [][] accuracy ;
+    int offset = -80;
+    double timing;
+    boolean soundBool[] = new boolean[3];
+    GridPane P1grid = new GridPane();
+    Label P1Score = new Label("Score");
+    Label P1Combo = new Label("Combo");
+    Label P1Accuracy = new Label("Accuracy");
+    GridPane P2grid = new GridPane();
+    Label P2Score = new Label("Score");
+    Label P2Combo = new Label("Combo");
+    Label P2Accuracy = new Label("Accuracy");
 
     @Override
     Scene run(Stage primaryStage, SceneTransferData data) {
+
 
         //Initializing resources
         Image BackgroundImage = new Image("buttonImages/gameAssets/RhythmGame.png", 1536*widthAdjust, 864*heightAdjust, false, false);

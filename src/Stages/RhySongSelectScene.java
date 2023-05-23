@@ -14,9 +14,6 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class RhySongSelectScene extends MasterScene{
-//    public RhySongSelectScene(SceneFactory factory) {
-//        super(factory);
-//    }
 
     @Override
     Scene run(Stage primaryStage, SceneTransferData data)  {
@@ -209,265 +206,121 @@ public class RhySongSelectScene extends MasterScene{
             menuMusic.stop();
             transferData.setFilename("BlackYooh vs. siromaru - BLACK or WHITE (DE-CADE) [Usagi's BASIC Lv.6].osu");
             controller.changeScenes(SceneEnums.RHY_GAME, transferData);
-//            try {
-//                rhythmGame = rhythmGame(stage,);
-//            } catch (IOException e) {
-//            }
-//            stage.setScene(rhythmGame);
-//            stage.show();
         });
         songSelect2.setOnAction(event->{
             menuMusic.stop();
             transferData.setFilename("Porter Robinson & Madeon - Shelter (Dellvangel) [Easy].osu");
             controller.changeScenes(SceneEnums.RHY_GAME, transferData);
-//            try {
-//                rhythmGame = rhythmGame(stage,"Porter Robinson & Madeon - Shelter (Dellvangel) [Easy].osu");
-//            } catch (IOException e) {
-//            }
-//            stage.setScene(rhythmGame);
-//            stage.show();
         });
         songSelect3.setOnAction(event->{
             menuMusic.stop();
             transferData.setFilename("t+pazolite - QLWA (Yugu) [ExNeko's Normal].osu");
             controller.changeScenes(SceneEnums.RHY_GAME, transferData);
-//            try {
-//                rhythmGame = rhythmGame(stage,"t+pazolite - QLWA (Yugu) [ExNeko's Normal].osu");
-//            } catch (IOException e) {
-//            }
-//            stage.setScene(rhythmGame);
-//            stage.show();
         });
         songSelect4.setOnAction(event->{
             menuMusic.stop();
             transferData.setFilename("NOMA - PEPSI  MAN (Zetera) [HD MAN].osu");
             controller.changeScenes(SceneEnums.RHY_GAME, transferData);
-//            try {
-//                rhythmGame = rhythmGame(stage,"NOMA - PEPSI  MAN (Zetera) [HD MAN].osu");
-//            } catch (IOException e) {
-//            }
-//            stage.setScene(rhythmGame);
-//            stage.show();
         });
         songSelect5.setOnAction(event->{
             menuMusic.stop();
             transferData.setFilename("KANA-BOON - Silhouette (ExKagii-) [Kyou's EZ].osu");
             controller.changeScenes(SceneEnums.RHY_GAME, transferData);
-//            try {
-//                rhythmGame = rhythmGame(stage,"KANA-BOON - Silhouette (ExKagii-) [Kyou's EZ].osu");
-//            } catch (IOException e) {
-//            }
-//            stage.setScene(rhythmGame);
-//            stage.show();
         });
         songSelect6.setOnAction(event->{
             menuMusic.stop();
             transferData.setFilename("MAKOOTO - Tanukichi no Bouken (Xinely) [Leni's Easy].osu");
             controller.changeScenes(SceneEnums.RHY_GAME, transferData);
-//            try {
-//                rhythmGame = rhythmGame(stage,"MAKOOTO - Tanukichi no Bouken (Xinely) [Leni's Easy].osu");
-//            } catch (IOException e) {
-//            }
-//            stage.setScene(rhythmGame);
-//            stage.show();
         });
         songSelect7.setOnAction(event->{
             menuMusic.stop();
             transferData.setFilename("Lindsey Stirling - Senbonzakura (MrSergio) [Harby's NM].osu");
             controller.changeScenes(SceneEnums.RHY_GAME, transferData);
-//            try {
-//                rhythmGame = rhythmGame(stage,"Lindsey Stirling - Senbonzakura (MrSergio) [Harby's NM].osu");
-//            } catch (IOException e) {
-//            }
-//            stage.setScene(rhythmGame);
-//            stage.show();
         });
         songSelect8.setOnAction(event->{
             menuMusic.stop();
            transferData.setFilename("Jin ft. MARiA from GARNiDELiA - daze (short ver.) (Takane6) [NM].osu");
             controller.changeScenes(SceneEnums.RHY_GAME,transferData);
-//            try {
-//                rhythmGame = rhythmGame(stage,"Jin ft. MARiA from GARNiDELiA - daze (short ver.) (Takane6) [NM].osu");
-//            } catch (IOException e) {
-//            }
-//            stage.setScene(rhythmGame);
-//            stage.show();
         });
         songSelect9.setOnAction(event->{
             menuMusic.stop();
            transferData.setFilename("Hibiki Sakura (CV Fairouz Ai) & Naruzo Machio (CV Ishikawa Kaito) - Onegai Muscle (TV Size) (Syadow-) [Easy].osu");
             controller.changeScenes(SceneEnums.RHY_GAME,transferData);
-//            try {
-//                rhythmGame = rhythmGame(stage,"Hibiki Sakura (CV Fairouz Ai) & Naruzo Machio (CV Ishikawa Kaito) - Onegai Muscle (TV Size) (Syadow-) [Easy].osu");
-//            } catch (IOException e) {
-//            }
-//            stage.setScene(rhythmGame);
-//            stage.show();
         });
         songSelect10.setOnAction(event->{
             menuMusic.stop();
            transferData.setFilename("Soleily - Renatus (ExPew) [Normal].osu");
             controller.changeScenes(SceneEnums.RHY_GAME,transferData);
-//            try {
-//                rhythmGame = rhythmGame(stage,"Soleily - Renatus (ExPew) [Normal].osu");
-//            } catch (IOException e) {
-//            }
-//            stage.setScene(rhythmGame);
-//            stage.show();
         });
         songSelect11.setOnAction(event->{
             menuMusic.stop();
            transferData.setFilename("Soleily - Renatus (Tidek) [Hard].osu");
             controller.changeScenes(SceneEnums.RHY_GAME,transferData);
-//            try {
-//                rhythmGame = rhythmGame(stage,"Soleily - Renatus (Tidek) [Hard].osu");
-//            } catch (IOException e) {
-//            }
-//            stage.setScene(rhythmGame);
-//            stage.show();
         });
         songSelect12.setOnAction(event->{
             menuMusic.stop();
            transferData.setFilename("TK from Ling tosite sigure - unravel (TV edit) (Desperate-kun) [Marirose's Normal].osu");
             controller.changeScenes(SceneEnums.RHY_GAME,transferData);
-//            try {
-//                rhythmGame = rhythmGame(stage,"TK from Ling tosite sigure - unravel (TV edit) (Desperate-kun) [Marirose's Normal].osu");
-//            } catch (IOException e) {
-//            }
-//            stage.setScene(rhythmGame);
-//            stage.show();
         });
         songSelect13.setOnAction(event->{
             menuMusic.stop();
            transferData.setFilename("BlackYooh vs. siromaru - BLACK or WHITE (DE-CADE) [NOVICE Lv.9].osu");
             controller.changeScenes(SceneEnums.RHY_GAME,transferData);
-//            try {
-//                rhythmGame = rhythmGame(stage,"BlackYooh vs. siromaru - BLACK or WHITE (DE-CADE) [NOVICE Lv.9].osu");
-//            } catch (IOException e) {
-//            }
-//            stage.setScene(rhythmGame);
-//            stage.show();
         });
         songSelect14.setOnAction(event->{
             menuMusic.stop();
            transferData.setFilename("C-Show - Invitation from Mr.C (_FrEsH_ChICkEn_) [NOVICE].osu");
             controller.changeScenes(SceneEnums.RHY_GAME,transferData);
-//            try {
-//                rhythmGame = rhythmGame(stage,"C-Show - Invitation from Mr.C (_FrEsH_ChICkEn_) [NOVICE].osu");
-//            } catch (IOException e) {
-//            }
-//            stage.setScene(rhythmGame);
-//            stage.show();
         });
         songSelect15.setOnAction(event->{
             menuMusic.stop();
            transferData.setFilename("DJ OKAWARI - Flower Dance (Narcissu) [CS' Normal].osu");
             controller.changeScenes(SceneEnums.RHY_GAME,transferData);
-//            try {
-//                rhythmGame = rhythmGame(stage,"DJ OKAWARI - Flower Dance (Narcissu) [CS' Normal].osu");
-//            } catch (IOException e) {
-//            }
-//            stage.setScene(rhythmGame);
-//            stage.show();
         });
         songSelect16.setOnAction(event->{
             menuMusic.stop();
            transferData.setFilename("Hibiki Sakura (CV Fairouz Ai) & Naruzo Machio (CV Ishikawa Kaito) - Onegai Muscle (TV Size) (Syadow-) [Normal].osu");
             controller.changeScenes(SceneEnums.RHY_GAME,transferData);
-//            try {
-//                rhythmGame = rhythmGame(stage,"Hibiki Sakura (CV Fairouz Ai) & Naruzo Machio (CV Ishikawa Kaito) - Onegai Muscle (TV Size) (Syadow-) [Normal].osu");
-//            } catch (IOException e) {
-//            }
-//            stage.setScene(rhythmGame);
-//            stage.show();
         });
         songSelect17.setOnAction(event->{
             menuMusic.stop();
            transferData.setFilename("KANA-BOON - Silhouette (ExKagii-) [NM].osu");
             controller.changeScenes(SceneEnums.RHY_GAME,transferData);
-//            try {
-//                rhythmGame = rhythmGame(stage,"KANA-BOON - Silhouette (ExKagii-) [NM].osu");
-//            } catch (IOException e) {
-//            }
-//            stage.setScene(rhythmGame);
-//            stage.show();
         });
         songSelect18.setOnAction(event->{
             menuMusic.stop();
            transferData.setFilename("MAKOOTO - Tanukichi no Bouken (Xinely) [Leni's Normal].osu");
             controller.changeScenes(SceneEnums.RHY_GAME,transferData);
-//            try {
-//                rhythmGame = rhythmGame(stage,"MAKOOTO - Tanukichi no Bouken (Xinely) [Leni's Normal].osu");
-//            } catch (IOException e) {
-//            }
-//            stage.setScene(rhythmGame);
-//            stage.show();
         });
         songSelect19.setOnAction(event->{
             menuMusic.stop();
            transferData.setFilename("Kairiki bear feat. GUMI, Kagamine Rin - Inai Inai Izonshou (juankristal) [timing hell].osu");
             controller.changeScenes(SceneEnums.RHY_GAME,transferData);
-//            try {
-//                rhythmGame = rhythmGame(stage,"Kairiki bear feat. GUMI, Kagamine Rin - Inai Inai Izonshou (juankristal) [timing hell].osu");
-//            } catch (IOException e) {
-//            }
-//            stage.setScene(rhythmGame);
-//            stage.show();
         });
         songSelect20.setOnAction(event->{
             menuMusic.stop();
            transferData.setFilename("BlackYooh vs. siromaru - BLACK or WHITE (DE-CADE) [ADVANCED Lv.14].osu");
             controller.changeScenes(SceneEnums.RHY_GAME,transferData);
-//            try {
-//                rhythmGame = rhythmGame(stage,"BlackYooh vs. siromaru - BLACK or WHITE (DE-CADE) [ADVANCED Lv.14].osu");
-//            } catch (IOException e) {
-//            }
-//            stage.setScene(rhythmGame);
-//            stage.show();
         });
         songSelect21.setOnAction(event->{
             menuMusic.stop();
            transferData.setFilename("Porter Robinson & Madeon - Shelter (Dellvangel) [Loneliness].osu");
             controller.changeScenes(SceneEnums.RHY_GAME,transferData);
-//            try {
-//                rhythmGame = rhythmGame(stage,"Porter Robinson & Madeon - Shelter (Dellvangel) [Loneliness].osu");
-//            } catch (IOException e) {
-//            }
-//            stage.setScene(rhythmGame);
-//            stage.show();
         });
         songSelect22.setOnAction(event->{
             menuMusic.stop();
            transferData.setFilename("Soleily - Renatus (Tidek) [Insane].osu");
             controller.changeScenes(SceneEnums.RHY_GAME,transferData);
-//            try {
-//                rhythmGame = rhythmGame(stage,"Soleily - Renatus (Tidek) [Insane].osu");
-//            } catch (IOException e) {
-//            }
-//            stage.setScene(rhythmGame);
-//            stage.show();
         });
         songSelect23.setOnAction(event->{
             menuMusic.stop();
            transferData.setFilename("LeaF - I (Tidek) [Limbo].osu");
             controller.changeScenes(SceneEnums.RHY_GAME,transferData);
-//            try {
-//                rhythmGame = rhythmGame(stage,"LeaF - I (Tidek) [Limbo].osu");
-//            } catch (IOException e) {
-//            }
-//            stage.setScene(rhythmGame);
-//            stage.show();
         });
         songSelect24.setOnAction(event->{
             menuMusic.stop();
            transferData.setFilename("Soulja Baka - Soulja Baka (jackylam5) [SMITH RMX].osu");
             controller.changeScenes(SceneEnums.RHY_GAME,transferData);
-//            try {
-//                rhythmGame = rhythmGame(stage,"Soulja Baka - Soulja Baka (jackylam5) [SMITH RMX].osu");
-//            } catch (IOException e) {
-//            }
-//            stage.setScene(rhythmGame);
-//            stage.show();
         });
 
         //adding all buttons to grid
@@ -505,7 +358,6 @@ public class RhySongSelectScene extends MasterScene{
         //setting up group and scene
         Group main = new Group();
         main.getChildren().addAll(backgroundImage,grid, addTopAnchorPane(SceneEnums.GAME_SELECT));
-        Scene rhythmSongSelect = new Scene(main);
-        return rhythmSongSelect;
+        return new Scene(main);
     }
 }

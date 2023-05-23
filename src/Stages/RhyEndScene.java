@@ -2,17 +2,26 @@ package Stages;
 
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public class RhyEndScene extends MasterScene{
-
+    GridPane P1grid = new GridPane();
+    Label P1Score = new Label("Score");
+    Label P1Combo = new Label("Combo");
+    Label P1Accuracy = new Label("Accuracy");
+    GridPane P2grid = new GridPane();
+    Label P2Score = new Label("Score");
+    Label P2Combo = new Label("Combo");
+    Label P2Accuracy = new Label("Accuracy");
     @Override
     Scene run(Stage primaryStage, SceneTransferData data){
-        scores = data.getScores();
-        accuracy = data.getAccuracy();
+        long [][] scores = data.getScores();
+        double [][] accuracy = data.getAccuracy();
         //setting images
         Image BackgroundImage = new Image("buttonImages/gameAssets/GameOverRhythmBackground.png", 1536*widthAdjust, 864*heightAdjust, false, false);
         ImageView background = new ImageView(BackgroundImage);

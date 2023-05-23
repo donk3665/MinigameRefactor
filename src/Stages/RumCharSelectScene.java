@@ -15,15 +15,12 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class RumCharSelectScene extends MasterScene {
-
-//    public RumCharSelectScene(SceneFactory factory) {
-//        super(factory);
-//    }
+    Label playerChosen;
+    int counter;
 
     @Override
     Scene run(Stage primaryStage, SceneTransferData data){
-//        //scene counter
-//        count = 2;
+
 
         //setting up images
         Image BackgroundImage = new Image("buttonImages/gameSelect/GameBackground.png", 1536*widthAdjust, 864*heightAdjust, false, false);
@@ -119,13 +116,6 @@ public class RumCharSelectScene extends MasterScene {
                 players[counter]="rock";
                 transferData.setPlayers(players);
                 controller.changeScenes(SceneEnums.RUM_GAME,transferData);
-//                try {
-//
-//                    fightingGame =	fightingGame(stage,players);
-//                } catch (IOException e) {
-//                }
-//                stage.setScene(fightingGame);
-//                stage.show();
 
             }
         });

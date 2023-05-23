@@ -7,10 +7,6 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 public class CrzRumCtrlScene extends MasterScene{
-//    public CrzRumCtrlScene(SceneFactory factory) {
-//        super(factory);
-//    }
-
     @Override
     Scene run(Stage primaryStage, SceneTransferData data) {
 

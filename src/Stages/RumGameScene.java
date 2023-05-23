@@ -6,6 +6,7 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -28,9 +29,40 @@ import java.util.TimerTask;
 
 public class RumGameScene extends MasterScene{
 
-//    public RumGameScene(SceneFactory factory) {
-//        super(factory);
-//    }
+
+    //variables and objects for the fighting game
+    static FightingCharacter[] characters = new FightingCharacter[2];
+    static double downBorder = 730;
+    static double rightBorder = 1400;
+    static int leftBorder = 100;
+    static byte movement[][] = new byte[2][4];
+    ImageView[] characterDraw = new ImageView[2];
+    int playerTimer[] = new int[2];
+    boolean attacks[][] = new boolean[2][11];
+    static int []attackIndex = new int[2];
+    Rectangle[]healthBar = new Rectangle[2];
+    static double[][] tempHold;
+    static ArrayList<String> inputs = new ArrayList<String>();
+    static ArrayList<Integer> inputsTime = new ArrayList<Integer>();
+    static ArrayList<String> inputs2 = new ArrayList<String>();
+    static ArrayList<Integer> inputsTime2 = new ArrayList<Integer>();
+    static int inputTimer = 0;
+    static int[] hitstun = new int[2];
+    byte counter;
+    int [] playerCounter = new int[2];
+    boolean endGame = false;
+    int timerInterval = 0;
+    int animationCounter[] = new int[2];
+    ImageView[] resourcePane;
+    Image [] resources;
+    int logoVanishCounter = 0;
+    static AudioClip[] hitSounds;
+    MediaPlayer backgroundMusic;
+    static AudioClip[] narrator;
+    int[][] frameTotals = new int[2][8];
+    static int[][] frameCounters = new int[2][7];
+    int frameCounterIndex[] = {0,0};
+
 
     @Override
     Scene run(Stage primaryStage, SceneTransferData data) {

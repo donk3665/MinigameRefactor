@@ -7,15 +7,10 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 public class CreditScene extends MasterScene{
-//    public CreditScreen(SceneFactory factory) {
-//        super(factory);
-//    }
 
     @Override
     Scene run(Stage primaryStage, SceneTransferData data) {
         Scene creditScreen;
-        //scene counter
-        //count = 1;
 
         //Setting up images
         Image BackgroundImage = new Image("buttonImages/mainMenu/CreditScreen.png", 1536*widthAdjust,864*heightAdjust , false, false);

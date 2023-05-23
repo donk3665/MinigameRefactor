@@ -10,9 +10,6 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 public class GameSelectScene extends MasterScene{
-//    public GameSelectScene(SceneFactory factory) {
-//        super(factory);
-//    }
 
     @Override
     Scene run(Stage primaryStage, SceneTransferData data){
@@ -68,37 +65,21 @@ public class GameSelectScene extends MasterScene{
         // Crazy Rumble Button
         crazyRumble.setOnAction(event->{
             controller.changeScenes(SceneEnums.RUM_CHAR_SELECT, null);
-//            rumbleCharSelect = rumbleCharSelect(stage);
-//            stage.setScene(rumbleCharSelect);
-//
-//            stage.show();
         });
 
         // Crazy Rhythm Button
         crazyRhythm.setOnAction(event->{
             controller.changeScenes(SceneEnums.RHY_SONG_SELECT, null);
-//            rhythmSongSelect = rhythmSongSelect(stage);
-//            stage.setScene(rhythmSongSelect);
-//
-//            stage.show();
         });
 
         // Controls Button
         crazyRumbleControls.setOnAction(event->{
             controller.changeScenes(SceneEnums.CRZ_RUM_CTRL_SCREEN, null);
-//            crazyRumCtrlScreen = crazyRumCtrlScreen(stage);
-//            stage.setScene(crazyRumCtrlScreen);
-//
-//            stage.show();
         });
 
         // Crazy Rhythm Control
         crazyRhythmControls.setOnAction(event->{
             controller.changeScenes(SceneEnums.CRZ_RHY_CTRL_SCREEN, null);
-//            crazyRhyCtrlScreen = crazyRhyCtrlScreen(stage);
-//            stage.setScene(crazyRhyCtrlScreen);
-//
-//            stage.show();
         });
 
         // Creating main group to add into scene and adding back button
