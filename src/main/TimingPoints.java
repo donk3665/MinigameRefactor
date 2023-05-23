@@ -20,7 +20,7 @@ public class TimingPoints {
 	 * @param meter The amount of beats in a measure
 	 * @param inheritValue The amount of change in the scroll speed
 	 */
-	TimingPoints(double startTime, double beatLength, int meter, int inheritValue){
+	public TimingPoints(double startTime, double beatLength, int meter, int inheritValue){
 		this.startTime = startTime;
 		this.beatLength = beatLength;
 		this.meter = meter;
