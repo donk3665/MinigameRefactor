@@ -22,10 +22,7 @@ import javafx.stage.Stage;
 import main.Note;
 import main.TimingPoints;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
 
 public class RhyGameScene extends MasterScene{
@@ -57,7 +54,7 @@ public class RhyGameScene extends MasterScene{
     AudioClip[] sounds = new AudioClip[3];
     long[][] scores;
     double [][] accuracy ;
-    int offset = -80;
+    int offset = -30;
     double timing;
     boolean[] soundBool = new boolean[3];
     GridPane P1grid = new GridPane();
@@ -691,15 +688,15 @@ public class RhyGameScene extends MasterScene{
     public void initRhythm(String gameFile) throws IOException {
 
         //receiving music file
-        File file = new File("src/rhythm/rhythmFiles/"+gameFile);
-        BufferedReader br = new BufferedReader(new FileReader(file));
+        BufferedReader br = new BufferedReader(new InputStreamReader(Objects.requireNonNull(getClass().getResourceAsStream("/rhythm/rhythmFiles/" + gameFile))));
+
         String input = br.readLine();
         while (!input.matches("(AudioFilename:.+)")) {
             input=br.readLine();
         }
         String[] fileName = input.split(":");
-        String musicFile = "src/rhythm/rhythmFiles/"+fileName[1].trim();
-        Media pick = new Media(new File(musicFile).toURI().toString());
+        Media pick = new Media(Objects.requireNonNull(getClass().getResource("/rhythm/rhythmFiles/"+fileName[1].trim())).toExternalForm());
+
         player = new MediaPlayer(pick);
 
         //loading up base sounds
@@ -708,10 +705,8 @@ public class RhyGameScene extends MasterScene{
         soundFiles[1]="normal-slidertick.wav";
         soundFiles[2]="combobreak.mp3";
         for (int i = 0; i<soundFiles.length; i++) {
-            musicFile = "src/rhythm/rhythmFiles/"+soundFiles[i];
-            sounds[i] =  new AudioClip(new File(musicFile).toURI().toString());
+            sounds[i] =  new AudioClip(Objects.requireNonNull(getClass().getResource("/rhythm/rhythmFiles/"+soundFiles[i])).toExternalForm());
             sounds[i].setVolume(0.4);
-
         }
 
         //getting other stats

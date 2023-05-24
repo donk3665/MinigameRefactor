@@ -18,6 +18,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import java.io.File;
+import java.util.Objects;
 
 public class PrimaryScene extends MasterScene{
 
@@ -26,17 +27,8 @@ public class PrimaryScene extends MasterScene{
         Scene mainMenuScreen;
 
         //playing the main menu music looped
-        File file = new File("src/buttonImages/otherAssets/Main_Menu.mp3");
-        System.out.println(file.toURI());
-        Media media = null;
-        try {
-            media = new Media(file.toURI().toString());
-        }
-        catch (Exception e){
-            System.out.println(e.getMessage());
-            System.exit(1);
-        }
-        System.out.println("HERE");
+        Media media = new Media(Objects.requireNonNull(getClass().getResource("/buttonImages/otherAssets/Main_Menu.mp3")).toExternalForm());
+
         menuMusic = new MediaPlayer(media);
         menuMusic.play();
         menuMusic.setOnEndOfMedia(() -> {
