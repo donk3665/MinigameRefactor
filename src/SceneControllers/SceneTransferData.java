@@ -1,8 +1,8 @@
-package Stages;
+package SceneControllers;
 
 public class SceneTransferData {
     String filename;
-    String players[];
+    String[] players;
     long [][] scores;
     double [][] accuracy;
 

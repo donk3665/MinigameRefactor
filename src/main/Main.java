@@ -1,12 +1,9 @@
 package main;
 
-import Stages.SceneController;
-import Stages.SceneEnums;
-import Stages.SceneTransferData;
+import SceneControllers.SceneController;
+import SceneControllers.SceneEnums;
 import javafx.application.Application;
 import javafx.stage.Stage;
-
-import java.io.File;
 
 public class Main extends Application {
     /**

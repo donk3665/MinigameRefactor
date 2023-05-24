@@ -1,12 +1,13 @@
-package Stages;
+package Scenes;
 
+import SceneControllers.SceneEnums;
+import SceneControllers.SceneTransferData;
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -35,24 +36,23 @@ public class RumGameScene extends MasterScene{
     static double downBorder = 730;
     static double rightBorder = 1400;
     static int leftBorder = 100;
-    static byte movement[][] = new byte[2][4];
+    static byte[][] movement = new byte[2][4];
     ImageView[] characterDraw = new ImageView[2];
-    int playerTimer[] = new int[2];
-    boolean attacks[][] = new boolean[2][11];
+    int[] playerTimer = new int[2];
+    boolean[][] attacks = new boolean[2][11];
     static int []attackIndex = new int[2];
     Rectangle[]healthBar = new Rectangle[2];
     static double[][] tempHold;
-    static ArrayList<String> inputs = new ArrayList<String>();
-    static ArrayList<Integer> inputsTime = new ArrayList<Integer>();
-    static ArrayList<String> inputs2 = new ArrayList<String>();
-    static ArrayList<Integer> inputsTime2 = new ArrayList<Integer>();
+    static ArrayList<String> inputs = new ArrayList<>();
+    static ArrayList<Integer> inputsTime = new ArrayList<>();
+    static ArrayList<String> inputs2 = new ArrayList<>();
+    static ArrayList<Integer> inputsTime2 = new ArrayList<>();
     static int inputTimer = 0;
-    static int[] hitstun = new int[2];
-    byte counter;
+    static int[] hitStun = new int[2];
     int [] playerCounter = new int[2];
     boolean endGame = false;
     int timerInterval = 0;
-    int animationCounter[] = new int[2];
+    int[] animationCounter = new int[2];
     ImageView[] resourcePane;
     Image [] resources;
     int logoVanishCounter = 0;
@@ -61,11 +61,11 @@ public class RumGameScene extends MasterScene{
     static AudioClip[] narrator;
     int[][] frameTotals = new int[2][8];
     static int[][] frameCounters = new int[2][7];
-    int frameCounterIndex[] = {0,0};
+    int[] frameCounterIndex = {0,0};
 
 
     @Override
-    Scene run(Stage primaryStage, SceneTransferData data) {
+    public Scene run(Stage primaryStage, SceneTransferData data) {
 
         //Initializing resources
         Image BackgroundImage = new Image("buttonImages/gameAssets/rumbleBackground.png", 1536*widthAdjust, 864*heightAdjust, false, false);
@@ -218,7 +218,7 @@ public class RumGameScene extends MasterScene{
              * are all processed here. Variables are in place to keep track of inputs and prevent input errors.
              */
 
-            if (keyCode.equals(KeyCode.S)&&characters[0].getKeyReady(0)==false) {
+            if (keyCode.equals(KeyCode.S)&& !characters[0].getKeyReady(0)) {
                 movement[0][0]=2;
                 if (inputTimer != 0) {
                     inputs.add("s");
@@ -228,7 +228,7 @@ public class RumGameScene extends MasterScene{
 
             }
 
-            if (keyCode.equals(KeyCode.D)&&characters[0].getKeyReady(1)==false) {
+            if (keyCode.equals(KeyCode.D)&& !characters[0].getKeyReady(1)) {
 
                 if (movement[0][2] != 2) {
 
@@ -241,7 +241,7 @@ public class RumGameScene extends MasterScene{
 
                 }
             }
-            if (keyCode.equals(KeyCode.A)&&characters[0].getKeyReady(2)==false) {
+            if (keyCode.equals(KeyCode.A)&& !characters[0].getKeyReady(2)) {
 
                 if (movement[0][1] != 2) {
 
@@ -254,7 +254,7 @@ public class RumGameScene extends MasterScene{
                 }
 
             }
-            if (keyCode.equals(KeyCode.W)&&characters[0].getKeyReady(3)==false&&characters[0].getCentreY()>=downBorder) {
+            if (keyCode.equals(KeyCode.W)&& !characters[0].getKeyReady(3) &&characters[0].getCentreY()>=downBorder) {
 
                 movement[0][3]=2;
                 if (inputTimer != 0) {
@@ -264,72 +264,72 @@ public class RumGameScene extends MasterScene{
                 characters[0].setKeyReady(3, true);
 
             }
-            if (keyCode.equals(KeyCode.Y)&&characters[0].getKeyReady(4)==false && characters[0].getIsCrouching() == true) {
+            if (keyCode.equals(KeyCode.Y)&& !characters[0].getKeyReady(4) && characters[0].getIsCrouching()) {
 
                 attacks[0][2]=true;
-                if (attacks[0][attackIndex[0]] == false) {
+                if (!attacks[0][attackIndex[0]]) {
                     attackIndex[0] = 2;
                 }
                 characters[0].setKeyReady(4, true);
 
             }
-            if (keyCode.equals(KeyCode.Y)&&characters[0].getKeyReady(4)==false && characters[0].getCentreY()<downBorder) {
+            if (keyCode.equals(KeyCode.Y)&& !characters[0].getKeyReady(4) && characters[0].getCentreY()<downBorder) {
 
                 attacks[0][4]=true;
-                if (attacks[0][attackIndex[0]] == false) {
+                if (!attacks[0][attackIndex[0]]) {
                     attackIndex[0] = 4;
                 }
                 characters[0].setKeyReady(4, true);
 
             }
-            if (keyCode.equals(KeyCode.Y)&&characters[0].getKeyReady(4)==false && characters[0].getCentreY()>=downBorder) {
+            if (keyCode.equals(KeyCode.Y)&& !characters[0].getKeyReady(4) && characters[0].getCentreY()>=downBorder) {
 
                 attacks[0][0]=true;
-                if (attacks[0][attackIndex[0]] == false) {
+                if (!attacks[0][attackIndex[0]]) {
                     attackIndex[0] = 0;
                 }
                 characters[0].setKeyReady(4, true);
 
             }
-            if (keyCode.equals(KeyCode.U)&&characters[0].getKeyReady(5)==false && characters[0].getIsCrouching()) {
+            if (keyCode.equals(KeyCode.U)&& !characters[0].getKeyReady(5) && characters[0].getIsCrouching()) {
 
                 attacks[0][3]=true;
-                if (attacks[0][attackIndex[0]] == false) {
+                if (!attacks[0][attackIndex[0]]) {
                     attackIndex[0] = 3;
                 }
                 characters[0].setKeyReady(5, true);
 
             }
-            if (keyCode.equals(KeyCode.U)&&characters[0].getKeyReady(5)==false && characters[0].getCentreY()<downBorder) {
+            if (keyCode.equals(KeyCode.U)&& !characters[0].getKeyReady(5) && characters[0].getCentreY()<downBorder) {
 
                 attacks[0][5]=true;
-                if (attacks[0][attackIndex[0]] == false) {
+                if (!attacks[0][attackIndex[0]]) {
                     attackIndex[0] = 5;
                 }
                 characters[0].setKeyReady(5, true);
 
             }
-            if (keyCode.equals(KeyCode.U)&&characters[0].getKeyReady(5)==false && characters[0].getCentreY()>=downBorder) {
+            if (keyCode.equals(KeyCode.U)&& !characters[0].getKeyReady(5) && characters[0].getCentreY()>=downBorder) {
 
                 attacks[0][1]=true;
-                if (attacks[0][attackIndex[0]] == false) {
+                if (!attacks[0][attackIndex[0]]) {
                     attackIndex[0] = 1;
                 }
                 characters[0].setKeyReady(5, true);
 
             }
-            if (keyCode.equals(KeyCode.I)&&characters[0].getKeyReady(6)==false && characters[0].getCentreY()>=downBorder && movement[0][2] == 2) {
+            if (keyCode.equals(KeyCode.I)&& !characters[0].getKeyReady(6) && characters[0].getCentreY()>=downBorder && movement[0][2] == 2) {
                 characters[0].setXSpeed(0);
 
                 if (characters[0].getFacingRight()==1) {
                     attacks[0][8]=true;
-                    if (attacks[0][attackIndex[0]] == false) {
+                    if (!attacks[0][attackIndex[0]]) {
                         attackIndex[0] = 8;
                     }
                 }
                 else {
                     attacks[0][9]=true;
-                    if (attacks[0][attackIndex[0]] == false) {
+                    if (!attacks[0][attackIndex[0]]) {
                         attackIndex[0] = 9;
                     }
                 }
@@ -337,17 +337,17 @@ public class RumGameScene extends MasterScene{
                 characters[0].setKeyReady(6, true);
 
             }
-            if (keyCode.equals(KeyCode.I)&&characters[0].getKeyReady(6)==false && characters[0].getCentreY()>=downBorder && movement[0][1] == 2) {
+            if (keyCode.equals(KeyCode.I)&& !characters[0].getKeyReady(6) && characters[0].getCentreY()>=downBorder && movement[0][1] == 2) {
                 characters[0].setXSpeed(0);
                 if (characters[0].getFacingRight()==1) {
                     attacks[0][9]=true;
-                    if (attacks[0][attackIndex[0]] == false) {
+                    if (!attacks[0][attackIndex[0]]) {
                         attackIndex[0] = 9;
                     }
                 }
                 else {
                     attacks[0][8]=true;
-                    if (attacks[0][attackIndex[0]] == false) {
+                    if (!attacks[0][attackIndex[0]]) {
                         attackIndex[0] = 8;
                     }
                 }
@@ -355,35 +355,35 @@ public class RumGameScene extends MasterScene{
 
 
             }
-            if (keyCode.equals(KeyCode.I)&&characters[0].getKeyReady(6)==false && characters[0].getIsCrouching()) {
+            if (keyCode.equals(KeyCode.I)&& !characters[0].getKeyReady(6) && characters[0].getIsCrouching()) {
 
                 attacks[0][7]=true;
-                if (attacks[0][attackIndex[0]] == false) {
+                if (!attacks[0][attackIndex[0]]) {
                     attackIndex[0] = 7;
                 }
                 characters[0].setKeyReady(6, true);
 
             }
-            if (keyCode.equals(KeyCode.I)&&characters[0].getKeyReady(6)==false && characters[0].getCentreY()<downBorder) {
+            if (keyCode.equals(KeyCode.I)&& !characters[0].getKeyReady(6) && characters[0].getCentreY()<downBorder) {
 
                 attacks[0][10]=true;
-                if (attacks[0][attackIndex[0]] == false) {
+                if (!attacks[0][attackIndex[0]]) {
                     attackIndex[0] = 10;
                 }
                 characters[0].setKeyReady(6, true);
 
             }
-            if (keyCode.equals(KeyCode.I)&&characters[0].getKeyReady(6)==false && characters[0].getCentreY()>=downBorder) {
+            if (keyCode.equals(KeyCode.I)&& !characters[0].getKeyReady(6) && characters[0].getCentreY()>=downBorder) {
 
                 attacks[0][6]=true;
-                if (attacks[0][attackIndex[0]] == false) {
+                if (!attacks[0][attackIndex[0]]) {
                     attackIndex[0] = 6;
                 }
                 characters[0].setKeyReady(6, true);
 
             }
 
-            if (keyCode.equals(KeyCode.DOWN)&&characters[1].getKeyReady(0)==false) {
+            if (keyCode.equals(KeyCode.DOWN)&& !characters[1].getKeyReady(0)) {
 
 
                 movement[1][0]=2;
@@ -395,7 +395,7 @@ public class RumGameScene extends MasterScene{
 
             }
 
-            if (keyCode.equals(KeyCode.RIGHT)&&characters[1].getKeyReady(1)==false) {
+            if (keyCode.equals(KeyCode.RIGHT)&& !characters[1].getKeyReady(1)) {
 
                 if (movement[1][2] != 2) {
 
@@ -409,7 +409,7 @@ public class RumGameScene extends MasterScene{
                 }
             }
 
-            if (keyCode.equals(KeyCode.LEFT)&&characters[1].getKeyReady(2)==false) {
+            if (keyCode.equals(KeyCode.LEFT)&& !characters[1].getKeyReady(2)) {
 
                 if (movement[1][1] != 2) {
 
@@ -423,7 +423,7 @@ public class RumGameScene extends MasterScene{
 
             }
 
-            if (keyCode.equals(KeyCode.UP)&&characters[1].getKeyReady(3)==false&&characters[1].getCentreY()>=downBorder) {
+            if (keyCode.equals(KeyCode.UP)&& !characters[1].getKeyReady(3) &&characters[1].getCentreY()>=downBorder) {
 
 
 
@@ -435,103 +435,103 @@ public class RumGameScene extends MasterScene{
                 characters[1].setKeyReady(3, true);
 
             }
-            if (keyCode.equals(KeyCode.COMMA)&&characters[1].getKeyReady(4)==false && characters[1].getIsCrouching()) {
+            if (keyCode.equals(KeyCode.COMMA)&& !characters[1].getKeyReady(4) && characters[1].getIsCrouching()) {
 
                 attacks[1][2]=true;
-                if (attacks[1][attackIndex[1]] == false) {
+                if (!attacks[1][attackIndex[1]]) {
                     attackIndex[1] = 2;
                 }
                 characters[1].setKeyReady(4, true);
 
             }
-            if (keyCode.equals(KeyCode.COMMA)&&characters[1].getKeyReady(4)==false && characters[1].getCentreY()<downBorder) {
+            if (keyCode.equals(KeyCode.COMMA)&& !characters[1].getKeyReady(4) && characters[1].getCentreY()<downBorder) {
 
                 attacks[1][4]=true;
-                if (attacks[1][attackIndex[1]] == false) {
+                if (!attacks[1][attackIndex[1]]) {
                     attackIndex[1] = 4;
                 }
                 characters[1].setKeyReady(4, true);
 
             }
-            if (keyCode.equals(KeyCode.COMMA)&&characters[1].getKeyReady(4)==false && characters[1].getCentreY()>=downBorder) {
+            if (keyCode.equals(KeyCode.COMMA)&& !characters[1].getKeyReady(4) && characters[1].getCentreY()>=downBorder) {
 
                 attacks[1][0]=true;
-                if (attacks[1][attackIndex[1]] == false) {
+                if (!attacks[1][attackIndex[1]]) {
                     attackIndex[1] = 0;
                 }
                 characters[1].setKeyReady(4, true);
 
             }
-            if (keyCode.equals(KeyCode.PERIOD)&&characters[1].getKeyReady(5)==false && characters[1].getIsCrouching()) {
+            if (keyCode.equals(KeyCode.PERIOD)&& !characters[1].getKeyReady(5) && characters[1].getIsCrouching()) {
 
                 attacks[1][3]=true;
-                if (attacks[1][attackIndex[1]] == false) {
+                if (!attacks[1][attackIndex[1]]) {
                     attackIndex[1] = 3;
                 }
                 characters[1].setKeyReady(5, true);
 
             }
-            if (keyCode.equals(KeyCode.PERIOD)&&characters[1].getKeyReady(5)==false && characters[1].getCentreY()<downBorder) {
+            if (keyCode.equals(KeyCode.PERIOD)&& !characters[1].getKeyReady(5) && characters[1].getCentreY()<downBorder) {
 
                 attacks[1][5]=true;
-                if (attacks[1][attackIndex[1]] == false) {
+                if (!attacks[1][attackIndex[1]]) {
                     attackIndex[1] = 5;
                 }
                 characters[1].setKeyReady(5, true);
 
             }
-            if (keyCode.equals(KeyCode.PERIOD)&&characters[1].getKeyReady(5)==false && characters[1].getCentreY()>=downBorder) {
+            if (keyCode.equals(KeyCode.PERIOD)&& !characters[1].getKeyReady(5) && characters[1].getCentreY()>=downBorder) {
 
                 attacks[1][1]=true;
-                if (attacks[1][attackIndex[1]] == false) {
+                if (!attacks[1][attackIndex[1]]) {
                     attackIndex[1] = 1;
                 }
                 characters[1].setKeyReady(5, true);
 
             }
-            if (keyCode.equals(KeyCode.SLASH)&&characters[1].getKeyReady(6)==false && characters[1].getIsCrouching()) {
+            if (keyCode.equals(KeyCode.SLASH)&& !characters[1].getKeyReady(6) && characters[1].getIsCrouching()) {
 
                 attacks[1][7]=true;
-                if (attacks[1][attackIndex[1]] == false) {
+                if (!attacks[1][attackIndex[1]]) {
                     attackIndex[1] = 7;
                 }
                 characters[1].setKeyReady(6, true);
 
             }
-            if (keyCode.equals(KeyCode.SLASH)&&characters[1].getKeyReady(6)==false && characters[1].getCentreY()<downBorder) {
+            if (keyCode.equals(KeyCode.SLASH)&& !characters[1].getKeyReady(6) && characters[1].getCentreY()<downBorder) {
 
                 attacks[1][10]=true;
-                if (attacks[1][attackIndex[1]] == false) {
+                if (!attacks[1][attackIndex[1]]) {
                     attackIndex[1] = 10;
                 }
                 characters[1].setKeyReady(6, true);
 
             }
-            if (keyCode.equals(KeyCode.SLASH)&&characters[1].getKeyReady(6)==false && characters[1].getCentreY()>=downBorder && movement[1][1] == 2) {
+            if (keyCode.equals(KeyCode.SLASH)&& !characters[1].getKeyReady(6) && characters[1].getCentreY()>=downBorder && movement[1][1] == 2) {
                 characters[1].setXSpeed(0);
 
                 if (characters[1].getFacingRight()==-1) {
 
                     attacks[1][8]=true;
-                    if (attacks[1][attackIndex[1]] == false) {
+                    if (!attacks[1][attackIndex[1]]) {
                         attackIndex[1] = 8;
                     }
                     characters[1].setKeyReady(6, true);
                 }
                 else {
                     attacks[1][9]=true;
-                    if (attacks[1][attackIndex[1]] == false) {
+                    if (!attacks[1][attackIndex[1]]) {
                         attackIndex[1] = 9;
                     }
                     characters[1].setKeyReady(6, true);
                 }
 
             }
-            if (keyCode.equals(KeyCode.SLASH)&&characters[1].getKeyReady(6)==false && characters[1].getCentreY()>=downBorder&& movement[1][2] == 2) {
+            if (keyCode.equals(KeyCode.SLASH)&& !characters[1].getKeyReady(6) && characters[1].getCentreY()>=downBorder&& movement[1][2] == 2) {
                 characters[1].setXSpeed(0);
                 if (characters[1].getFacingRight()==-1) {
                     attacks[1][9]=true;
-                    if (attacks[1][attackIndex[1]] == false) {
+                    if (!attacks[1][attackIndex[1]]) {
                         attackIndex[1] = 9;
                     }
                     characters[1].setKeyReady(6, true);
@@ -539,17 +539,17 @@ public class RumGameScene extends MasterScene{
                 }
                 else {
                     attacks[1][8]=true;
-                    if (attacks[1][attackIndex[1]] == false) {
+                    if (!attacks[1][attackIndex[1]]) {
                         attackIndex[1] = 8;
                     }
                     characters[1].setKeyReady(6, true);
                 }
 
             }
-            if (keyCode.equals(KeyCode.SLASH)&&characters[1].getKeyReady(6)==false && characters[1].getCentreY()>=downBorder) {
+            if (keyCode.equals(KeyCode.SLASH)&& !characters[1].getKeyReady(6) && characters[1].getCentreY()>=downBorder) {
 
                 attacks[1][6]=true;
-                if (attacks[1][attackIndex[1]] == false) {
+                if (!attacks[1][attackIndex[1]]) {
                     attackIndex[1] = 6;
                 }
                 characters[1].setKeyReady(6, true);
@@ -731,7 +731,7 @@ public class RumGameScene extends MasterScene{
                                 characters[character].setHurtBoxCounter(0);
                                 characters[character].setHitCharacter(false);
                                 characters[character].setState(0);
-                                hitstun[character]=0;
+                                hitStun[character]=0;
                             }
 
                         }
@@ -836,11 +836,11 @@ public class RumGameScene extends MasterScene{
 
                     //hitstun calculations (how long a player cannot do any actions due to being hit)
                     for (int i = 0; i < 2; i++) {
-                        if (hitstun[i] > 0) {
+                        if (hitStun[i] > 0) {
                             characters[i].setIsActionable(false);
                             characters[i].setState(2);
-                            hitstun[i]--;
-                            if (hitstun[i]==0) {
+                            hitStun[i]--;
+                            if (hitStun[i]==0) {
                                 characters[i].setIsActionable(true);
                                 characters[i].setIsBlocking(1, false);
                                 characters[i].setIsBlocking(0, false);
@@ -902,7 +902,7 @@ public class RumGameScene extends MasterScene{
      * @param healthBar The visual representation of a player's health. Will go down if player is attacked
      */
     public static void damageCalculation(Rectangle[] healthBar) {
-        boolean playerHit[] = new boolean[2];
+        boolean[] playerHit = new boolean[2];
         int dependent = 1;
         for (int i = 0; i<2; i++) {
             ArrayList<Ellipse> hitBoxes= characters[i].getHitBoxes();
@@ -912,15 +912,15 @@ public class RumGameScene extends MasterScene{
             ArrayList<Rectangle> hurtBoxes= characters[dependent].getHurtBoxes();
 
             //checks if player's hitboxes collides with hurtboxes of enemy
-            for (int q = 0; q<hitBoxes.size(); q++) {
-                for (int t = 0; t<hurtBoxes.size(); t++) {
-                    if (hitBoxes.get(q).intersects(hurtBoxes.get(t).getBoundsInLocal())) {
-                        playerHit[i]=true;
+            for (Ellipse hitBox : hitBoxes) {
+                for (Rectangle hurtBox : hurtBoxes) {
+                    if (hitBox.intersects(hurtBox.getBoundsInLocal())) {
+                        playerHit[i] = true;
                     }
                 }
             }
             //if statement for when enemy successfully blocks attack
-            if (playerHit[i] == true && characters[i].getHitCharacter()==false && blocking(dependent)[characters[i].getAttackCurrent().getBlockingType()]) {
+            if (playerHit[i] && !characters[i].getHitCharacter() && blocking(dependent)[characters[i].getAttackCurrent().getBlockingType()]) {
 
 
                 if (characters[dependent].getIsCrouching()) {
@@ -932,7 +932,7 @@ public class RumGameScene extends MasterScene{
                 characters[i].setHitCharacter(true);
 
                 //damage, stun, and knockback calculations
-                hitstun[dependent] = characters[i].getAttackCurrent().getShieldStun();
+                hitStun[dependent] = characters[i].getAttackCurrent().getShieldStun();
                 characters[dependent].setXSpeed(0);
                 characters[dependent].changeXSpeed(characters[i].getAttackCurrent().getKnockBackX() * characters[i].getFacingRight() / 6);
                 characters[dependent].setYSpeed(0);
@@ -941,7 +941,7 @@ public class RumGameScene extends MasterScene{
                 healthBar[dependent].setWidth(healthBar[dependent].getWidth()-characters[i].getAttackCurrent().getShieldDamage());
             }
             //if statement for when enemy fails to block attack
-            else if (playerHit[i] == true && characters[i].getHitCharacter()==false) {
+            else if (playerHit[i] && !characters[i].getHitCharacter()) {
 
                 if (characters[i].getAttackCurrent().getMultihit() == 0) {
                     characters[i].setHitCharacter(true);
@@ -953,7 +953,7 @@ public class RumGameScene extends MasterScene{
                 }
                 //play sound effect
                 hitSounds[(int) (Math.random()*9)].play();
-                hitstun[dependent] = characters[i].getAttackCurrent().getHitStun();
+                hitStun[dependent] = characters[i].getAttackCurrent().getHitStun();
 
                 //damage, stun, and knockback calculations
                 characters[dependent].setXSpeed(0);
@@ -988,18 +988,12 @@ public class RumGameScene extends MasterScene{
             String input = inputs.toString();
 
             if (characters[0].getFacingRight() == 1) {
-                if (input.matches("(.*d, d])"))
-                {
-                    return true;
-                }
+                return input.matches("(.*d, d])");
             }
 
             else
             {
-                if (input.matches("(.*a, a])"))
-                {
-                    return true;
-                }
+                return input.matches("(.*a, a])");
             }
         }
         //checks forward dash input for player2
@@ -1007,19 +1001,13 @@ public class RumGameScene extends MasterScene{
             String input = inputs2.toString();
 
             if (characters[0].getFacingRight() == -1) {
-                if (input.matches("(.*d, d])"))
-                {
-                    return true;
-                }
+                return input.matches("(.*d, d])");
 
 
             }
             else
             {
-                if (input.matches("(.*a, a])"))
-                {
-                    return true;
-                }
+                return input.matches("(.*a, a])");
             }
 
         }
@@ -1039,7 +1027,7 @@ public class RumGameScene extends MasterScene{
      */
     public static void attackingRevamped(int character, boolean [] attacks, int attack) {
 
-        if (attacks[attack] == true&&hitstun[character]==0) {
+        if (attacks[attack] && hitStun[character]==0) {
 
 
             characters[character].setAttackCurrent(attack);
@@ -1071,8 +1059,8 @@ public class RumGameScene extends MasterScene{
                 tempHold = characters[character].getAttack(attack).getHitBoxes(playerTimer);
 
                 //adding new hitboxes
-                for (int i = 0; i<tempHold.length; i++) {
-                    Ellipse temp = new Ellipse(tempHold[i][0] * characters[character].getFacingRight() + xPosition ,tempHold[i][1]+yPosition,tempHold[i][2],tempHold[i][2]);
+                for (double[] doubles : tempHold) {
+                    Ellipse temp = new Ellipse(doubles[0] * characters[character].getFacingRight() + xPosition, doubles[1] + yPosition, doubles[2], doubles[2]);
 
                     characters[character].addHitBox(temp);
                     characters[character].addHitBoxCounter(1);
@@ -1081,17 +1069,15 @@ public class RumGameScene extends MasterScene{
                 tempHold = characters[character].getAttack(attack).getHurtBoxes(playerTimer);
 
                 //adding new hurtboxes
-                for (int i = 0; i<tempHold.length; i++) {
-                    if (characters[character].getFacingRight()==1) {
-                        Rectangle temp = new Rectangle(tempHold[i][0]  + xPosition,tempHold[i][1]+yPosition,tempHold[i][2],tempHold[i][3]);
-                        characters[character].addHurtBox(temp);
-                        characters[character].addHurtBoxCounter(1);
+                for (double[] doubles : tempHold) {
+                    Rectangle temp;
+                    if (characters[character].getFacingRight() == 1) {
+                        temp = new Rectangle(doubles[0] + xPosition, doubles[1] + yPosition, doubles[2], doubles[3]);
+                    } else {
+                        temp = new Rectangle(-(doubles[0]) + xPosition - doubles[2], doubles[1] + yPosition, doubles[2], doubles[3]);
                     }
-                    else{
-                        Rectangle temp = new Rectangle(-(tempHold[i][0])+ xPosition-tempHold[i][2],tempHold[i][1]+yPosition,tempHold[i][2],tempHold[i][3]);
-                        characters[character].addHurtBox(temp);
-                        characters[character].addHurtBoxCounter(1);
-                    }
+                    characters[character].addHurtBox(temp);
+                    characters[character].addHurtBoxCounter(1);
                 }
 
                 //setting associated image with attack frame
@@ -1115,7 +1101,7 @@ public class RumGameScene extends MasterScene{
 
             }
         }
-        else if (attacks[attack] == true&&hitstun[character]>0) {
+        else if (attacks[attack] && hitStun[character]>0) {
             //character is no longer in attacking state due to being hit, return hitboxes and hurtboxes to normal
             characters[character].setAttackCurrent(attack);
             characters[character].removeHitBox(characters[character].getHitBoxCounter());
@@ -1149,9 +1135,9 @@ public class RumGameScene extends MasterScene{
     public static void movement(int character, byte [] movement) {
 
         //character has to be in normal states to move
-        if (characters[character].getIsActionable()==true&&(characters[character].getState()==0||characters[character].getState()==5||characters[character].getState()==6)&&characters[character].getCentreY()>=downBorder) {
+        if (characters[character].getIsActionable() &&(characters[character].getState()==0||characters[character].getState()==5||characters[character].getState()==6)&&characters[character].getCentreY()>=downBorder) {
 
-            if (movement[1] == 2 && characters[character].getIsCrouching() == false) {
+            if (movement[1] == 2 && !characters[character].getIsCrouching()) {
                 //allows character to move, switches state depending on direction
                 characters[character].setXSpeed(characters[character].getWalkSpeed());
                 if (characters[character].getFacingRight() == 1) {
@@ -1171,12 +1157,12 @@ public class RumGameScene extends MasterScene{
             }
 
             //allowing character to dash forward
-            if (checkForwardDash(character) && characters[character].getJump() == false) {
+            if (checkForwardDash(character) && !characters[character].getJump()) {
                 characters[character].changeXSpeed(3 * characters[character].getFacingRight());
             }
 
 
-            if (movement[2]==2 && characters[character].getIsCrouching() == false){
+            if (movement[2]==2 && !characters[character].getIsCrouching()){
                 //allows character to move, switches state depending on direction
                 characters[character].setXSpeed(-characters[character].getWalkSpeed());
                 if (characters[character].getFacingRight() == 1) {
@@ -1266,7 +1252,7 @@ public class RumGameScene extends MasterScene{
     public static boolean[] blocking(int character) {
         boolean[] isBlocking = new boolean[3];
 
-        if (characters[character].getIsActionable()==true && characters[character].getJump() == false) {
+        if (characters[character].getIsActionable() && !characters[character].getJump()) {
 
             /*
              * checks which direction player is moving and what direction the player is facing,
@@ -1417,7 +1403,7 @@ public class RumGameScene extends MasterScene{
                 frameCounterIndex[i] = 6;
                 characters[i].setImageDisplay(characters[i].getBackWalkAnimation(frameCounters[i][6]/4));
             }
-            if (characters[i].getIsCrouching() == true && characters[i].getIsActionable()) {
+            if (characters[i].getIsCrouching() && characters[i].getIsActionable()) {
                 characters[i].setImageDisplay(characters[i].getCrouch());
             }
             if (characters[i].getCentreY()<downBorder && characters[i].getIsActionable()) {
@@ -1461,7 +1447,6 @@ public class RumGameScene extends MasterScene{
      * This function loads 2 files for 2 characters and sets their stats according
      * to the text files.
      * @param loadingCharacters The names of the characters that will be loaded
-     * @throws IOException
      */
     public void initFighting(String[] loadingCharacters) throws IOException {
 
@@ -1471,7 +1456,7 @@ public class RumGameScene extends MasterScene{
         healthBar[1] = new Rectangle(1048, 69, 0, 27);
         playerTimer[0] = 0;
         playerTimer[1] = 0;
-        String fileNames[] = new String[2];
+        String[] fileNames = new String[2];
         fileNames[0] = "src/main/" + loadingCharacters[0] + "/";
         fileNames[1] = "src/main/" + loadingCharacters[1] + "/";
         BufferedReader br;
@@ -1489,16 +1474,16 @@ public class RumGameScene extends MasterScene{
             }
             input = br.readLine();
             String[] d = input.split(" ");
-            double d2[] = new double[2];
+            double[] d2 = new double[2];
             d2[0] = Integer.parseInt(d[0]);
             d2[1] = Integer.parseInt(d[1]);
             input = br.readLine();
-            String inputArr[] = input.split(" ");
+            String[] inputArr = input.split(" ");
             int e = 1;
             if (i == 1) {
                 e = 0;
             }
-            characters[i] = new FightingCharacter(Math.abs((e * leftBorder + 100) + i * (rightBorder - 100) - Integer.parseInt(inputArr[0])), downBorder - (Integer.parseInt(inputArr[1]) / 2), Integer.parseInt(inputArr[0]), Integer.parseInt(inputArr[1]));
+            characters[i] = new FightingCharacter(Math.abs((e * leftBorder + 100) + i * (rightBorder - 100) - Integer.parseInt(inputArr[0])), downBorder - (Integer.parseInt(inputArr[1]) / 2.0), Integer.parseInt(inputArr[0]), Integer.parseInt(inputArr[1]));
             characters[i].setDimensions(d2);
             input = br.readLine();
             characters[i].setWalkSpeed(Integer.parseInt(input));
@@ -1659,7 +1644,7 @@ public class RumGameScene extends MasterScene{
                                     hurtBoxTotal[q][w][1] = Integer.parseInt(hitBoxData[1]);
                                     hurtBoxTotal[q][w][2] = Integer.parseInt(hitBoxData[2]);
                                     hurtBoxTotal[q][w][3] = Integer.parseInt(hitBoxData[3]);
-                                } else if (u == 2) {
+                                } else {
                                     speedChanges[q][0] = Integer.parseInt(hitBoxData[0]);
                                     speedChanges[q][1] = Integer.parseInt(hitBoxData[1]);
                                 }

@@ -1,5 +1,7 @@
-package Stages;
+package Scenes;
 
+import SceneControllers.SceneEnums;
+import SceneControllers.SceneTransferData;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -12,14 +14,12 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
-import java.io.IOException;
-
 public class RumCharSelectScene extends MasterScene {
     Label playerChosen;
     int counter;
 
     @Override
-    Scene run(Stage primaryStage, SceneTransferData data){
+    public Scene run(Stage primaryStage, SceneTransferData data){
 
 
         //setting up images

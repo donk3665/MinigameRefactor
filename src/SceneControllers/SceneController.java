@@ -1,5 +1,6 @@
-package Stages;
+package SceneControllers;
 
+import Scenes.MasterScene;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 

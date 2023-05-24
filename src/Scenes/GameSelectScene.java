@@ -1,5 +1,7 @@
-package Stages;
+package Scenes;
 
+import SceneControllers.SceneEnums;
+import SceneControllers.SceneTransferData;
 import javafx.geometry.HPos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -12,7 +14,7 @@ import javafx.stage.Stage;
 public class GameSelectScene extends MasterScene{
 
     @Override
-    Scene run(Stage primaryStage, SceneTransferData data){
+    public Scene run(Stage primaryStage, SceneTransferData data){
 
         //Setting up images
         Image BackgroundImage = new Image("buttonImages/gameSelect/GameBackground.png", 1536*widthAdjust, 864*heightAdjust, false, false);
@@ -24,26 +26,14 @@ public class GameSelectScene extends MasterScene{
         ImageView backgroundImage = new ImageView(BackgroundImage);
 
         //Crazy Rumble Button
-        Button crazyRumble = new Button();
-        ImageView crazyRumbleBut = new ImageView(CrazyRumbleButton);
-        crazyRumble.setGraphic(crazyRumbleBut); // Setting Image
-        crazyRumble.setStyle("-fx-background-color: transparent;");
+        Button crazyRumble = createStandardButton(CrazyRumbleButton);
 
         // Crazy Rhythm Button
-        Button crazyRhythm = new Button();
-        ImageView crazyRhythmBut = new ImageView(CrazyRhythmButton);
-        crazyRhythm.setGraphic(crazyRhythmBut);// Setting Image
-        crazyRhythm.setStyle("-fx-background-color: transparent;");
+        Button crazyRhythm = createStandardButton(CrazyRhythmButton);
 
         // Creating Control Buttons
-        Button crazyRumbleControls = new Button();
-        Button crazyRhythmControls = new Button();
-        ImageView control = new ImageView(ControlsButton);
-        ImageView control2 = new ImageView(ControlsButton);
-        crazyRumbleControls.setGraphic(control);
-        crazyRumbleControls.setStyle("-fx-background-color: transparent;");
-        crazyRhythmControls.setGraphic(control2);
-        crazyRhythmControls.setStyle("-fx-background-color: transparent;");
+        Button crazyRumbleControls = createStandardButton(ControlsButton);
+        Button crazyRhythmControls = createStandardButton(ControlsButton);
 
         //adding various buttons to GridPane
         GridPane games = new GridPane();
@@ -54,8 +44,8 @@ public class GameSelectScene extends MasterScene{
         games.setVgap(10);
 
         // Centering the Control Buttons
-        games.setHalignment(crazyRumbleControls, HPos.CENTER);
-        games.setHalignment(crazyRhythmControls, HPos.CENTER);
+        GridPane.setHalignment(crazyRumbleControls, HPos.CENTER);
+        GridPane.setHalignment(crazyRhythmControls, HPos.CENTER);
 
         // Positioning
         games.setTranslateX(25*widthAdjust);
@@ -63,29 +53,20 @@ public class GameSelectScene extends MasterScene{
 
         // Button on click methods
         // Crazy Rumble Button
-        crazyRumble.setOnAction(event->{
-            controller.changeScenes(SceneEnums.RUM_CHAR_SELECT, null);
-        });
+        crazyRumble.setOnAction(event-> controller.changeScenes(SceneEnums.RUM_CHAR_SELECT, null));
 
         // Crazy Rhythm Button
-        crazyRhythm.setOnAction(event->{
-            controller.changeScenes(SceneEnums.RHY_SONG_SELECT, null);
-        });
+        crazyRhythm.setOnAction(event-> controller.changeScenes(SceneEnums.RHY_SONG_SELECT, null));
 
         // Controls Button
-        crazyRumbleControls.setOnAction(event->{
-            controller.changeScenes(SceneEnums.CRZ_RUM_CTRL_SCREEN, null);
-        });
+        crazyRumbleControls.setOnAction(event-> controller.changeScenes(SceneEnums.CRZ_RUM_CTRL_SCREEN, null));
 
         // Crazy Rhythm Control
-        crazyRhythmControls.setOnAction(event->{
-            controller.changeScenes(SceneEnums.CRZ_RHY_CTRL_SCREEN, null);
-        });
+        crazyRhythmControls.setOnAction(event-> controller.changeScenes(SceneEnums.CRZ_RHY_CTRL_SCREEN, null));
 
         // Creating main group to add into scene and adding back button
         Group main = new Group();
         main.getChildren().addAll(backgroundImage,games,addTopAnchorPane(SceneEnums.PRIMARY_SCENE));
-        Scene gameSelect = new Scene(main);
-        return gameSelect;
+        return new Scene(main);
     }
 }

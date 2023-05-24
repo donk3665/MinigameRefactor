@@ -1,6 +1,7 @@
-package Stages;
+package Scenes;
 
-import javafx.event.EventHandler;
+import SceneControllers.SceneEnums;
+import SceneControllers.SceneTransferData;
 import javafx.geometry.HPos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -33,21 +34,18 @@ public class PrimaryScene extends MasterScene{
         }
         catch (Exception e){
             System.out.println(e.getMessage());
+            System.exit(1);
         }
-
         System.out.println("HERE");
         menuMusic = new MediaPlayer(media);
         menuMusic.play();
-        menuMusic.setOnEndOfMedia(new Runnable() {
-            @Override
-            public void run() {
-                menuMusic.stop();
-                menuMusic.play();
-            }
+        menuMusic.setOnEndOfMedia(() -> {
+            menuMusic.stop();
+            menuMusic.play();
         });
         //setting up the stage to be a maximized, borderless window
         primaryStage.initStyle(StageStyle.UNDECORATED);
-        primaryStage.setTitle("Crazy Minigames");
+        primaryStage.setTitle("Crazy MiniGames");
         primaryStage.setMaximized(true);
 
         //setting up graphics and groups
@@ -88,8 +86,8 @@ public class PrimaryScene extends MasterScene{
         grid.add(playButton, 0,0,1,1);
         grid.add(creditButton, 0, 1, 1, 1);
         grid.add(quitButton, 0, 2,1,1);
-        grid.setHalignment(creditButton, HPos.RIGHT);
-        grid.setHalignment(quitButton, HPos.RIGHT);
+        GridPane.setHalignment(creditButton, HPos.RIGHT);
+        GridPane.setHalignment(quitButton, HPos.RIGHT);
         grid.setVgap(10);
 
         // Setting Location of Grid Pane
@@ -104,43 +102,29 @@ public class PrimaryScene extends MasterScene{
 
 
         // Button interaction when hovered over
-        playButton.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent e) {
-                Scale sool = new Scale(0.8, 0.8);
-                sool.setPivotX(playButton.getWidth()/2);
-                sool.setPivotY(playButton.getHeight()/2);
-                playButton.getTransforms().add(sool);
-            }
-
+        playButton.addEventHandler(MouseEvent.MOUSE_ENTERED, e -> {
+            Scale buttonScale = new Scale(0.8, 0.8);
+            buttonScale.setPivotX(playButton.getWidth()/2);
+            buttonScale.setPivotY(playButton.getHeight()/2);
+            playButton.getTransforms().add(buttonScale);
         });
-        playButton.addEventHandler(MouseEvent.MOUSE_EXITED, new EventHandler<MouseEvent>() {
 
-            @Override
-            public void handle(MouseEvent e) {
-                Scale sools = new Scale(1.25, 1.25);
-                sools.setPivotX(playButton.getWidth()/2);
-                sools.setPivotY(playButton.getHeight()/2);
-                playButton.getTransforms().add(sools);
-                try {
-                    Thread.sleep(100);
-                } catch (InterruptedException e1) {
-                }
+        playButton.addEventHandler(MouseEvent.MOUSE_EXITED, e -> {
+            Scale buttonScale = new Scale(1.25, 1.25);
+            buttonScale.setPivotX(playButton.getWidth() / 2);
+            buttonScale.setPivotY(playButton.getHeight() / 2);
+            playButton.getTransforms().add(buttonScale);
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException ignored) {
+
             }
-
         });
 
         //button function
-        playButton.setOnAction(event ->{
-            controller.changeScenes(SceneEnums.GAME_SELECT, null);
-
-        });
-        creditButton.setOnAction(event ->{
-            controller.changeScenes(SceneEnums.CREDIT_SCREEN, null);
-        });
-        quitButton.setOnAction(event ->{
-            System.exit(0);
-        });
+        playButton.setOnAction(event -> controller.changeScenes(SceneEnums.GAME_SELECT, null));
+        creditButton.setOnAction(event -> controller.changeScenes(SceneEnums.CREDIT_SCREEN, null));
+        quitButton.setOnAction(event -> System.exit(0));
 
         //setting up scene object and showing scene
         mainMenuScreen = new Scene(mainGroup,1536*widthAdjust,864*heightAdjust);

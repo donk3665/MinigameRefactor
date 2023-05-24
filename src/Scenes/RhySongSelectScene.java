@@ -1,5 +1,7 @@
-package Stages;
+package Scenes;
 
+import SceneControllers.SceneEnums;
+import SceneControllers.SceneTransferData;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -11,12 +13,10 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
-import java.io.IOException;
-
 public class RhySongSelectScene extends MasterScene{
 
     @Override
-    Scene run(Stage primaryStage, SceneTransferData data)  {
+    public Scene run(Stage primaryStage, SceneTransferData data)  {
         //scene counter
         //background image and layout setup
         Image BackgroundImage = new Image("buttonImages/gameSelect/GameBackground.png", 1536*widthAdjust, 864*heightAdjust, false, false);

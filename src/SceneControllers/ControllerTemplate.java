@@ -1,11 +1,11 @@
-package Stages;
+package SceneControllers;
 
 import javafx.stage.Stage;
 
-abstract class ControllerTemplate {
+public abstract class ControllerTemplate {
     Stage currentStage;
     public ControllerTemplate(Stage currentStage){
         this.currentStage = currentStage;
     }
-    abstract void changeScenes(SceneEnums scene, SceneTransferData data);
+    public abstract void changeScenes(SceneEnums scene, SceneTransferData data);
 }

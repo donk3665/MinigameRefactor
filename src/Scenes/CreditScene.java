@@ -1,5 +1,7 @@
-package Stages;
+package Scenes;
 
+import SceneControllers.SceneEnums;
+import SceneControllers.SceneTransferData;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -9,7 +11,7 @@ import javafx.stage.Stage;
 public class CreditScene extends MasterScene{
 
     @Override
-    Scene run(Stage primaryStage, SceneTransferData data) {
+    public Scene run(Stage primaryStage, SceneTransferData data) {
         Scene creditScreen;
 
         //Setting up images
