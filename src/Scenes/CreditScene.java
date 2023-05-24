@@ -15,7 +15,7 @@ public class CreditScene extends MasterScene{
         Scene creditScreen;
 
         //Setting up images
-        Image BackgroundImage = new Image("buttonImages/mainMenu/CreditScreen.png", 1536*widthAdjust,864*heightAdjust , false, false);
+        Image BackgroundImage = new Image("SceneAssets/creditScreen/CreditScreen.png", 1536*widthAdjust,864*heightAdjust , false, false);
         ImageView Background = 	new ImageView(BackgroundImage);
 
         // Creating main group to add into scene and adding back button

@@ -71,25 +71,26 @@ public class RhyGameScene extends MasterScene{
 
 
         //Initializing resources
-        Image BackgroundImage = new Image("buttonImages/gameAssets/RhythmGame.png", 1536*widthAdjust, 864*heightAdjust, false, false);
+        Image BackgroundImage = new Image("SceneAssets/rhyGame/RhythmGame.png", 1536*widthAdjust, 864*heightAdjust, false, false);
         ImageView backgroundImage = new ImageView(BackgroundImage);
         scores = new long[2][3];
         accuracy = new double[2][2];
 
         try {
-            initRhythm(data.getFilename());
+            initRhythm(data.getFilename(), data.getFolderName());
         }
         catch (Exception e){
+            System.err.println("Initialization error");
             System.exit(1);
         }
         Group mainPane = new Group();
         resources = new Image[6];
-        resources[0] = new Image("rhythm/rhythmFiles/hit0.png");
-        resources[1] = new Image("rhythm/rhythmFiles/hitEmpty.png");
-        resources[2] = new Image("rhythm/rhythmFiles/hit100.png");
-        resources[3] = new Image("rhythm/rhythmFiles/hit200.png");
-        resources[4] = new Image("rhythm/rhythmFiles/hit300.png");
-        resources[5] = new Image("rhythm/rhythmFiles/hit300g.png");
+        resources[0] = new Image("rhythmFiles/baseFiles/images/hit0.png");
+        resources[1] = new Image("rhythmFiles/baseFiles/images/hitEmpty.png");
+        resources[2] = new Image("rhythmFiles/baseFiles/images/hit100.png");
+        resources[3] = new Image("rhythmFiles/baseFiles/images/hit200.png");
+        resources[4] = new Image("rhythmFiles/baseFiles/images/hit300.png");
+        resources[5] = new Image("rhythmFiles/baseFiles/images/hit300g.png");
         resourcePane = new ImageView[2];
         resourcePane[0]= new ImageView(resources[1]);
         resourcePane[1]= new ImageView(resources[1]);
@@ -683,19 +684,21 @@ public class RhyGameScene extends MasterScene{
     }
     /**
      * This method converts a file into its various notes, timing points, and loads its music file
-     * @param gameFile - the game file to be converted
+     *
+     * @param gameFile   - the game file to be converted
+     * @param folderName
      */
-    public void initRhythm(String gameFile) throws IOException {
+    public void initRhythm(String gameFile, String folderName) throws IOException {
 
         //receiving music file
-        BufferedReader br = new BufferedReader(new InputStreamReader(Objects.requireNonNull(getClass().getResourceAsStream("/rhythm/rhythmFiles/" + gameFile))));
+        BufferedReader br = new BufferedReader(new InputStreamReader(Objects.requireNonNull(getClass().getResourceAsStream("/rhythmFiles/songs/" + folderName + "/" + gameFile))));
 
         String input = br.readLine();
         while (!input.matches("(AudioFilename:.+)")) {
             input=br.readLine();
         }
         String[] fileName = input.split(":");
-        Media pick = new Media(Objects.requireNonNull(getClass().getResource("/rhythm/rhythmFiles/"+fileName[1].trim())).toExternalForm());
+        Media pick = new Media(Objects.requireNonNull(getClass().getResource("/rhythmFiles/songs/" + folderName + "/" +fileName[1].trim())).toExternalForm());
 
         player = new MediaPlayer(pick);
 
@@ -705,7 +708,7 @@ public class RhyGameScene extends MasterScene{
         soundFiles[1]="normal-slidertick.wav";
         soundFiles[2]="combobreak.mp3";
         for (int i = 0; i<soundFiles.length; i++) {
-            sounds[i] =  new AudioClip(Objects.requireNonNull(getClass().getResource("/rhythm/rhythmFiles/"+soundFiles[i])).toExternalForm());
+            sounds[i] =  new AudioClip(Objects.requireNonNull(getClass().getResource("/rhythmFiles/baseFiles/audio/" +soundFiles[i])).toExternalForm());
             sounds[i].setVolume(0.4);
         }
 
@@ -769,9 +772,6 @@ public class RhyGameScene extends MasterScene{
         scrollSpeed = scrollConstant;
         timing =  (151-(3*overallDifficulty));
         br.close();
-
-
-
 
     }
 

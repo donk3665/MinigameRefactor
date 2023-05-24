@@ -14,7 +14,7 @@ public class CrzRhyCtrlScene extends MasterScene{
 
 
         //Showing image which displays controls and back button
-        Image RhyTutorial = new Image("buttonImages/tutorials/TutorialRhythm.png", 1536*widthAdjust, 864*heightAdjust, false, false);
+        Image RhyTutorial = new Image("SceneAssets/tutorialRhythm/TutorialRhythm.png", 1536*widthAdjust, 864*heightAdjust, false, false);
         ImageView rhythmTutorialScreen = new ImageView(RhyTutorial);
         Group main = new Group();
         main.getChildren().addAll(rhythmTutorialScreen, addTopAnchorPane(SceneEnums.GAME_SELECT));

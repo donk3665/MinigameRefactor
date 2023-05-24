@@ -43,14 +43,14 @@ public abstract class MasterScene{
         AnchorPane anchorpane = new AnchorPane();
 
         //Gets the Back Button image from package, sets into ImageView, creates button and sets graphic for button.
-        javafx.scene.image.Image BackButton = new javafx.scene.image.Image("buttonImages/gameSelect/BackButton.png", 418*widthAdjust, 77*heightAdjust, false, false);
+        javafx.scene.image.Image BackButton = new javafx.scene.image.Image("SceneAssets/misc/BackButton.png", 418*widthAdjust, 77*heightAdjust, false, false);
         ImageView backBut = new ImageView(BackButton);
         javafx.scene.control.Button backButton = new Button();
         backButton.setGraphic(backBut);
         backButton.setStyle("-fx-background-color: transparent;");
 
         // Gets the Logo Image and places it
-        javafx.scene.image.Image Logo = new Image("buttonImages/mainMenu/Logo.png", 424.8*widthAdjust, 172*heightAdjust, false, false);
+        javafx.scene.image.Image Logo = new Image("SceneAssets/misc/Logo.png", 424.8*widthAdjust, 172*heightAdjust, false, false);
         ImageView logo = new ImageView(Logo);
         anchorpane.getChildren().addAll(logo, backButton);
         // Anchoring the location

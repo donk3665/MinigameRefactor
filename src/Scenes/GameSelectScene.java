@@ -17,10 +17,10 @@ public class GameSelectScene extends MasterScene{
     public Scene run(Stage primaryStage, SceneTransferData data){
 
         //Setting up images
-        Image BackgroundImage = new Image("buttonImages/gameSelect/GameBackground.png", 1536*widthAdjust, 864*heightAdjust, false, false);
-        Image ControlsButton = new Image("buttonImages/gameSelect/ControlsButton.png", 510*widthAdjust, 93*heightAdjust, false, false);
-        Image CrazyRumbleButton = new Image("buttonImages/gameSelect/CrazyRumbleButton.png", 720*widthAdjust, 600*heightAdjust, false, false);
-        Image CrazyRhythmButton = new Image("buttonImages/gameSelect/CrazyRhythmButton.png", 720*widthAdjust, 600*heightAdjust, false, false);
+        Image BackgroundImage = new Image("SceneAssets/gameSelect/GameBackground.png", 1536*widthAdjust, 864*heightAdjust, false, false);
+        Image ControlsButton = new Image("SceneAssets/gameSelect/ControlsButton.png", 510*widthAdjust, 93*heightAdjust, false, false);
+        Image CrazyRumbleButton = new Image("SceneAssets/gameSelect/CrazyRumbleButton.png", 720*widthAdjust, 600*heightAdjust, false, false);
+        Image CrazyRhythmButton = new Image("SceneAssets/gameSelect/CrazyRhythmButton.png", 720*widthAdjust, 600*heightAdjust, false, false);
 
         // Creates background Image
         ImageView backgroundImage = new ImageView(BackgroundImage);

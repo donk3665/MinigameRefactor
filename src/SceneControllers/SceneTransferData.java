@@ -2,10 +2,16 @@ package SceneControllers;
 
 public class SceneTransferData {
     String filename;
+    String folderName;
     String[] players;
     long [][] scores;
     double [][] accuracy;
-
+    public void setFolderName(String folderName) {
+        this.folderName = folderName;
+    }
+    public String getFolderName() {
+        return folderName;
+    }
     public void setFilename(String filename){
         this.filename = filename;
     }

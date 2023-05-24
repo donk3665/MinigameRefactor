@@ -23,13 +23,13 @@ public class RumCharSelectScene extends MasterScene {
 
 
         //setting up images
-        Image BackgroundImage = new Image("buttonImages/gameSelect/GameBackground.png", 1536*widthAdjust, 864*heightAdjust, false, false);
+        Image BackgroundImage = new Image("SceneAssets/gameSelect/GameBackground.png", 1536*widthAdjust, 864*heightAdjust, false, false);
         ImageView backgroundImage = new ImageView(BackgroundImage);
         backgroundImage.fitWidthProperty().bind(primaryStage.widthProperty());
         backgroundImage.fitHeightProperty().bind(primaryStage.heightProperty());
-        Image box = new Image("buttonImages/otherAssets/BigBox.png", 600*widthAdjust, 630*heightAdjust, false, false);
-        Image hibiki = new Image("main/hibiki/Hibiki.jpg", 344*widthAdjust, 436*heightAdjust, false, false);
-        Image rock = new Image("main/rock/Rock.jpg", 344*widthAdjust, 436*heightAdjust, false, false);
+        Image box = new Image("SceneAssets/misc/BigBox.png", 600*widthAdjust, 630*heightAdjust, false, false);
+        Image hibiki = new Image("fightingFiles/characters/hibiki/images/Hibiki.jpg", 344*widthAdjust, 436*heightAdjust, false, false);
+        Image rock = new Image("fightingFiles/characters/rock/images/Rock.jpg", 344*widthAdjust, 436*heightAdjust, false, false);
 
         //layouts and styling for displaying buttons and characters
         GridPane grid = new GridPane();
@@ -65,7 +65,7 @@ public class RumCharSelectScene extends MasterScene {
         playerChosen.setTextFill(Color.WHITE);
 
         //object contains the characters to load
-        String players[] = new String[2];
+        String[] players = new String[2];
 
         //variable to get both players' character
         counter = 0;
@@ -88,14 +88,6 @@ public class RumCharSelectScene extends MasterScene {
                 players[counter]="hibiki";
                 transferData.setPlayers(players);
                 controller.changeScenes(SceneEnums.RUM_GAME,transferData);
-//                try {
-//
-//                    fightingGame = fightingGame(stage,players);
-//
-//                } catch (IOException e) {
-//                }
-//                stage.setScene(fightingGame);
-//                stage.show();
 
             }
         });

@@ -19,12 +19,12 @@ public class RhySongSelectScene extends MasterScene{
     public Scene run(Stage primaryStage, SceneTransferData data)  {
         //scene counter
         //background image and layout setup
-        Image BackgroundImage = new Image("buttonImages/gameSelect/GameBackground.png", 1536*widthAdjust, 864*heightAdjust, false, false);
+        Image BackgroundImage = new Image("SceneAssets/gameSelect/GameBackground.png", 1536*widthAdjust, 864*heightAdjust, false, false);
         ImageView backgroundImage = new ImageView(BackgroundImage);
         backgroundImage.fitWidthProperty().bind(primaryStage.widthProperty());
         backgroundImage.fitHeightProperty().bind(primaryStage.heightProperty());
 
-        Image box = new Image("buttonImages/otherAssets/Box.png", 350*widthAdjust, 90*heightAdjust, false, false);
+        Image box = new Image("SceneAssets/misc/Box.png", 350*widthAdjust, 90*heightAdjust, false, false);
         GridPane grid = new GridPane();
         Font basic = new Font("Verdana", 12*widthAdjust);
 
@@ -204,122 +204,146 @@ public class RhySongSelectScene extends MasterScene{
         //event handlers for all 24 buttons
         songSelect1.setOnAction(event->{
             menuMusic.stop();
+            transferData.setFolderName("BLACK_or_WHITE");
             transferData.setFilename("BlackYooh vs. siromaru - BLACK or WHITE (DE-CADE) [Usagi's BASIC Lv.6].osu");
             controller.changeScenes(SceneEnums.RHY_GAME, transferData);
         });
         songSelect2.setOnAction(event->{
             menuMusic.stop();
+            transferData.setFolderName("Shelter");
             transferData.setFilename("Porter Robinson & Madeon - Shelter (Dellvangel) [Easy].osu");
             controller.changeScenes(SceneEnums.RHY_GAME, transferData);
         });
         songSelect3.setOnAction(event->{
             menuMusic.stop();
+            transferData.setFolderName("qlwa");
             transferData.setFilename("t+pazolite - QLWA (Yugu) [ExNeko's Normal].osu");
             controller.changeScenes(SceneEnums.RHY_GAME, transferData);
         });
         songSelect4.setOnAction(event->{
             menuMusic.stop();
+            transferData.setFolderName("PEPSI_MAN");
             transferData.setFilename("NOMA - PEPSI  MAN (Zetera) [HD MAN].osu");
             controller.changeScenes(SceneEnums.RHY_GAME, transferData);
         });
         songSelect5.setOnAction(event->{
             menuMusic.stop();
+            transferData.setFolderName("Silhouette");
             transferData.setFilename("KANA-BOON - Silhouette (ExKagii-) [Kyou's EZ].osu");
             controller.changeScenes(SceneEnums.RHY_GAME, transferData);
         });
         songSelect6.setOnAction(event->{
             menuMusic.stop();
+            transferData.setFolderName("Tanukichi_no_Bouken");
             transferData.setFilename("MAKOOTO - Tanukichi no Bouken (Xinely) [Leni's Easy].osu");
             controller.changeScenes(SceneEnums.RHY_GAME, transferData);
         });
         songSelect7.setOnAction(event->{
             menuMusic.stop();
+            transferData.setFolderName("Senbonzakura");
             transferData.setFilename("Lindsey Stirling - Senbonzakura (MrSergio) [Harby's NM].osu");
             controller.changeScenes(SceneEnums.RHY_GAME, transferData);
         });
         songSelect8.setOnAction(event->{
             menuMusic.stop();
-           transferData.setFilename("Jin ft. MARiA from GARNiDELiA - daze (short ver.) (Takane6) [NM].osu");
+            transferData.setFolderName("daze");
+            transferData.setFilename("Jin ft. MARiA from GARNiDELiA - daze (short ver.) (Takane6) [NM].osu");
             controller.changeScenes(SceneEnums.RHY_GAME,transferData);
         });
         songSelect9.setOnAction(event->{
             menuMusic.stop();
-           transferData.setFilename("Hibiki Sakura (CV Fairouz Ai) & Naruzo Machio (CV Ishikawa Kaito) - Onegai Muscle (TV Size) (Syadow-) [Easy].osu");
+            transferData.setFolderName("Onegai_Muscle");
+            transferData.setFilename("Hibiki Sakura (CV Fairouz Ai) & Naruzo Machio (CV Ishikawa Kaito) - Onegai Muscle (TV Size) (Syadow-) [Easy].osu");
             controller.changeScenes(SceneEnums.RHY_GAME,transferData);
         });
         songSelect10.setOnAction(event->{
             menuMusic.stop();
-           transferData.setFilename("Soleily - Renatus (ExPew) [Normal].osu");
+            transferData.setFolderName("Renatus");
+            transferData.setFilename("Soleily - Renatus (Tidek) [Normal].osu");
             controller.changeScenes(SceneEnums.RHY_GAME,transferData);
         });
         songSelect11.setOnAction(event->{
             menuMusic.stop();
-           transferData.setFilename("Soleily - Renatus (Tidek) [Hard].osu");
+            transferData.setFolderName("Renatus");
+            transferData.setFilename("Soleily - Renatus (Tidek) [Hard].osu");
             controller.changeScenes(SceneEnums.RHY_GAME,transferData);
         });
         songSelect12.setOnAction(event->{
             menuMusic.stop();
-           transferData.setFilename("TK from Ling tosite sigure - unravel (TV edit) (Desperate-kun) [Marirose's Normal].osu");
+            transferData.setFolderName("Unravel");
+            transferData.setFilename("TK from Ling tosite sigure - unravel (TV edit) (Desperate-kun) [Marirose's Normal].osu");
             controller.changeScenes(SceneEnums.RHY_GAME,transferData);
         });
         songSelect13.setOnAction(event->{
             menuMusic.stop();
-           transferData.setFilename("BlackYooh vs. siromaru - BLACK or WHITE (DE-CADE) [NOVICE Lv.9].osu");
+            transferData.setFolderName("BLACK_or_WHITE");
+            transferData.setFilename("BlackYooh vs. siromaru - BLACK or WHITE (DE-CADE) [NOVICE Lv.9].osu");
             controller.changeScenes(SceneEnums.RHY_GAME,transferData);
         });
         songSelect14.setOnAction(event->{
             menuMusic.stop();
-           transferData.setFilename("C-Show - Invitation from Mr.C (_FrEsH_ChICkEn_) [NOVICE].osu");
+            transferData.setFolderName("Invitation_from_MrC");
+            transferData.setFilename("C-Show - Invitation from Mr.C (_FrEsH_ChICkEn_) [NOVICE].osu");
             controller.changeScenes(SceneEnums.RHY_GAME,transferData);
         });
         songSelect15.setOnAction(event->{
             menuMusic.stop();
-           transferData.setFilename("DJ OKAWARI - Flower Dance (Narcissu) [CS' Normal].osu");
+            transferData.setFolderName("Flower_Dance");
+            transferData.setFilename("DJ OKAWARI - Flower Dance (Narcissu) [CS' Normal].osu");
             controller.changeScenes(SceneEnums.RHY_GAME,transferData);
         });
         songSelect16.setOnAction(event->{
             menuMusic.stop();
-           transferData.setFilename("Hibiki Sakura (CV Fairouz Ai) & Naruzo Machio (CV Ishikawa Kaito) - Onegai Muscle (TV Size) (Syadow-) [Normal].osu");
+            transferData.setFolderName("Onegai_Muscle");
+            transferData.setFilename("Hibiki Sakura (CV Fairouz Ai) & Naruzo Machio (CV Ishikawa Kaito) - Onegai Muscle (TV Size) (Syadow-) [Normal].osu");
             controller.changeScenes(SceneEnums.RHY_GAME,transferData);
         });
         songSelect17.setOnAction(event->{
             menuMusic.stop();
-           transferData.setFilename("KANA-BOON - Silhouette (ExKagii-) [NM].osu");
+            transferData.setFolderName("Silhouette");
+            transferData.setFilename("KANA-BOON - Silhouette (ExKagii-) [NM].osu");
             controller.changeScenes(SceneEnums.RHY_GAME,transferData);
         });
         songSelect18.setOnAction(event->{
             menuMusic.stop();
-           transferData.setFilename("MAKOOTO - Tanukichi no Bouken (Xinely) [Leni's Normal].osu");
+            transferData.setFolderName("Tanukichi_no_Bouken");
+            transferData.setFilename("MAKOOTO - Tanukichi no Bouken (Xinely) [Leni's Normal].osu");
             controller.changeScenes(SceneEnums.RHY_GAME,transferData);
         });
         songSelect19.setOnAction(event->{
             menuMusic.stop();
-           transferData.setFilename("Kairiki bear feat. GUMI, Kagamine Rin - Inai Inai Izonshou (juankristal) [timing hell].osu");
+            transferData.setFolderName("Inai_Inai_izonshou");
+            transferData.setFilename("Kairiki bear feat. GUMI, Kagamine Rin - Inai Inai Izonshou (juankristal) [timing hell].osu");
             controller.changeScenes(SceneEnums.RHY_GAME,transferData);
         });
         songSelect20.setOnAction(event->{
             menuMusic.stop();
+            transferData.setFolderName("BLACK_or_WHITE");
            transferData.setFilename("BlackYooh vs. siromaru - BLACK or WHITE (DE-CADE) [ADVANCED Lv.14].osu");
             controller.changeScenes(SceneEnums.RHY_GAME,transferData);
         });
         songSelect21.setOnAction(event->{
             menuMusic.stop();
-           transferData.setFilename("Porter Robinson & Madeon - Shelter (Dellvangel) [Loneliness].osu");
+            transferData.setFolderName("Shelter");
+            transferData.setFilename("Porter Robinson & Madeon - Shelter (Dellvangel) [Loneliness].osu");
             controller.changeScenes(SceneEnums.RHY_GAME,transferData);
         });
         songSelect22.setOnAction(event->{
             menuMusic.stop();
-           transferData.setFilename("Soleily - Renatus (Tidek) [Insane].osu");
+            transferData.setFolderName("Renatus");
+            transferData.setFilename("Soleily - Renatus (Tidek) [Insane].osu");
             controller.changeScenes(SceneEnums.RHY_GAME,transferData);
         });
         songSelect23.setOnAction(event->{
             menuMusic.stop();
-           transferData.setFilename("LeaF - I (Tidek) [Limbo].osu");
+            transferData.setFolderName("I");
+            transferData.setFilename("LeaF - I (Tidek) [Limbo].osu");
             controller.changeScenes(SceneEnums.RHY_GAME,transferData);
         });
         songSelect24.setOnAction(event->{
             menuMusic.stop();
-           transferData.setFilename("Soulja Baka - Soulja Baka (jackylam5) [SMITH RMX].osu");
+            transferData.setFolderName("Soulja_Baka");
+            transferData.setFilename("Soulja Baka - Soulja Baka (jackylam5) [SMITH RMX].osu");
             controller.changeScenes(SceneEnums.RHY_GAME,transferData);
         });
 

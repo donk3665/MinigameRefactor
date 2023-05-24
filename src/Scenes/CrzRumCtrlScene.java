@@ -13,7 +13,7 @@ public class CrzRumCtrlScene extends MasterScene{
     public Scene run(Stage primaryStage, SceneTransferData data) {
 
         //Showing image which displays controls and back button
-        Image RumTutorial = new Image("buttonImages/tutorials/RumbleTutorial.png", 1536*widthAdjust, 864*heightAdjust, false, false);
+        Image RumTutorial = new Image("SceneAssets/tutorialRumble/RumbleTutorial.png", 1536*widthAdjust, 864*heightAdjust, false, false);
         ImageView rumbleTutorialScreen = new ImageView(RumTutorial);
         Group main = new Group();
         main.getChildren().addAll(rumbleTutorialScreen, addTopAnchorPane(SceneEnums.GAME_SELECT));

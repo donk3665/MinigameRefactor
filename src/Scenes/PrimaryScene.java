@@ -17,7 +17,6 @@ import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-import java.io.File;
 import java.util.Objects;
 
 public class PrimaryScene extends MasterScene{
@@ -27,7 +26,7 @@ public class PrimaryScene extends MasterScene{
         Scene mainMenuScreen;
 
         //playing the main menu music looped
-        Media media = new Media(Objects.requireNonNull(getClass().getResource("/buttonImages/otherAssets/Main_Menu.mp3")).toExternalForm());
+        Media media = new Media(Objects.requireNonNull(getClass().getResource("/SceneAssets/misc/Main_Menu.mp3")).toExternalForm());
 
         menuMusic = new MediaPlayer(media);
         menuMusic.play();
@@ -41,11 +40,11 @@ public class PrimaryScene extends MasterScene{
         primaryStage.setMaximized(true);
 
         //setting up graphics and groups
-        Image BackgroundImage = new Image("buttonImages/mainMenu/Background.png", 1536*widthAdjust,864*heightAdjust , false, false);
-        Image Logo = new Image("buttonImages/mainMenu/Logo.png", 1070*widthAdjust, 418*heightAdjust, false, false);
-        Image PlayButton = new Image("buttonImages/mainMenu/PlayButton.png", 583.2*widthAdjust, 130*heightAdjust, false, false);
-        Image CreditsButton = new Image("buttonImages/mainMenu/CreditsButton.png", 396.8*widthAdjust, 78*heightAdjust, false, false);
-        Image QuitButton = new Image("buttonImages/mainMenu/QuitButton.png", 308*widthAdjust, 60*heightAdjust, false, false);
+        Image BackgroundImage = new Image("SceneAssets/primaryScene/Background.png", 1536*widthAdjust,864*heightAdjust , false, false);
+        Image Logo = new Image("SceneAssets/misc/Logo.png", 1070*widthAdjust, 418*heightAdjust, false, false);
+        Image PlayButton = new Image("SceneAssets/primaryScene/PlayButton.png", 583.2*widthAdjust, 130*heightAdjust, false, false);
+        Image CreditsButton = new Image("SceneAssets/primaryScene/CreditsButton.png", 396.8*widthAdjust, 78*heightAdjust, false, false);
+        Image QuitButton = new Image("SceneAssets/primaryScene/QuitButton.png", 308*widthAdjust, 60*heightAdjust, false, false);
         Pane mainGroup = new Pane();
         ImageView Background = 	new ImageView(BackgroundImage);
         Group back = new Group();

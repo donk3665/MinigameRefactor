@@ -26,7 +26,7 @@ public class RhyEndScene extends MasterScene{
         long [][] scores = data.getScores();
         double [][] accuracy = data.getAccuracy();
         //setting images
-        Image BackgroundImage = new Image("buttonImages/gameAssets/GameOverRhythmBackground.png", 1536*widthAdjust, 864*heightAdjust, false, false);
+        Image BackgroundImage = new Image("SceneAssets/rhyEndScreen/GameOverRhythmBackground.png", 1536*widthAdjust, 864*heightAdjust, false, false);
         ImageView background = new ImageView(BackgroundImage);
 
         //positioning grids
@@ -56,10 +56,10 @@ public class RhyEndScene extends MasterScene{
 
         //displaying who won
         if (scores[0][0]>scores[0][1]) {
-            winner = new Image("main/fightingFiles/player1.png", 600*widthAdjust, 100*heightAdjust, false, false);
+            winner = new Image("/fightingFiles/baseFiles/images/player1.png", 600*widthAdjust, 100*heightAdjust, false, false);
         }
         else{
-            winner = new Image("main/fightingFiles/player2.png", 600*widthAdjust, 100*heightAdjust, false, false);
+            winner = new Image("/fightingFiles/baseFiles/images/player2.png", 600*widthAdjust, 100*heightAdjust, false, false);
         }
         ImageView playerWon = new ImageView(winner);
         playerWon.setX(850*widthAdjust);

@@ -69,7 +69,7 @@ public class RumGameScene extends MasterScene{
     public Scene run(Stage primaryStage, SceneTransferData data) {
 
         //Initializing resources
-        Image BackgroundImage = new Image("buttonImages/gameAssets/rumbleBackground.png", 1536*widthAdjust, 864*heightAdjust, false, false);
+        Image BackgroundImage = new Image("SceneAssets/rumGame/rumbleBackground.png", 1536*widthAdjust, 864*heightAdjust, false, false);
         ImageView backgroundImage = new ImageView(BackgroundImage);
         try {
             initFighting(data.getPlayers());
@@ -84,21 +84,21 @@ public class RumGameScene extends MasterScene{
         playerCounter[0]=-1;
         playerCounter[1]=-1;
         resources = new Image[15];
-        resources[3] = new Image("main/fightingFiles/count1.png");
-        resources[4] = new Image("main/fightingFiles/count2.png");
-        resources[5] = new Image("main/fightingFiles/count3.png");
-        resources[6] = new Image("main/fightingFiles/fight.png");
-        resources[7] = new Image("main/fightingFiles/ko.png");
-        resources[0] = new Image("main/fightingFiles/round1.png");
-        resources[1] = new Image("main/fightingFiles/round2.png");
-        resources[2] = new Image("main/fightingFiles/round3.png");
-        resources[8] = new Image("main/fightingFiles/empty.png");
-        resources[9] = new Image("main/fightingFiles/player1.png");
-        resources[10] = new Image("main/fightingFiles/player2.png");
-        resources[11] = new Image("buttonImages/gameAssets/RumblePlayerOne1.png");
-        resources[12] = new Image("buttonImages/gameAssets/RumblePlayerOne2.png");
-        resources[13] = new Image("buttonImages/gameAssets/RumblePlayerTwo1.png");
-        resources[14] = new Image("buttonImages/gameAssets/RumblePlayerTwo2.png");
+        resources[3] = new Image("fightingFiles/baseFiles/images/count1.png");
+        resources[4] = new Image("fightingFiles/baseFiles/images/count2.png");
+        resources[5] = new Image("fightingFiles/baseFiles/images/count3.png");
+        resources[6] = new Image("fightingFiles/baseFiles/images/fight.png");
+        resources[7] = new Image("fightingFiles/baseFiles/images/ko.png");
+        resources[0] = new Image("fightingFiles/baseFiles/images/round1.png");
+        resources[1] = new Image("fightingFiles/baseFiles/images/round2.png");
+        resources[2] = new Image("fightingFiles/baseFiles/images/round3.png");
+        resources[8] = new Image("fightingFiles/baseFiles/images/empty.png");
+        resources[9] = new Image("fightingFiles/baseFiles/images/player1.png");
+        resources[10] = new Image("fightingFiles/baseFiles/images/player2.png");
+        resources[11] = new Image("SceneAssets/rumGame/RumblePlayerOne1.png");
+        resources[12] = new Image("SceneAssets/rumGame/RumblePlayerOne2.png");
+        resources[13] = new Image("SceneAssets/rumGame/RumblePlayerTwo1.png");
+        resources[14] = new Image("SceneAssets/rumGame/RumblePlayerTwo2.png");
 
         resourcePane = new ImageView[5];
         resourcePane[0] = new ImageView(resources[8]);
@@ -134,23 +134,23 @@ public class RumGameScene extends MasterScene{
         hitSounds = new AudioClip[9];
         //Initializing all sound effects
         for (int i = 0; i< 9; i++){
-            hitSounds[i]= new AudioClip(Objects.requireNonNull(getClass().getResource("/main/fightingFiles/hit_"+i+".wav")).toExternalForm());
+            hitSounds[i]= new AudioClip(Objects.requireNonNull(getClass().getResource("/fightingFiles/baseFiles/audio/hit_"+i+".wav")).toExternalForm());
             hitSounds[i].setVolume(0.4);
         }
 
 
         narrator = new AudioClip[10];
 
-        narrator[0] = new AudioClip(Objects.requireNonNull(getClass().getResource("/main/fightingFiles/Round1.mp3")).toExternalForm());
-        narrator[1] = new AudioClip(Objects.requireNonNull(getClass().getResource("/main/fightingFiles/Round2.mp3")).toExternalForm());
-        narrator[2] = new AudioClip(Objects.requireNonNull(getClass().getResource("/main/fightingFiles/Round3.mp3")).toExternalForm());
-        narrator[3] = new AudioClip(Objects.requireNonNull(getClass().getResource("/main/fightingFiles/Three.mp3")).toExternalForm());
-        narrator[4] = new AudioClip(Objects.requireNonNull(getClass().getResource("/main/fightingFiles/Two.mp3")).toExternalForm());
-        narrator[5] = new AudioClip(Objects.requireNonNull(getClass().getResource("/main/fightingFiles/One.mp3")).toExternalForm());
-        narrator[6] = new AudioClip(Objects.requireNonNull(getClass().getResource("/main/fightingFiles/KO.mp3")).toExternalForm());
-        narrator[7] = new AudioClip(Objects.requireNonNull(getClass().getResource("/main/fightingFiles/Fight.mp3")).toExternalForm());
-        narrator[8] = new AudioClip(Objects.requireNonNull(getClass().getResource("/main/fightingFiles/player1win.wav")).toExternalForm());
-        narrator[9] = new AudioClip(Objects.requireNonNull(getClass().getResource("/main/fightingFiles/player2win.wav")).toExternalForm());
+        narrator[0] = new AudioClip(Objects.requireNonNull(getClass().getResource("/fightingFiles/baseFiles/audio/Round1.mp3")).toExternalForm());
+        narrator[1] = new AudioClip(Objects.requireNonNull(getClass().getResource("/fightingFiles/baseFiles/audio/Round2.mp3")).toExternalForm());
+        narrator[2] = new AudioClip(Objects.requireNonNull(getClass().getResource("/fightingFiles/baseFiles/audio/Round3.mp3")).toExternalForm());
+        narrator[3] = new AudioClip(Objects.requireNonNull(getClass().getResource("/fightingFiles/baseFiles/audio/Three.mp3")).toExternalForm());
+        narrator[4] = new AudioClip(Objects.requireNonNull(getClass().getResource("/fightingFiles/baseFiles/audio/Two.mp3")).toExternalForm());
+        narrator[5] = new AudioClip(Objects.requireNonNull(getClass().getResource("/fightingFiles/baseFiles/audio/One.mp3")).toExternalForm());
+        narrator[6] = new AudioClip(Objects.requireNonNull(getClass().getResource("/fightingFiles/baseFiles/audio/KO.mp3")).toExternalForm());
+        narrator[7] = new AudioClip(Objects.requireNonNull(getClass().getResource("/fightingFiles/baseFiles/audio/Fight.mp3")).toExternalForm());
+        narrator[8] = new AudioClip(Objects.requireNonNull(getClass().getResource("/fightingFiles/baseFiles/audio/player1win.wav")).toExternalForm());
+        narrator[9] = new AudioClip(Objects.requireNonNull(getClass().getResource("/fightingFiles/baseFiles/audio/player2win.wav")).toExternalForm());
 
         for (int i = 0; i< 8; i++){
             narrator[i].setVolume(0.4);
@@ -191,7 +191,7 @@ public class RumGameScene extends MasterScene{
         timer.start();
 
         //Media music = new Media(new File("src/main/fightingFiles/Blue_Water_Blue_Sky.mp3").toURI().toString());
-        Media music = new Media(Objects.requireNonNull(getClass().getResource("/main/fightingFiles/Blue_Water_Blue_Sky.mp3")).toExternalForm());
+        Media music = new Media(Objects.requireNonNull(getClass().getResource("/fightingFiles/baseFiles/audio/Blue_Water_Blue_Sky.mp3")).toExternalForm());
         backgroundMusic = new MediaPlayer(music);
         backgroundMusic.setVolume(0.4);
 
@@ -757,7 +757,7 @@ public class RumGameScene extends MasterScene{
                         else if (timerInterval==5500) {
                             if (playerCounter[1]==2||playerCounter[0]==2) {
 
-                                //if player won, return back to character select screen, suspend all timers
+                                //if player won, return to character select screen, suspend all timers
                                 endGame=true;
                                 timer.stop();
                                 timer2.cancel();
@@ -1440,11 +1440,13 @@ public class RumGameScene extends MasterScene{
         playerTimer[0] = 0;
         playerTimer[1] = 0;
         String[] fileNames = new String[2];
-        fileNames[0] = "/main/" + loadingCharacters[0] + "/";
-        fileNames[1] = "/main/" + loadingCharacters[1] + "/";
+        fileNames[0] = "/fightingFiles/characters/" + loadingCharacters[0] + "/";
+        fileNames[1] = "/fightingFiles/characters/" + loadingCharacters[1] + "/";
         BufferedReader br;
         //loading 2 different characters
         for (int i = 0; i < 2; i++) {
+            String imagePath = fileNames[i] + "images/";
+            String audioPath = fileNames[i] + "audio/";
 
             String temp2 = fileNames[i] + loadingCharacters[i] + ".txt";
 
@@ -1471,7 +1473,7 @@ public class RumGameScene extends MasterScene{
             input = br.readLine();
             characters[i].setWalkSpeed(Integer.parseInt(input));
             input = br.readLine();
-            Image temp = new Image(Objects.requireNonNull(getClass().getResourceAsStream(fileNames[i] + input)));
+            Image temp = new Image(Objects.requireNonNull(getClass().getResourceAsStream(imagePath + input)));
             characters[i].setImageCharacter(temp);
             characters[i].setImageDisplay(temp);
             input = br.readLine();
@@ -1484,14 +1486,14 @@ public class RumGameScene extends MasterScene{
             Image[] imageTemp = new Image[Integer.parseInt(input)];
             for (int q = 0; q < imageTemp.length; q++) {
                 input = br.readLine();
-                imageTemp[q] = new Image(Objects.requireNonNull(getClass().getResourceAsStream(fileNames[i] + input)));
+                imageTemp[q] = new Image(Objects.requireNonNull(getClass().getResourceAsStream(imagePath + input)));
             }
             tempAnimation.setFrames(imageTemp);
             characters[i].setStartingAnimation(tempAnimation);
             AudioClip[] tempAudio = new AudioClip[3];
             for (int q = 0; q < 3; q++) {
                 input = br.readLine();
-                tempAudio[q] = new AudioClip(Objects.requireNonNull(getClass().getResource(fileNames[i] + input)).toExternalForm());
+                tempAudio[q] = new AudioClip(Objects.requireNonNull(getClass().getResource(audioPath + input)).toExternalForm());
             }
             characters[i].setHurtSound(tempAudio);
 
@@ -1506,18 +1508,18 @@ public class RumGameScene extends MasterScene{
             frameTotals[i][0] = frames * 5;
             for (int a = 0; a < frames; a++) {
                 input = br.readLine();
-                idleAnimation[a] = new Image(Objects.requireNonNull(getClass().getResourceAsStream(fileNames[i] + input)));
+                idleAnimation[a] = new Image(Objects.requireNonNull(getClass().getResourceAsStream(imagePath + input)));
             }
             characters[i].setIdleAnimation(idleAnimation);
             input = br.readLine();
-            characters[i].setCrouch(new Image(Objects.requireNonNull(getClass().getResourceAsStream(fileNames[i] + input))));
+            characters[i].setCrouch(new Image(Objects.requireNonNull(getClass().getResourceAsStream(imagePath + input))));
 
             frames = Integer.parseInt(br.readLine());
             Image[] walkAnimation = new Image[frames];
             frameTotals[i][5] = frames * 4;
             for (int a = 0; a < frames; a++) {
                 input = br.readLine();
-                walkAnimation[a] = new Image(Objects.requireNonNull(getClass().getResourceAsStream(fileNames[i] + input)));
+                walkAnimation[a] = new Image(Objects.requireNonNull(getClass().getResourceAsStream(imagePath + input)));
             }
             characters[i].setWalkAnimation(walkAnimation);
             frames = Integer.parseInt(br.readLine());
@@ -1525,7 +1527,7 @@ public class RumGameScene extends MasterScene{
             frameTotals[i][6] = frames * 4;
             for (int a = 0; a < frames; a++) {
                 input = br.readLine();
-                backWalkAnimation[a] = new Image(Objects.requireNonNull(getClass().getResourceAsStream(fileNames[i] + input)));
+                backWalkAnimation[a] = new Image(Objects.requireNonNull(getClass().getResourceAsStream(imagePath + input)));
             }
             characters[i].setBackWalkAnimation(backWalkAnimation);
 
@@ -1534,18 +1536,18 @@ public class RumGameScene extends MasterScene{
             frameTotals[i][4] = frames * 6;
             for (int a = 0; a < frames; a++) {
                 input = br.readLine();
-                jumpAnimation[a] = new Image(Objects.requireNonNull(getClass().getResourceAsStream(fileNames[i] + input)));
+                jumpAnimation[a] = new Image(Objects.requireNonNull(getClass().getResourceAsStream(imagePath + input)));
 
             }
             characters[i].setJumpAnimation(jumpAnimation);
             input = br.readLine();
-            characters[i].setBlock(new Image(Objects.requireNonNull(getClass().getResourceAsStream(fileNames[i] + input))));
+            characters[i].setBlock(new Image(Objects.requireNonNull(getClass().getResourceAsStream(imagePath + input))));
 
             input = br.readLine();
-            characters[i].setLowBlock(new Image(Objects.requireNonNull(getClass().getResourceAsStream(fileNames[i] + input))));
+            characters[i].setLowBlock(new Image(Objects.requireNonNull(getClass().getResourceAsStream(imagePath + input))));
 
             input = br.readLine();
-            characters[i].setHurt(new Image(Objects.requireNonNull(getClass().getResourceAsStream(fileNames[i] + input))));
+            characters[i].setHurt(new Image(Objects.requireNonNull(getClass().getResourceAsStream(imagePath + input))));
 
 
             //loading attacks
@@ -1579,7 +1581,7 @@ public class RumGameScene extends MasterScene{
                 input = br.readLine();
                 tempAttack.setMultihit(Byte.parseByte(input));
                 input = br.readLine();
-                tempAttack.setSfx(new AudioClip(Objects.requireNonNull(getClass().getResource(fileNames[i]+input)).toExternalForm()));
+                tempAttack.setSfx(new AudioClip(Objects.requireNonNull(getClass().getResource(audioPath+input)).toExternalForm()));
 
                 br.readLine();
                 input = br.readLine();
@@ -1601,7 +1603,7 @@ public class RumGameScene extends MasterScene{
 
                     input = br.readLine();
                     if (input.matches(".*[.].*")) {
-                        images[q - 1] = new Image(Objects.requireNonNull(getClass().getResourceAsStream(fileNames[i] + input)));
+                        images[q - 1] = new Image(Objects.requireNonNull(getClass().getResourceAsStream(imagePath + input)));
                         q--;
                         continue;
                     }
