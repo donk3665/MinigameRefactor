@@ -37,20 +37,13 @@ public class RumGameScene extends MasterScene{
     static double downBorder = 730;
     static double rightBorder = 1400;
     static int leftBorder = 100;
-    static byte[][] movement = new byte[2][4];
     ImageView[] characterDraw = new ImageView[2];
     int[] playerTimer = new int[2];
-    boolean[][] attacks = new boolean[2][11];
     static int []attackIndex = new int[2];
     Rectangle[]healthBar = new Rectangle[2];
     static double[][] tempHold;
-    static ArrayList<String> inputs = new ArrayList<>();
-    static ArrayList<Integer> inputsTime = new ArrayList<>();
-    static ArrayList<String> inputs2 = new ArrayList<>();
-    static ArrayList<Integer> inputsTime2 = new ArrayList<>();
     static int inputTimer = 0;
-    static int[] hitStun = new int[2];
-    int [] playerCounter = new int[2];
+    int [] playerWinCounter = new int[2];
     boolean endGame = false;
     int timerInterval = 0;
     int[] animationCounter = new int[2];
@@ -60,8 +53,6 @@ public class RumGameScene extends MasterScene{
     static AudioClip[] hitSounds;
     MediaPlayer backgroundMusic;
     static AudioClip[] narrator;
-    int[][] frameTotals = new int[2][8];
-    static int[][] frameCounters = new int[2][7];
     int[] frameCounterIndex = {0,0};
 
 
@@ -77,12 +68,12 @@ public class RumGameScene extends MasterScene{
         catch (Exception e){
             System.err.println("initialization error");
             System.exit(1);
-        };
+        }
         Group mainPane = new Group();
 
         //Initializing all UI Images
-        playerCounter[0]=-1;
-        playerCounter[1]=-1;
+        playerWinCounter[0]=-1;
+        playerWinCounter[1]=-1;
         resources = new Image[15];
         resources[3] = new Image("fightingFiles/baseFiles/images/count1.png");
         resources[4] = new Image("fightingFiles/baseFiles/images/count2.png");
@@ -197,413 +188,20 @@ public class RumGameScene extends MasterScene{
 
 
         //event handler for keyboard presses
+
         fightingGame.setOnKeyPressed(event -> {
+
             KeyCode keyCode = event.getCode();
-
-            /*
-             * These if statements check for specific input and record it. Input for movement and attacks
-             * are all processed here. Variables are in place to keep track of inputs and prevent input errors.
-             */
-
-            if (keyCode.equals(KeyCode.S)&& !characters[0].getKeyReady(0)) {
-                movement[0][0]=2;
-                if (inputTimer != 0) {
-                    inputs.add("s");
-                    inputsTime.add(inputTimer);
-                }
-                characters[0].setKeyReady(0, true);
-
-            }
-
-            if (keyCode.equals(KeyCode.D)&& !characters[0].getKeyReady(1)) {
-
-                if (movement[0][2] != 2) {
-
-                    movement[0][1]=2;
-                    if (inputTimer != 0) {
-                        inputs.add("d");
-                        inputsTime.add(inputTimer);
-                    }
-                    characters[0].setKeyReady(1, true);
-
-                }
-            }
-            if (keyCode.equals(KeyCode.A)&& !characters[0].getKeyReady(2)) {
-
-                if (movement[0][1] != 2) {
-
-                    movement[0][2]=2;
-                    if (inputTimer != 0) {
-                        inputs.add("a");
-                        inputsTime.add(inputTimer)
-                        ;}
-                    characters[0].setKeyReady(2, true);
-                }
-
-            }
-            if (keyCode.equals(KeyCode.W)&& !characters[0].getKeyReady(3) &&characters[0].getCentreY()>=downBorder) {
-
-                movement[0][3]=2;
-                if (inputTimer != 0) {
-                    inputs.add("w");
-                    inputsTime.add(inputTimer);
-                }
-                characters[0].setKeyReady(3, true);
-
-            }
-            if (keyCode.equals(KeyCode.Y)&& !characters[0].getKeyReady(4) && characters[0].getIsCrouching()) {
-
-                attacks[0][2]=true;
-                if (!attacks[0][attackIndex[0]]) {
-                    attackIndex[0] = 2;
-                }
-                characters[0].setKeyReady(4, true);
-
-            }
-            if (keyCode.equals(KeyCode.Y)&& !characters[0].getKeyReady(4) && characters[0].getCentreY()<downBorder) {
-
-                attacks[0][4]=true;
-                if (!attacks[0][attackIndex[0]]) {
-                    attackIndex[0] = 4;
-                }
-                characters[0].setKeyReady(4, true);
-
-            }
-            if (keyCode.equals(KeyCode.Y)&& !characters[0].getKeyReady(4) && characters[0].getCentreY()>=downBorder) {
-
-                attacks[0][0]=true;
-                if (!attacks[0][attackIndex[0]]) {
-                    attackIndex[0] = 0;
-                }
-                characters[0].setKeyReady(4, true);
-
-            }
-            if (keyCode.equals(KeyCode.U)&& !characters[0].getKeyReady(5) && characters[0].getIsCrouching()) {
-
-                attacks[0][3]=true;
-                if (!attacks[0][attackIndex[0]]) {
-                    attackIndex[0] = 3;
-                }
-                characters[0].setKeyReady(5, true);
-
-            }
-            if (keyCode.equals(KeyCode.U)&& !characters[0].getKeyReady(5) && characters[0].getCentreY()<downBorder) {
-
-                attacks[0][5]=true;
-                if (!attacks[0][attackIndex[0]]) {
-                    attackIndex[0] = 5;
-                }
-                characters[0].setKeyReady(5, true);
-
-            }
-            if (keyCode.equals(KeyCode.U)&& !characters[0].getKeyReady(5) && characters[0].getCentreY()>=downBorder) {
-
-                attacks[0][1]=true;
-                if (!attacks[0][attackIndex[0]]) {
-                    attackIndex[0] = 1;
-                }
-                characters[0].setKeyReady(5, true);
-
-            }
-            if (keyCode.equals(KeyCode.I)&& !characters[0].getKeyReady(6) && characters[0].getCentreY()>=downBorder && movement[0][2] == 2) {
-                characters[0].setXSpeed(0);
-
-                if (characters[0].getFacingRight()==1) {
-                    attacks[0][8]=true;
-                    if (!attacks[0][attackIndex[0]]) {
-                        attackIndex[0] = 8;
-                    }
-                }
-                else {
-                    attacks[0][9]=true;
-                    if (!attacks[0][attackIndex[0]]) {
-                        attackIndex[0] = 9;
-                    }
-                }
-
-                characters[0].setKeyReady(6, true);
-
-            }
-            if (keyCode.equals(KeyCode.I)&& !characters[0].getKeyReady(6) && characters[0].getCentreY()>=downBorder && movement[0][1] == 2) {
-                characters[0].setXSpeed(0);
-                if (characters[0].getFacingRight()==1) {
-                    attacks[0][9]=true;
-                    if (!attacks[0][attackIndex[0]]) {
-                        attackIndex[0] = 9;
-                    }
-                }
-                else {
-                    attacks[0][8]=true;
-                    if (!attacks[0][attackIndex[0]]) {
-                        attackIndex[0] = 8;
-                    }
-                }
-                characters[0].setKeyReady(6, true);
-
-
-            }
-            if (keyCode.equals(KeyCode.I)&& !characters[0].getKeyReady(6) && characters[0].getIsCrouching()) {
-
-                attacks[0][7]=true;
-                if (!attacks[0][attackIndex[0]]) {
-                    attackIndex[0] = 7;
-                }
-                characters[0].setKeyReady(6, true);
-
-            }
-            if (keyCode.equals(KeyCode.I)&& !characters[0].getKeyReady(6) && characters[0].getCentreY()<downBorder) {
-
-                attacks[0][10]=true;
-                if (!attacks[0][attackIndex[0]]) {
-                    attackIndex[0] = 10;
-                }
-                characters[0].setKeyReady(6, true);
-
-            }
-            if (keyCode.equals(KeyCode.I)&& !characters[0].getKeyReady(6) && characters[0].getCentreY()>=downBorder) {
-
-                attacks[0][6]=true;
-                if (!attacks[0][attackIndex[0]]) {
-                    attackIndex[0] = 6;
-                }
-                characters[0].setKeyReady(6, true);
-
-            }
-
-            if (keyCode.equals(KeyCode.DOWN)&& !characters[1].getKeyReady(0)) {
-
-
-                movement[1][0]=2;
-                if (inputTimer != 0) {
-                    inputs2.add("s");
-                    inputsTime2.add(inputTimer);
-                }
-                characters[1].setKeyReady(0, true);
-
-            }
-
-            if (keyCode.equals(KeyCode.RIGHT)&& !characters[1].getKeyReady(1)) {
-
-                if (movement[1][2] != 2) {
-
-                    movement[1][1]=2;
-                    if (inputTimer != 0) {
-                        inputs2.add("d");
-                        inputsTime2.add(inputTimer);
-                    }
-                    characters[1].setKeyReady(1, true);
-
-                }
-            }
-
-            if (keyCode.equals(KeyCode.LEFT)&& !characters[1].getKeyReady(2)) {
-
-                if (movement[1][1] != 2) {
-
-                    movement[1][2]=2;
-                    if (inputTimer != 0) {
-                        inputs2.add("a");
-                        inputsTime2.add(inputTimer);
-                    }
-                    characters[1].setKeyReady(2, true);
-                }
-
-            }
-
-            if (keyCode.equals(KeyCode.UP)&& !characters[1].getKeyReady(3) &&characters[1].getCentreY()>=downBorder) {
-
-
-
-                movement[1][3]=2;
-                if (inputTimer != 0) {
-                    inputs2.add("w");
-                    inputsTime2.add(inputTimer);
-                }
-                characters[1].setKeyReady(3, true);
-
-            }
-            if (keyCode.equals(KeyCode.COMMA)&& !characters[1].getKeyReady(4) && characters[1].getIsCrouching()) {
-
-                attacks[1][2]=true;
-                if (!attacks[1][attackIndex[1]]) {
-                    attackIndex[1] = 2;
-                }
-                characters[1].setKeyReady(4, true);
-
-            }
-            if (keyCode.equals(KeyCode.COMMA)&& !characters[1].getKeyReady(4) && characters[1].getCentreY()<downBorder) {
-
-                attacks[1][4]=true;
-                if (!attacks[1][attackIndex[1]]) {
-                    attackIndex[1] = 4;
-                }
-                characters[1].setKeyReady(4, true);
-
-            }
-            if (keyCode.equals(KeyCode.COMMA)&& !characters[1].getKeyReady(4) && characters[1].getCentreY()>=downBorder) {
-
-                attacks[1][0]=true;
-                if (!attacks[1][attackIndex[1]]) {
-                    attackIndex[1] = 0;
-                }
-                characters[1].setKeyReady(4, true);
-
-            }
-            if (keyCode.equals(KeyCode.PERIOD)&& !characters[1].getKeyReady(5) && characters[1].getIsCrouching()) {
-
-                attacks[1][3]=true;
-                if (!attacks[1][attackIndex[1]]) {
-                    attackIndex[1] = 3;
-                }
-                characters[1].setKeyReady(5, true);
-
-            }
-            if (keyCode.equals(KeyCode.PERIOD)&& !characters[1].getKeyReady(5) && characters[1].getCentreY()<downBorder) {
-
-                attacks[1][5]=true;
-                if (!attacks[1][attackIndex[1]]) {
-                    attackIndex[1] = 5;
-                }
-                characters[1].setKeyReady(5, true);
-
-            }
-            if (keyCode.equals(KeyCode.PERIOD)&& !characters[1].getKeyReady(5) && characters[1].getCentreY()>=downBorder) {
-
-                attacks[1][1]=true;
-                if (!attacks[1][attackIndex[1]]) {
-                    attackIndex[1] = 1;
-                }
-                characters[1].setKeyReady(5, true);
-
-            }
-            if (keyCode.equals(KeyCode.SLASH)&& !characters[1].getKeyReady(6) && characters[1].getIsCrouching()) {
-
-                attacks[1][7]=true;
-                if (!attacks[1][attackIndex[1]]) {
-                    attackIndex[1] = 7;
-                }
-                characters[1].setKeyReady(6, true);
-
-            }
-            if (keyCode.equals(KeyCode.SLASH)&& !characters[1].getKeyReady(6) && characters[1].getCentreY()<downBorder) {
-
-                attacks[1][10]=true;
-                if (!attacks[1][attackIndex[1]]) {
-                    attackIndex[1] = 10;
-                }
-                characters[1].setKeyReady(6, true);
-
-            }
-            if (keyCode.equals(KeyCode.SLASH)&& !characters[1].getKeyReady(6) && characters[1].getCentreY()>=downBorder && movement[1][1] == 2) {
-                characters[1].setXSpeed(0);
-
-                if (characters[1].getFacingRight()==-1) {
-
-                    attacks[1][8]=true;
-                    if (!attacks[1][attackIndex[1]]) {
-                        attackIndex[1] = 8;
-                    }
-                    characters[1].setKeyReady(6, true);
-                }
-                else {
-                    attacks[1][9]=true;
-                    if (!attacks[1][attackIndex[1]]) {
-                        attackIndex[1] = 9;
-                    }
-                    characters[1].setKeyReady(6, true);
-                }
-
-            }
-            if (keyCode.equals(KeyCode.SLASH)&& !characters[1].getKeyReady(6) && characters[1].getCentreY()>=downBorder&& movement[1][2] == 2) {
-                characters[1].setXSpeed(0);
-                if (characters[1].getFacingRight()==-1) {
-                    attacks[1][9]=true;
-                    if (!attacks[1][attackIndex[1]]) {
-                        attackIndex[1] = 9;
-                    }
-                    characters[1].setKeyReady(6, true);
-
-                }
-                else {
-                    attacks[1][8]=true;
-                    if (!attacks[1][attackIndex[1]]) {
-                        attackIndex[1] = 8;
-                    }
-                    characters[1].setKeyReady(6, true);
-                }
-
-            }
-            if (keyCode.equals(KeyCode.SLASH)&& !characters[1].getKeyReady(6) && characters[1].getCentreY()>=downBorder) {
-
-                attacks[1][6]=true;
-                if (!attacks[1][attackIndex[1]]) {
-                    attackIndex[1] = 6;
-                }
-                characters[1].setKeyReady(6, true);
-
-
+            for (int i = 0; i<2; i++) {
+                characters[i].getInputController().keyPressed(keyCode, inputTimer);
             }
         });
         //event handler for keyboard releases
         fightingGame.setOnKeyReleased(event -> {
             KeyCode keyCode = event.getCode();
-
-            /*
-             * These if statements also handle movement and prevent input errors
-             */
-
-            if (keyCode.equals(KeyCode.S)) {
-                movement[0][0]=1;
-                characters[0].setKeyReady(0, false);
+            for (int i = 0; i<2; i++) {
+                characters[i].getInputController().keyRelease(keyCode);
             }
-            if (keyCode.equals(KeyCode.D)) {
-                movement[0][1]=1;
-                characters[0].setKeyReady(1, false);
-            }
-            if (keyCode.equals(KeyCode.A)) {
-                movement[0][2]=1;
-                characters[0].setKeyReady(2, false);
-            }
-            if (keyCode.equals(KeyCode.W)) {
-                characters[0].setKeyReady(3, false);
-            }
-            if (keyCode.equals(KeyCode.Y)) {
-                characters[0].setKeyReady(4, false);
-            }
-            if (keyCode.equals(KeyCode.U)) {
-                characters[0].setKeyReady(5, false);
-            }
-            if (keyCode.equals(KeyCode.I)) {
-                characters[0].setKeyReady(6, false);
-            }
-
-
-            if (keyCode.equals(KeyCode.DOWN)) {
-                movement[1][0]=1;
-                characters[1].setKeyReady(0, false);
-            }
-            if (keyCode.equals(KeyCode.RIGHT)) {
-                movement[1][1]=1;
-                characters[1].setKeyReady(1, false);
-            }
-            if (keyCode.equals(KeyCode.LEFT)) {
-                movement[1][2]=1;
-                characters[1].setKeyReady(2, false);
-            }
-            if (keyCode.equals(KeyCode.UP)) {
-                movement[1][3]=1;
-                characters[1].setKeyReady(3, false);
-            }
-            if (keyCode.equals(KeyCode.COMMA)) {
-                characters[1].setKeyReady(4, false);
-            }
-            if (keyCode.equals(KeyCode.PERIOD)) {
-                characters[1].setKeyReady(5, false);
-            }
-            if (keyCode.equals(KeyCode.SLASH)) {
-                characters[1].setKeyReady(6, false);
-            }
-
 
         });
         /*
@@ -614,12 +212,9 @@ public class RumGameScene extends MasterScene{
             public void run() {
                 backgroundMusic.play();
 
-                backgroundMusic.setOnEndOfMedia(new Runnable() {
-                    @Override
-                    public void run() {
-                        backgroundMusic.stop();
-                        backgroundMusic.play();
-                    }
+                backgroundMusic.setOnEndOfMedia(() -> {
+                    backgroundMusic.stop();
+                    backgroundMusic.play();
                 });
             }
         },0);
@@ -638,24 +233,24 @@ public class RumGameScene extends MasterScene{
 
                         //adds points to first and/or second player, based on whoever won the round
                         if (healthBar[1].getWidth()<=0&&healthBar[0].getWidth()<=0) {
-                            playerCounter[1]++;
-                            playerCounter[0]++;
+                            playerWinCounter[1]++;
+                            playerWinCounter[0]++;
                         }
                         else if (healthBar[1].getWidth()<=0) {
-                            playerCounter[0]++;
+                            playerWinCounter[0]++;
                         }
                         else {
-                            playerCounter[1]++;
+                            playerWinCounter[1]++;
 
                         }
 
 
-                        if (playerCounter[1]!=0||playerCounter[0]!=0) {
+                        if (playerWinCounter[1]!=0||playerWinCounter[0]!=0) {
                             //if one player has points, show an image and play a sound
                             resourcePane[0].setImage(resources[7]);
                             narrator[6].play();
                         }
-                        if (playerCounter[1]==0&&playerCounter[0]==0) {
+                        if (playerWinCounter[1]==0&&playerWinCounter[0]==0) {
                             //if this is during the initialization of the game, skip to player animations
                             timerInterval=960;
                         }
@@ -668,7 +263,7 @@ public class RumGameScene extends MasterScene{
                     }
                     else {
                         timerInterval+=20;
-                        if (timerInterval%80==0&&timerInterval>1000&&(playerCounter[0]==0&&playerCounter[1]==0)) {
+                        if (timerInterval%80==0&&timerInterval>1000&&(playerWinCounter[0]==0&&playerWinCounter[1]==0)) {
                             //if this is during initialization of the game, show beginning animations
                             for (int q = 0; q<2; q++) {
 
@@ -685,12 +280,12 @@ public class RumGameScene extends MasterScene{
                                 }
                             }
                         }
-                        if (timerInterval==1000&&(playerCounter[0]!=2&&playerCounter[1]!=2)) {
+                        if (timerInterval==1000&&(playerWinCounter[0]!=2&&playerWinCounter[1]!=2)) {
                             //show image and play a sound
-                            resourcePane[0].setImage(resources[playerCounter[0]+playerCounter[1]]);
-                            narrator[playerCounter[0]+playerCounter[1]].play();
+                            resourcePane[0].setImage(resources[playerWinCounter[0]+playerWinCounter[1]]);
+                            narrator[playerWinCounter[0]+playerWinCounter[1]].play();
 
-                            //reseting characters after round end
+                            //resetting characters after round end
                             int e = 1;
                             for (int character = 0; character<2; character++) {
                                 if (character==1) {
@@ -718,17 +313,18 @@ public class RumGameScene extends MasterScene{
                                 characters[character].setHurtBoxCounter(0);
                                 characters[character].setHitCharacter(false);
                                 characters[character].setState(0);
-                                hitStun[character]=0;
+                                characters[character].setHitstun(0);
+                                //hitStun[character]=0;
                             }
 
                         }
                         else if (timerInterval ==2500) {
 
-                            if (playerCounter[1]==2||playerCounter[0]==2) {
+                            if (playerWinCounter[1]==2||playerWinCounter[0]==2) {
                                 //play sound and display image if a player won
                                 resourcePane[0].setFitHeight(200*heightAdjust);
                                 resourcePane[0].setFitWidth(600*widthAdjust);
-                                if (playerCounter[1]==2) {
+                                if (playerWinCounter[1]==2) {
                                     resourcePane[0].setImage(resources[10]);
                                     narrator[9].play();
                                 }
@@ -743,19 +339,19 @@ public class RumGameScene extends MasterScene{
                                 narrator[3].play();
                             }
                         }
-                        else if (timerInterval ==3500&&(playerCounter[0]!=2&&playerCounter[1]!=2)) {
+                        else if (timerInterval ==3500&&(playerWinCounter[0]!=2&&playerWinCounter[1]!=2)) {
                             //play normal countdown sound and image
                             resourcePane[0].setImage(resources[4]);
                             narrator[4].play();
 
                         }
-                        else if (timerInterval==4500&&(playerCounter[0]!=2&&playerCounter[1]!=2)) {
+                        else if (timerInterval==4500&&(playerWinCounter[0]!=2&&playerWinCounter[1]!=2)) {
                             //play normal countdown sound and image
                             resourcePane[0].setImage(resources[3]);
                             narrator[5].play();
                         }
                         else if (timerInterval==5500) {
-                            if (playerCounter[1]==2||playerCounter[0]==2) {
+                            if (playerWinCounter[1]==2||playerWinCounter[0]==2) {
 
                                 //if player won, return to character select screen, suspend all timers
                                 endGame=true;
@@ -775,12 +371,12 @@ public class RumGameScene extends MasterScene{
                                     for (int count = 0; count<7;count++) {
                                         characters[character].setKeyReady(count, false);
                                     }
+                                    characters[character].resetAttackInt();
+                                    characters[character].resetMovement();
+                                    characters[character].resetFrameCounters();
                                 }
-                                frameCounters = new int[2][7];
-                                attacks = new boolean[2][11];
-                                movement = new byte[2][4];
 
-                                //display a image and sound, allow game to start
+                                //display an image and sound, allow game to start
                                 resourcePane[0].setImage(resources[6]);
                                 logoVanishCounter+=20;
                                 timerInterval=0;
@@ -814,17 +410,17 @@ public class RumGameScene extends MasterScene{
                     }
 
                     facingDirection();
-                    attackingRevamped(0, attacks[0], attackIndex[0]);
-                    attackingRevamped(1, attacks[1], attackIndex[1]);
+                    attackingRevamped(characters[0]);
+                    attackingRevamped(characters[1]);
                     damageCalculation(healthBar);
 
                     //hitstun calculations (how long a player cannot do any actions due to being hit)
                     for (int i = 0; i < 2; i++) {
-                        if (hitStun[i] > 0) {
+                        if (characters[i].getHitstun() > 0) {
                             characters[i].setIsActionable(false);
                             characters[i].setState(2);
-                            hitStun[i]--;
-                            if (hitStun[i]==0) {
+                            characters[i].setHitstun(characters[i].getHitstun() - 1 );
+                            if (characters[i].getHitstun()==0) {
                                 characters[i].setIsActionable(true);
                                 characters[i].setIsBlocking(1, false);
                                 characters[i].setIsBlocking(0, false);
@@ -833,24 +429,22 @@ public class RumGameScene extends MasterScene{
                         }
                     }
 
-                    movement(0,movement[0]);
-                    movement(1,movement[1]);
+                    movement(characters[0]);
+                    movement(characters[1]);
 
 
                     //holds most recent inputs, decays over time
                     inputTimer++;
-                    if (inputsTime.contains(inputTimer))
-                    {
-                        int index = inputsTime.indexOf(inputTimer);
-                        inputsTime.remove(index);
-                        inputs.remove(index);
+
+                    for (int i = 0; i<2; i++){
+                        if (characters[i].getInputTime().contains(inputTimer)){
+                            int index = characters[i].getInputTime().indexOf(inputTimer);
+                            characters[i].getInputTime().remove(index);
+                            characters[i].getInputs().remove(index);
+                        }
+
                     }
-                    if (inputsTime2.contains(inputTimer))
-                    {
-                        int index = inputsTime2.indexOf(inputTimer);
-                        inputsTime2.remove(index);
-                        inputs2.remove(index);
-                    }
+
                     if (inputTimer == 20)
                     {
                         inputTimer = 0;
@@ -877,10 +471,10 @@ public class RumGameScene extends MasterScene{
         return fightingGame;
     }
     /**
-     * This function looks at each hitbox that is active and compares them with every active hurtbox.
-     * If a hitbox overlaps a hurtbox and the opponent isn't blocking, the opponent is hurt and is
+     * This function looks at each hit box that is active and compares them with every active hurt box.
+     * If a hit box overlaps a hurt box and the opponent isn't blocking, the opponent is hurt and is
      * put into hitstun(a state in which they cannot perform any actions). Then calculations are done
-     * for how much knockback the move deals to the opponent and the user, and finally damage is taken
+     * for how much knock-back the move deals to the opponent and the user, and finally damage is taken
      * off of the victim's health. If the opponent is blocking, they will go through the same calculations
      * but with lower hitstun and damage.
      * @param healthBar The visual representation of a player's health. Will go down if player is attacked
@@ -895,7 +489,7 @@ public class RumGameScene extends MasterScene{
             }
             ArrayList<Rectangle> hurtBoxes= characters[dependent].getHurtBoxes();
 
-            //checks if player's hitboxes collides with hurtboxes of enemy
+            //checks if player's hit boxes collides with hurt boxes of enemy
             for (Ellipse hitBox : hitBoxes) {
                 for (Rectangle hurtBox : hurtBoxes) {
                     if (hitBox.intersects(hurtBox.getBoundsInLocal())) {
@@ -904,7 +498,7 @@ public class RumGameScene extends MasterScene{
                 }
             }
             //if statement for when enemy successfully blocks attack
-            if (playerHit[i] && !characters[i].getHitCharacter() && blocking(dependent)[characters[i].getAttackCurrent().getBlockingType()]) {
+            if (playerHit[i] && characters[i].getNotHitCharacter() && blocking(characters[dependent])[characters[i].getAttackCurrent().getBlockingType()]) {
 
 
                 if (characters[dependent].getIsCrouching()) {
@@ -915,8 +509,8 @@ public class RumGameScene extends MasterScene{
                 }
                 characters[i].setHitCharacter(true);
 
-                //damage, stun, and knockback calculations
-                hitStun[dependent] = characters[i].getAttackCurrent().getShieldStun();
+                //damage, stun, and knock-back calculations
+                characters[dependent].setHitstun(characters[i].getAttackCurrent().getShieldStun());
                 characters[dependent].setXSpeed(0);
                 characters[dependent].changeXSpeed(characters[i].getAttackCurrent().getKnockBackX() * characters[i].getFacingRight() / 6);
                 characters[dependent].setYSpeed(0);
@@ -925,7 +519,7 @@ public class RumGameScene extends MasterScene{
                 healthBar[dependent].setWidth(healthBar[dependent].getWidth()-characters[i].getAttackCurrent().getShieldDamage());
             }
             //if statement for when enemy fails to block attack
-            else if (playerHit[i] && !characters[i].getHitCharacter()) {
+            else if (playerHit[i] && characters[i].getNotHitCharacter()) {
 
                 if (characters[i].getAttackCurrent().getMultihit() == 0) {
                     characters[i].setHitCharacter(true);
@@ -937,9 +531,9 @@ public class RumGameScene extends MasterScene{
                 }
                 //play sound effect
                 hitSounds[(int) (Math.random()*9)].play();
-                hitStun[dependent] = characters[i].getAttackCurrent().getHitStun();
+                characters[dependent].setHitstun(characters[i].getAttackCurrent().getHitStun());
 
-                //damage, stun, and knockback calculations
+                //damage, stun, and knock-back calculations
                 characters[dependent].setXSpeed(0);
                 characters[dependent].changeXSpeed(characters[i].getAttackCurrent().getKnockBackX()* characters[i].getFacingRight());
                 characters[dependent].setYSpeed(0);
@@ -963,15 +557,14 @@ public class RumGameScene extends MasterScene{
      * @param character The character that is being checked for dashes
      * @return Whether a forward dash is inputted
      */
-    public static boolean checkForwardDash(int character)
+    public static boolean checkForwardDash(FightingCharacter character)
     {
 
+        //checks forward dash input for players
+        if (character.getState()==0) {
+            String input = character.getInputs().toString();
 
-        //checks forward dash input for player1
-        if (character == 0&&characters[character].getState()==0) {
-            String input = inputs.toString();
-
-            if (characters[0].getFacingRight() == 1) {
+            if (character.getFacingRight() == 1) {
                 return input.matches("(.*d, d])");
             }
 
@@ -979,132 +572,108 @@ public class RumGameScene extends MasterScene{
             {
                 return input.matches("(.*a, a])");
             }
-        }
-        //checks forward dash input for player2
-        else if (character==1&&characters[character].getState()==0){
-            String input = inputs2.toString();
-
-            if (characters[0].getFacingRight() == -1) {
-                return input.matches("(.*d, d])");
-
-
-            }
-            else
-            {
-                return input.matches("(.*a, a])");
-            }
-
         }
         return false;
     }
     /**
      * This function checks to see whether an attack is inputted and if it is, the
-     * hitboxes and hurtboxes of the character is changed to be that of the attack's.
+     * hit boxes and hurt boxes of the character is changed to be that of the attack's.
      * The character's speed is also changed by the attack's speedChange value. While
      * the attack hasn't reached its end, the next frame of the attack will play and
      * the character will remain in an attacking state. If the attack has reached its
-     * end, the character's hitboxes and hurtboxes will return to default and the
+     * end, the character's hit boxes and hurt boxes will return to default and the
      * character will be put back in an idle state.
      * @param character The character whose attacks will be checked
-     * @param attacks A boolean of the character's full set of attacks and which ones are pressed
-     * @param attack The attack that is currently being pressed
      */
-    public static void attackingRevamped(int character, boolean [] attacks, int attack) {
+    public static void attackingRevamped(FightingCharacter character) {
+        if (character.getAttackInt() != -1 && character.getHitstun()==0) {
+            character.setAttackCurrent(character.getAttackInt());
 
-        if (attacks[attack] && hitStun[character]==0) {
-
-
-            characters[character].setAttackCurrent(attack);
-
-            if (characters[character].getPlayerTimer()==0) {
-                //removing base hitbox, playing sfx
-                characters[character].removeHurtBox(1);
-                characters[character].getAttackCurrent().getSfx().play();
+            if (character.getPlayerTimer()==0) {
+                //removing base hit box, playing sfx
+                character.removeHurtBox(1);
+                character.getAttackCurrent().getSfx().play();
             }
 
-            //removing the character's hitboxes and hurtboxes
-            characters[character].removeHitBox(characters[character].getHitBoxCounter());
-            characters[character].setHitBoxCounter(0);
-            characters[character].removeHurtBox(characters[character].getHurtBoxCounter());
-            characters[character].setHurtBoxCounter(0);
-            int playerTimer = characters[character].getPlayerTimer();
-            int xPosition = characters[character].getCentreX();
-            int yPosition = characters[character].getCentreY();
+            //removing the character's hit boxes and hurt boxes
+            character.removeHitBox(character.getHitBoxCounter());
+            character.setHitBoxCounter(0);
+            character.removeHurtBox(character.getHurtBoxCounter());
+            character.setHurtBoxCounter(0);
+            int playerTimer = character.getPlayerTimer();
+            int xPosition = character.getCentreX();
+            int yPosition = character.getCentreY();
 
             //setting the character's state
-            characters[character].setIsActionable(false);
-            characters[character].setState(1);
+            character.setIsActionable(false);
+            character.setState(1);
 
-            if (playerTimer<characters[character].getAttack(attack).getFrameTime()) {
+            if (playerTimer<character.getAttackCurrent().getFrameTime()) {
 
                 //horizontal and vertical speed changes
-                characters[character].changeXSpeed(characters[character].getAttack(attack).getSpeedChangeX(playerTimer)*characters[character].getFacingRight());
-                characters[character].changeYSpeed(characters[character].getAttack(attack).getSpeedChangeY(playerTimer));
-                tempHold = characters[character].getAttack(attack).getHitBoxes(playerTimer);
+                character.changeXSpeed(character.getAttackCurrent().getSpeedChangeX(playerTimer)*character.getFacingRight());
+                character.changeYSpeed(character.getAttackCurrent().getSpeedChangeY(playerTimer));
+                tempHold = character.getAttackCurrent().getHitBoxes(playerTimer);
 
-                //adding new hitboxes
+                //adding new hit boxes
                 for (double[] doubles : tempHold) {
-                    Ellipse temp = new Ellipse(doubles[0] * characters[character].getFacingRight() + xPosition, doubles[1] + yPosition, doubles[2], doubles[2]);
+                    Ellipse temp = new Ellipse(doubles[0] * character.getFacingRight() + xPosition, doubles[1] + yPosition, doubles[2], doubles[2]);
 
-                    characters[character].addHitBox(temp);
-                    characters[character].addHitBoxCounter(1);
+                    character.addHitBox(temp);
+                    character.addHitBoxCounter(1);
 
                 }
-                tempHold = characters[character].getAttack(attack).getHurtBoxes(playerTimer);
+                tempHold = character.getAttackCurrent().getHurtBoxes(playerTimer);
 
-                //adding new hurtboxes
+                //adding new hurt boxes
                 for (double[] doubles : tempHold) {
                     Rectangle temp;
-                    if (characters[character].getFacingRight() == 1) {
+                    if (character.getFacingRight() == 1) {
                         temp = new Rectangle(doubles[0] + xPosition, doubles[1] + yPosition, doubles[2], doubles[3]);
                     } else {
                         temp = new Rectangle(-(doubles[0]) + xPosition - doubles[2], doubles[1] + yPosition, doubles[2], doubles[3]);
                     }
-                    characters[character].addHurtBox(temp);
-                    characters[character].addHurtBoxCounter(1);
+                    character.addHurtBox(temp);
+                    character.addHurtBoxCounter(1);
                 }
 
                 //setting associated image with attack frame
-                characters[character].setImageDisplay(characters[character].getAttack(attack).getImages(playerTimer));
+                character.setImageDisplay(character.getAttackCurrent().getImages(playerTimer));
 
-                characters[character].addPlayerTimer(1);
+                character.addPlayerTimer(1);
             }
             else {
-                //character is no longer in attacking state, return hitboxes and hurtboxes to normal
+                //character is no longer in attacking state, return hit boxes and hurt boxes to normal
 
-                characters[character].addHurtBox(characters[character].getBaseHurtBox());
-                characters[character].getHurtBox(0).setX(characters[character].getX());
-                characters[character].getHurtBox(0).setY(characters[character].getY());
-                characters[character].setImageDisplay(characters[character].getImageCharacter());
-                attacks[attack] = false;
-                characters[character].setIsActionable(true);
-                characters[character].setPlayerTimer(0);
-                characters[character].setHurtBoxCounter(0);
-                characters[character].setHitCharacter(false);
-                characters[character].setState(0);
+                setCharacterToDefaultState(character);
 
             }
         }
-        else if (attacks[attack] && hitStun[character]>0) {
-            //character is no longer in attacking state due to being hit, return hitboxes and hurtboxes to normal
-            characters[character].setAttackCurrent(attack);
-            characters[character].removeHitBox(characters[character].getHitBoxCounter());
-            characters[character].setHitBoxCounter(0);
-            characters[character].removeHurtBox(characters[character].getTotalHurtBoxCounter());
-            characters[character].setHurtBoxCounter(0);
-            characters[character].addHurtBox(characters[character].getBaseHurtBox());
-            characters[character].getHurtBox(0).setX(characters[character].getX());
-            characters[character].getHurtBox(0).setY(characters[character].getY());
-            characters[character].setImageDisplay(characters[character].getImageCharacter());
-            attacks[attack] = false;
-            characters[character].setIsActionable(true);
-            characters[character].setPlayerTimer(0);
-            characters[character].setHurtBoxCounter(0);
-            characters[character].setHitCharacter(false);
-            characters[character].setState(0);
+        else if (character.getAttackInt() != -1 && character.getHitstun()>0) {
+            //character is no longer in attacking state due to being hit, return hit boxes and hurt boxes to normal
+            character.setAttackCurrent(character.getAttackInt());
+            character.removeHitBox(character.getHitBoxCounter());
+            character.setHitBoxCounter(0);
+            character.removeHurtBox(character.getTotalHurtBoxCounter());
+            character.setHurtBoxCounter(0);
+            setCharacterToDefaultState(character);
         }
 
     }
+
+    private static void setCharacterToDefaultState(FightingCharacter character) {
+        character.addHurtBox(character.getBaseHurtBox());
+        character.getHurtBox(0).setX(character.getX());
+        character.getHurtBox(0).setY(character.getY());
+        character.setImageDisplay(character.getImageCharacter());
+        character.setIsActionable(true);
+        character.setPlayerTimer(0);
+        character.setHurtBoxCounter(0);
+        character.setHitCharacter(false);
+        character.setState(0);
+        character.resetAttackInt();
+    }
+
     /**
      * This function first checks whether the character is able to move. If they are
      * able to, it checks which movement buttons they are pressing and moves them
@@ -1112,79 +681,78 @@ public class RumGameScene extends MasterScene{
      * direction they're going in. At the end regardless of whether the character is
      * able to move, the collision function is called with the character being checked.
      * @param character The character whose movement inputs are being checked.
-     * @param movement A byte array of all the player's movement inputs (movement[0] = down, [1] = right, [2] = left, [3] = up)
+//     * @param movement A byte array of all the player's movement inputs (movement[0] = down, [1] = right, [2] = left, [3] = up)
      * (movement[_] = 2 means the button is being pressed, movement[_] = 1 means the button is being released, and movement[_]
      *  = 0 means the button isn't being pressed.
      */
-    public static void movement(int character, byte [] movement) {
+    public static void movement(FightingCharacter character) {
 
         //character has to be in normal states to move
-        if (characters[character].getIsActionable() &&(characters[character].getState()==0||characters[character].getState()==5||characters[character].getState()==6)&&characters[character].getCentreY()>=downBorder) {
+        if (character.getIsActionable() &&(character.getState()==0||character.getState()==5||character.getState()==6)&&character.getCentreY()>=downBorder) {
 
-            if (movement[1] == 2 && !characters[character].getIsCrouching()) {
+            if (character.getMovement()[1] == 2 && !character.getIsCrouching()) {
                 //allows character to move, switches state depending on direction
-                characters[character].setXSpeed(characters[character].getWalkSpeed());
-                if (characters[character].getFacingRight() == 1) {
-                    characters[character].setState(5);
+                character.setXSpeed(character.getWalkSpeed());
+                if (character.getFacingRight() == 1) {
+                    character.setState(5);
                 }
                 else {
-                    characters[character].setState(6);
+                    character.setState(6);
                 }
-
             }
-            else if(movement[1]==1) {
+            else if(character.getMovement()[1]==1) {
                 //stopping character when key is released
-                characters[character].setXSpeed(0);
-                characters[character].setState(0);
+                character.setXSpeed(0);
+                character.setState(0);
 
-                movement[1]=0;
+                character.getMovement()[1]=0;
             }
 
             //allowing character to dash forward
-            if (checkForwardDash(character) && !characters[character].getJump()) {
-                characters[character].changeXSpeed(3 * characters[character].getFacingRight());
+            if (checkForwardDash(character) && character.getNotJump()) {
+                character.changeXSpeed(3 * character.getFacingRight());
             }
 
 
-            if (movement[2]==2 && !characters[character].getIsCrouching()){
+            if (character.getMovement()[2]==2 && !character.getIsCrouching()){
                 //allows character to move, switches state depending on direction
-                characters[character].setXSpeed(-characters[character].getWalkSpeed());
-                if (characters[character].getFacingRight() == 1) {
-                    characters[character].setState(6);
+                character.setXSpeed(-character.getWalkSpeed());
+                if (character.getFacingRight() == 1) {
+                    character.setState(6);
                 }
                 else {
-                    characters[character].setState(5);
+                    character.setState(5);
                 }
 
             }
-            else if (movement[2]==1){
+            else if (character.getMovement()[2]==1){
                 //stopping character when key is released
-                characters[character].setXSpeed(0);
-                characters[character].setState(0);
-                movement[2]=0;
+                character.setXSpeed(0);
+                character.setState(0);
+                character.getMovement()[2]=0;
             }
 
-            if (movement[0] == 2) {
+            if (character.getMovement()[0] == 2) {
                 //crouching state
-                characters[character].setIsCrouching(true);
+                character.setIsCrouching(true);
 
-                characters[character].setXSpeed(0);
-                movement[0]=-1;
+                character.setXSpeed(0);
+                character.getMovement()[0]=-1;
 
             }
-            else if(movement[0]==1) {
+            else if(character.getMovement()[0]==1) {
                 //crouch released
-                characters[character].setIsCrouching(false);
-                characters[character].setState(0);
-                movement[0]=0;
+                character.setIsCrouching(false);
+                character.setState(0);
+                character.getMovement()[0]=0;
             }
 
-            if (movement[3]==2){
-                //jump state
-                characters[character].setJump(true);
-                frameCounters[character][4] = 0;
-                characters[character].changeYSpeed(-28);
-                movement[3]=0;
+            if (character.getMovement()[3]==2){
+                //setting character to jump state
+                character.setJump(true);
+                character.getFrameCounters()[4] = 0;
+                character.changeYSpeed(-28);
+                character.getMovement()[3]=0;
             }
 
 
@@ -1233,21 +801,21 @@ public class RumGameScene extends MasterScene{
      * @return A boolean array which has all the heights at which the character is blocking
      * (isBlocking[0] = blocking low, [1] = blocking mid, [2] = blocking high)
      */
-    public static boolean[] blocking(int character) {
+    public static boolean[] blocking(FightingCharacter character) {
         boolean[] isBlocking = new boolean[3];
 
-        if (characters[character].getIsActionable() && !characters[character].getJump()) {
+        if (character.getIsActionable() && character.getNotJump()) {
 
             /*
              * checks which direction player is moving and what direction the player is facing,
              * determining whether player is blocking. Also checks if the player is blocking low or high.
              */
-            if (characters[character].getFacingRight() == 1) {
+            if (character.getFacingRight() == 1) {
 
-                if (movement[character][2] == 2) {
+                if (character.getMovement()[2] == 2) {
                     isBlocking[1] = true;
 
-                    if (movement[character][0] == -1) {
+                    if (character.getMovement()[0] == -1) {
                         isBlocking[0] = true;
                     }
                     else {
@@ -1256,10 +824,10 @@ public class RumGameScene extends MasterScene{
                 }
             }
             else {
-                if (movement[character][1] == 2) {
+                if (character.getMovement()[1] == 2) {
                     isBlocking[1] = true;
 
-                    if (movement[character][0] == -1) {
+                    if (character.getMovement()[0] == -1) {
                         isBlocking[0] = true;
                     }
                     else {
@@ -1268,8 +836,6 @@ public class RumGameScene extends MasterScene{
                 }
             }
         }
-
-
         return isBlocking;
     }
 
@@ -1278,34 +844,33 @@ public class RumGameScene extends MasterScene{
      * This method updates the character's location after being called.
      * @param independent - character being evaluated
      */
-    public static void collision(int independent) {
+    public static void collision(FightingCharacter independent) {
 
-        int dependent;
-        if (independent ==0) {
-            dependent=1;
+        FightingCharacter dependent;
+        if (independent.equals(characters[0])) {
+            dependent=characters[1];
         }
         else {
-            dependent=0;
+            dependent=characters[0];
         }
 
         //determining future position of character with current speeds
-        double currentXDistance = Math.abs(characters[dependent].getCentreX()-characters[independent].getCentreX())-characters[dependent].getWidth()/2-characters[independent].getWidth()/2;
-        double currentYDistance = Math.abs(characters[dependent].getCentreY()-characters[independent].getCentreY())-characters[dependent].getHeight()/2-characters[independent].getHeight()/2;
-        double futureXPosition = characters[independent].getCentreX()+characters[independent].getXSpeed();
-        double futureYPosition = characters[independent].getCentreY()+characters[independent].getYSpeed();
-        double xDistance = Math.abs(characters[dependent].getCentreX()-futureXPosition)-characters[dependent].getWidth()/2-characters[independent].getWidth()/2;
-        double yDistance = Math.abs(characters[dependent].getCentreY()-futureYPosition)-characters[dependent].getHeight()/2-characters[independent].getHeight()/2;
+        double currentXDistance = Math.abs(dependent.getCentreX()-independent.getCentreX())-dependent.getWidth()/2-independent.getWidth()/2;
+        double currentYDistance = Math.abs(dependent.getCentreY()-independent.getCentreY())-dependent.getHeight()/2-independent.getHeight()/2;
+        double futureXPosition = independent.getCentreX()+independent.getXSpeed();
+        double futureYPosition = independent.getCentreY()+independent.getYSpeed();
+        double xDistance = Math.abs(dependent.getCentreX()-futureXPosition)-dependent.getWidth()/2-independent.getWidth()/2;
+        double yDistance = Math.abs(dependent.getCentreY()-futureYPosition)-dependent.getHeight()/2-independent.getHeight()/2;
 
         //pushing characters apart when overlapping
-        if (characters[independent].getBaseHurtBox().intersects(characters[dependent].getBaseHurtBox().getBoundsInLocal())&&(characters[independent].getState()!=1&&characters[dependent].getState()!=1)) {
-            if (characters[independent].getX()>=characters[dependent].getX()) {
-                characters[independent].setXSpeed(10);
+        if (independent.getBaseHurtBox().intersects(dependent.getBaseHurtBox().getBoundsInLocal())&&(independent.getState()!=1&&dependent.getState()!=1)) {
+            if (independent.getX()>=dependent.getX()) {
+                independent.setXSpeed(10);
             }
             else {
-                characters[independent].setXSpeed(-10);
+                independent.setXSpeed(-10);
             }
-            if (characters[independent].getX()==characters[dependent].getX()) {
-
+            if (independent.getX()==dependent.getX()) {
                 if (characters[0].getX()<rightBorder) {
                     characters[0].setX(characters[0].getX()-1);
                 }
@@ -1313,7 +878,7 @@ public class RumGameScene extends MasterScene{
             }
 
             //fixes specific interaction with borders of screen
-            if (characters[independent].getX()==characters[dependent].getX()&&characters[0].getX()<rightBorder) {
+            if (independent.getX()==dependent.getX()&&characters[0].getX()<rightBorder) {
                 characters[0].setX(characters[0].getX()-1);
             }
 
@@ -1321,28 +886,28 @@ public class RumGameScene extends MasterScene{
 
         //allows for smooth movement when walking together
         if (xDistance<0&&yDistance<0&&(currentXDistance>0||currentYDistance>0)) {
-            characters[independent].setXSpeed(0);
+            independent.setXSpeed(0);
         }
 
         //calculates new future position
-        futureXPosition = characters[independent].getCentreX()+characters[independent].getXSpeed();
-        futureYPosition = characters[independent].getCentreY()+characters[independent].getYSpeed();
+        futureXPosition = independent.getCentreX()+independent.getXSpeed();
+        futureYPosition = independent.getCentreY()+independent.getYSpeed();
 
         //changes speed if future position exceeds borders
         if (futureXPosition>rightBorder) {
-            characters[independent].changeXSpeed(-(futureXPosition-rightBorder));
+            independent.changeXSpeed(-(futureXPosition-rightBorder));
         }
         else if (futureXPosition<leftBorder) {
-            characters[independent].changeXSpeed(-(futureXPosition-leftBorder));
+            independent.changeXSpeed(-(futureXPosition-leftBorder));
         }
         if (futureYPosition>downBorder) {
-            characters[independent].changeYSpeed(-(futureYPosition-downBorder));
+            independent.changeYSpeed(-(futureYPosition-downBorder));
         }
         if (futureYPosition<0) {
-            characters[independent].changeYSpeed(-futureYPosition);
+            independent.changeYSpeed(-futureYPosition);
         }
 
-        characters[independent].update(1);
+        independent.update(1);
     }
 
 
@@ -1377,22 +942,22 @@ public class RumGameScene extends MasterScene{
             //various states cause various animation
             if (characters[i].getState() == 0 && characters[i].getIsActionable()) {
                 frameCounterIndex[i] = 0;
-                characters[i].setImageDisplay(characters[i].getIdleAnimation(frameCounters[i][0]/5));
+                characters[i].setImageDisplay(characters[i].getIdleAnimation(characters[i].getFrameCounters()[0]/5));
             }
             if (characters[i].getState() == 5  && characters[i].getIsActionable()) {
                 frameCounterIndex[i] = 5;
-                characters[i].setImageDisplay(characters[i].getWalkAnimation(frameCounters[i][5]/4));
+                characters[i].setImageDisplay(characters[i].getWalkAnimation(characters[i].getFrameCounters()[5]/4));
             }
             if (characters[i].getState() == 6  && characters[i].getIsActionable()) {
                 frameCounterIndex[i] = 6;
-                characters[i].setImageDisplay(characters[i].getBackWalkAnimation(frameCounters[i][6]/4));
+                characters[i].setImageDisplay(characters[i].getBackWalkAnimation(characters[i].getFrameCounters()[6]/4));
             }
             if (characters[i].getIsCrouching() && characters[i].getIsActionable()) {
                 characters[i].setImageDisplay(characters[i].getCrouch());
             }
             if (characters[i].getCentreY()<downBorder && characters[i].getIsActionable()) {
                 frameCounterIndex[i] = 4;
-                characters[i].setImageDisplay(characters[i].getJumpAnimation(frameCounters[i][4] / 6));
+                characters[i].setImageDisplay(characters[i].getJumpAnimation(characters[i].getFrameCounters()[4] / 6));
             }
             if (characters[i].getState() == 2) {
                 characters[i].setImageDisplay(characters[i].getHurt());
@@ -1403,9 +968,9 @@ public class RumGameScene extends MasterScene{
             if (characters[i].getIsBlocking(0)) {
                 characters[i].setImageDisplay(characters[i].getLowBlock());
             }
-            frameCounters[i][frameCounterIndex[i]]++;
-            if (frameCounters[i][frameCounterIndex[i]] >= frameTotals[i][frameCounterIndex[i]]) {
-                frameCounters[i][frameCounterIndex[i]] = 0;
+            characters[i].getFrameCounters()[frameCounterIndex[i]]++;
+            if (characters[i].getFrameCounters()[frameCounterIndex[i]] >= characters[i].getFrameTotals()[frameCounterIndex[i]]) {
+                characters[i].getFrameCounters()[frameCounterIndex[i]] = 0;
             }
 
             characterDraw[i].setImage(characters[i].getImageDisplay());
@@ -1414,13 +979,13 @@ public class RumGameScene extends MasterScene{
             gc.setFill(Color.RED);
             gc.fillRect(((healthBar[i].getX()+i*(500-healthBar[i].getWidth())*0.715))*widthAdjust, healthBar[i].getY()*heightAdjust, healthBar[i].getWidth()*0.715*widthAdjust, healthBar[i].getHeight()*heightAdjust);
             for (int e = 0; e<2; e++) {
-                for (int o = 0; o<playerCounter[e]; o++) {
+                for (int o = 0; o<playerWinCounter[e]; o++) {
                     gc.setFill(Color.AQUA);
-                    gc.fillOval((150+50*o-100*o*e+1200*e)*widthAdjust, 115*heightAdjust, 40*widthAdjust, 40*heightAdjust);
+                    gc.fillOval((150+50*o-100*o*e+1200*e) * widthAdjust, 115*heightAdjust, 40*widthAdjust, 40*heightAdjust);
                 }
-                for (int o = playerCounter[e]; o<2; o++) {
+                for (int o = playerWinCounter[e]; o<2; o++) {
                     gc.setFill(Color.WHITE);
-                    gc.fillOval((150+50*o+1200*e-100*o*e)*widthAdjust, 115*heightAdjust, 40*widthAdjust, 40*heightAdjust);
+                    gc.fillOval((150+50*o+1200*e-100*o*e) * widthAdjust, 115*heightAdjust, 40*widthAdjust, 40*heightAdjust);
                 }
             }
 
@@ -1465,10 +1030,17 @@ public class RumGameScene extends MasterScene{
             input = br.readLine();
             String[] inputArr = input.split(" ");
             int e = 1;
+
+            KeyCode [] keyArray = {KeyCode.W, KeyCode.A, KeyCode.S, KeyCode.D, KeyCode.Y, KeyCode.U, KeyCode.I};
+            //"W A S D Y U I"
+
             if (i == 1) {
                 e = 0;
+                keyArray = new KeyCode[]{KeyCode.UP, KeyCode.LEFT, KeyCode.DOWN, KeyCode.RIGHT, KeyCode.COMMA, KeyCode.PERIOD, KeyCode.SLASH};
+                // "38 37 40 39 COMMA PERIOD SLASH";
             }
-            characters[i] = new FightingCharacter(Math.abs((e * leftBorder + 100) + i * (rightBorder - 100) - Integer.parseInt(inputArr[0])), downBorder - (Integer.parseInt(inputArr[1]) / 2.0), Integer.parseInt(inputArr[0]), Integer.parseInt(inputArr[1]));
+            characters[i] = new FightingCharacter(Math.abs((e * leftBorder + 100) + i * (rightBorder - 100) - Integer.parseInt(inputArr[0])),
+                    downBorder - (Integer.parseInt(inputArr[1]) / 2.0), Integer.parseInt(inputArr[0]), Integer.parseInt(inputArr[1]), keyArray);
             characters[i].setDimensions(d2);
             input = br.readLine();
             characters[i].setWalkSpeed(Integer.parseInt(input));
@@ -1505,7 +1077,7 @@ public class RumGameScene extends MasterScene{
             characters[i].setName(input);
             int frames = Integer.parseInt(br.readLine());
             Image[] idleAnimation = new Image[frames];
-            frameTotals[i][0] = frames * 5;
+            characters[i].getFrameTotals()[0] = frames * 5;
             for (int a = 0; a < frames; a++) {
                 input = br.readLine();
                 idleAnimation[a] = new Image(Objects.requireNonNull(getClass().getResourceAsStream(imagePath + input)));
@@ -1516,7 +1088,7 @@ public class RumGameScene extends MasterScene{
 
             frames = Integer.parseInt(br.readLine());
             Image[] walkAnimation = new Image[frames];
-            frameTotals[i][5] = frames * 4;
+            characters[i].getFrameTotals()[5] = frames * 4;
             for (int a = 0; a < frames; a++) {
                 input = br.readLine();
                 walkAnimation[a] = new Image(Objects.requireNonNull(getClass().getResourceAsStream(imagePath + input)));
@@ -1524,7 +1096,7 @@ public class RumGameScene extends MasterScene{
             characters[i].setWalkAnimation(walkAnimation);
             frames = Integer.parseInt(br.readLine());
             Image[] backWalkAnimation = new Image[frames];
-            frameTotals[i][6] = frames * 4;
+            characters[i].getFrameTotals()[6] = frames * 4;
             for (int a = 0; a < frames; a++) {
                 input = br.readLine();
                 backWalkAnimation[a] = new Image(Objects.requireNonNull(getClass().getResourceAsStream(imagePath + input)));
@@ -1533,7 +1105,7 @@ public class RumGameScene extends MasterScene{
 
             frames = Integer.parseInt(br.readLine());
             Image[] jumpAnimation = new Image[frames];
-            frameTotals[i][4] = frames * 6;
+            characters[i].getFrameTotals()[4] = frames * 6;
             for (int a = 0; a < frames; a++) {
                 input = br.readLine();
                 jumpAnimation[a] = new Image(Objects.requireNonNull(getClass().getResourceAsStream(imagePath + input)));
@@ -1555,8 +1127,8 @@ public class RumGameScene extends MasterScene{
                 input = br.readLine();
             }
             int attackNumber = 0;
-            int frameAmount = 0;
-            int numberOfShapes = 0;
+            int frameAmount;
+            int numberOfShapes;
             String[] hitBoxes;
             String[] hitBoxData;
             double[][][] hitBoxTotal;

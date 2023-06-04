@@ -2,9 +2,11 @@ package main;
 
 import java.util.ArrayList;
 
+import Scenes.RumInputController;
 import interfaces.Drawable;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
 import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
@@ -15,24 +17,80 @@ import javafx.scene.shape.Rectangle;
  * This info includes what the character is doing at any given
  * moment, the size of the character, all non-attack animations
  * of a character, the speed of the character, the position of the character,
- * the attacks of a character, and the hitboxes/hurtboxes that are currently
+ * the attacks of a character, and the hit boxes/hurt boxes that are currently
  * active. 
  * @author Daniel
  *
  */
 public class FightingCharacter extends Rectangle implements Drawable{
 
-	private Attack[] attackList = new Attack[11];
+	public RumInputController getInputController() {
+		return inputController;
+	}
+	public void resetAttackInt(){attackInt = -1;}
+	private final RumInputController inputController;
+
+	public int[] getFrameTotals() {
+		return frameTotals;
+	}
+
+	private final int[] frameTotals = new int[8];
+
+	public int[] getFrameCounters() {
+		return frameCounters;
+	}
+	public void resetFrameCounters(){frameCounters = new int[7];}
+
+	private int [] frameCounters = new int[7];
+	public ArrayList<Integer> getInputTime() {
+		return inputTime;
+	}
+	private final ArrayList<Integer> inputTime = new ArrayList<>();
+
+	private final ArrayList<String> inputs = new ArrayList<>();
+	public ArrayList<String> getInputs() {
+		return inputs;
+	}
+
+	public int getAttackInt() {
+		return attackInt;
+	}
+
+	public void setAttackInt(int attackInt) {
+		if (this.attackInt == -1){this.attackInt = attackInt;}
+	}
+
+	public byte[] getMovement() {
+		return movement;
+	}
+
+	public void resetMovement(){movement = new byte[4];}
+
+	private byte [] movement = new byte[4];
+
+	private int attackInt = -1;
+
+	public int getHitstun() {
+		return hitstun;
+	}
+
+	public void setHitstun(int hitstun) {
+		this.hitstun = hitstun;
+	}
+
+	private int hitstun;
+	
+	private final Attack[] attackList = new Attack[11];
 	private int attackCurrent;
 	private String name;
-	private boolean [] keyReady = new boolean[11];
+	private final boolean [] keyReady = new boolean[11];
 	private double walkSpeed;
 	private boolean jumpAvailable = false;
 	private boolean isActionable = true;
 	private double xSpeed;
 	private double ySpeed;
-	private ArrayList<Rectangle> hurtBoxes = new ArrayList<Rectangle>();
-	private ArrayList<Ellipse> hitBoxes = new ArrayList<Ellipse>();
+	private final ArrayList<Rectangle> hurtBoxes = new ArrayList<>();
+	private final ArrayList<Ellipse> hitBoxes = new ArrayList<>();
 	private int state;
 	private int hitBoxCounter;
 	private int hurtBoxCounter;
@@ -45,7 +103,7 @@ public class FightingCharacter extends Rectangle implements Drawable{
 	private double offsetY;
 	private double []dimensions;
 	private Image imageDisplay;
-	private Rectangle baseHurtBox;
+	private final Rectangle baseHurtBox;
 	private double heightAdjust;
 	private double widthAdjust;
 	Animation startingAnimation;
@@ -57,7 +115,7 @@ public class FightingCharacter extends Rectangle implements Drawable{
 	private Image[] jumpAnimation;
 	private Image block;
 	private Image lowBlock;
-	private boolean[] isBlocking = new boolean[2];
+	private final boolean[] isBlocking = new boolean[2];
 	private Image hurt;
 	/**
 	 * This function sets an image for when a character is hurt
@@ -106,9 +164,9 @@ public class FightingCharacter extends Rectangle implements Drawable{
 	}  
 	/**
 	 * This function sets an image array for when a character is idle
-	 * @param walkAnimation The image array for when a character is idle
+	 * @param idleAnimation The image array for when a character is idle
 	 */
-	public void setIdleAnimation(Image idleAnimation[]) {
+	public void setIdleAnimation(Image[] idleAnimation) {
 		this.idleAnimation = idleAnimation;
 	}
 	/**
@@ -137,7 +195,7 @@ public class FightingCharacter extends Rectangle implements Drawable{
 	 * This function sets an image array for when a character is walking forward
 	 * @param walkAnimation The image array for when a character is walking forward
 	 */
-	public void setWalkAnimation(Image walkAnimation[]) {
+	public void setWalkAnimation(Image[] walkAnimation) {
 		this.walkAnimation = walkAnimation;
 	}
 	/**
@@ -150,9 +208,9 @@ public class FightingCharacter extends Rectangle implements Drawable{
 	}
 	/**
 	 * This function sets an image for when a character is walking backwards
-	 * @param backWalkAnimation[] The image for when a character is walking backwards
+	 * @param backWalkAnimation The image for when a character is walking backwards
 	 */
-	public void setBackWalkAnimation(Image backWalkAnimation[]) {
+	public void setBackWalkAnimation(Image[] backWalkAnimation) {
 		this.backWalkAnimation = backWalkAnimation;
 	}
 	/**
@@ -165,9 +223,9 @@ public class FightingCharacter extends Rectangle implements Drawable{
 	}
 	/**
 	 * This function sets an image for when a character is jumping
-	 * @param jumpAnimation[] The image for when a character is jumping
+	 * @param jumpAnimation The image for when a character is jumping
 	 */
-	public void setJumpAnimation(Image jumpAnimation[]) {
+	public void setJumpAnimation(Image [] jumpAnimation) {
 		this.jumpAnimation = jumpAnimation;
 	}
 	/**
@@ -230,7 +288,7 @@ public class FightingCharacter extends Rectangle implements Drawable{
 		this.widthAdjust= widthAdjust; 
 	}
 	/**
-	 * This function sets what image will displayed for the character
+	 * This function sets what image will be displayed for the character
 	 * @param imageDisplay The image that will be displayed
 	 */
 	public void setImageDisplay(Image imageDisplay) {
@@ -246,7 +304,6 @@ public class FightingCharacter extends Rectangle implements Drawable{
 
 	/**
 	 * This function sets the dimensions of the character
-	 * @param dimentions
 	 */
 	public void setDimensions(double []dimensions) {
 		this.dimensions=dimensions;
@@ -327,30 +384,29 @@ public class FightingCharacter extends Rectangle implements Drawable{
 	}
 
 	/**
-	 * This function gets whether the character is currently hitting the opponent
-	 * @return Returns whether the character is currently hitting the opponent
+	 * This function gets whether the character is currently not hitting the opponent
+	 * @return Returns whether the character is currently not hitting the opponent
 	 */
-	public boolean getHitCharacter() {
-		return hitCharacter;
+	public boolean getNotHitCharacter() {
+		return !hitCharacter;
 	}
 	/**
-	 * This function gets whether the character is currently hitting the opponent
-	 * @param hitCharacter Returns whether the character is currently hitting the opponent
+	 * This function sets whether the character is currently hitting the opponent
 	 */
 	public void setHitCharacter(boolean hitCharacter) {
 		this.hitCharacter=hitCharacter;
 	}
 
 	/**
-	 * This functioin gets the hurtboxes that are on the character
-	 * @return Returns an ArrayList of rectangles which are the hurtboxes
+	 * This function gets the hurt boxes that are on the character
+	 * @return Returns an ArrayList of rectangles which are the hurt boxes
 	 */
 	public ArrayList<Rectangle> getHurtBoxes(){
 		return hurtBoxes;
 	}
 	/**
-	 * This function gets the hitboxes that are on the character
-	 * @return Returns an ArrayList of ellipses which are the hitboxes
+	 * This function gets the hit boxes that are on the character
+	 * @return Returns an ArrayList of ellipses which are the hit boxes
 	 */
 	public ArrayList<Ellipse> getHitBoxes(){
 		return hitBoxes;
@@ -370,35 +426,35 @@ public class FightingCharacter extends Rectangle implements Drawable{
 		this.playerTimer+=amount;
 	}
 	/**
-	 * This function sets the amount of hitboxes that are on the character
-	 * @param hitBoxCounter Returns an int of how many hitboxes are on the character
+	 * This function sets the amount of hit boxes that are on the character
+	 * @param hitBoxCounter Returns an int of how many hit boxes are on the character
 	 */
 	public void setHitBoxCounter(int hitBoxCounter) {
 		this.hitBoxCounter= hitBoxCounter;
 	}
 	/**
-	 * This function adds the hitboxes that are on the character
+	 * This function adds the hit boxes that are on the character
 	 * @param amount The amount that the hitBoxCounter that will be increased by
 	 */
 	public void addHitBoxCounter(int amount) {
 		this.hitBoxCounter+=amount;
 	}
 	/**
-	 * This function sets the amount of hurtboxes that are on the character
-	 * @param hurtBoxCounter Returns an int of how many hurtboxes are on the character
+	 * This function sets the amount of hurt boxes that are on the character
+	 * @param hurtBoxCounter Returns an int of how many hurt boxes are on the character
 	 */
 	public void setHurtBoxCounter(int hurtBoxCounter) {
 		this.hurtBoxCounter= hurtBoxCounter;
 	}
 	/**
-	 * This function adds the hurtboxes that are on the character
+	 * This function adds the hurt boxes that are on the character
 	 * @param amount The amount that the hurtBoxCounter that will be increased by
 	 */
 	public void addHurtBoxCounter(int amount) {
 		this.hurtBoxCounter+=amount;
 	}
 	/**
-	 * This function gets the hurtBoxCounter which is how many hurtboxes are on the character
+	 * This function gets the hurtBoxCounter which is how many hurt boxes are on the character
 	 * @return The hurtBoxCounter
 	 */
 	public int getHurtBoxCounter() {
@@ -426,9 +482,9 @@ public class FightingCharacter extends Rectangle implements Drawable{
 		return playerTimer;
 	}
 	/**
-	 * This function gets a hurtbox from an ArrayList
+	 * This function gets a hurt box from an ArrayList
 	 * @param index The index that will be searched in the ArrayList
-	 * @return A Rectangle which is the hurtbox
+	 * @return A Rectangle which is the hurt box
 	 */
 	public Rectangle getHurtBox(int index) {
 		return hurtBoxes.get(index);
@@ -442,16 +498,15 @@ public class FightingCharacter extends Rectangle implements Drawable{
 		return attackList[index];
 	}
 	/**
-	 * This function adds a hitbox from an ArrayList
+	 * This function adds a hit box from an ArrayList
 	 * @param hitCircle The Ellipse that will be added in the ArrayList
-	 * @return An Ellipse which is the hitbox
 	 */
 	public void addHitBox(Ellipse hitCircle) {
 		hitBoxes.add(hitCircle);
 	}
 	/**
-	 * This function removes as many hitboxes as wanted 
-	 * @param value How many hitboxes that will be removed
+	 * This function removes as many hit boxes as wanted
+	 * @param value How many hit boxes that will be removed
 	 */
 	public void removeHitBox(int value) {
 		for (int i = 0; i<value; i++) {
@@ -459,16 +514,15 @@ public class FightingCharacter extends Rectangle implements Drawable{
 		}
 	}
 	/**
-	 * This function gets a hurtbox from an ArrayList
-	 * @param hurtBox The hurtbox that will be added in the ArrayList
-	 * @return A rectangle which is the hurtbox
+	 * This function gets a hurt box from an ArrayList
+	 * @param hurtBox The hurt box that will be added in the ArrayList
 	 */
 	public void addHurtBox(Rectangle hurtBox) {
 		hurtBoxes.add(hurtBox);
 	}
 	/**
-	 * This function removes as many hurtboxes as wanted 
-	 * @param value How many hurtboxes that will be removed
+	 * This function removes as many hurt boxes as wanted
+	 * @param value How many hurt boxes that will be removed
 	 */
 	public void removeHurtBox(int value) {
 		for (int i = 0; i<value; i++) {
@@ -497,11 +551,11 @@ public class FightingCharacter extends Rectangle implements Drawable{
 		jumpAvailable=value;
 	}
 	/**
-	 * This function gets whether the character is currently jumping
-	 * @return The value for if the character is currently jumping
+	 * This function gets whether the character is currently not jumping
+	 * @return The value for if the character is currently not jumping
 	 */
-	public boolean getJump() {
-		return jumpAvailable;
+	public boolean getNotJump() {
+		return !jumpAvailable;
 	}
 
 	/**
@@ -512,25 +566,24 @@ public class FightingCharacter extends Rectangle implements Drawable{
 	 * @param width The width of the character
 	 * @param height The height of the character
 	 */
-	public FightingCharacter(double positionX, double positionY, double width, double height) {
+	public FightingCharacter(double positionX, double positionY, double width, double height, KeyCode[] keys) {
 		super(positionX,positionY,width, height);
 		baseHurtBox = new Rectangle(positionX,positionY,width, height);
-		//this.addHurtBox(baseHurtBox);
 		walkSpeed=0;
-		//		fallSpeed=0;
-		//		jumpHeight=0;
 		xSpeed=0;
 		ySpeed=0;
 		playerTimer=0;
 		hitBoxCounter=0;
 		hurtBoxCounter=0;
+		inputController = new RumInputController(this, keys);
+
 		for (int i = 0; i <attackList.length; i++) {
 			attackList[i] = new Attack();
 		}
 	}
 	/**
-	 * This function returns a character's base hurtbox (The character's default hurtbox)
-	 * @return The character's base hurtbox
+	 * This function returns a character's base hurt box (The character's default hurt box)
+	 * @return The character's base hurt box
 	 */
 	public Rectangle getBaseHurtBox() {
 
@@ -546,12 +599,12 @@ public class FightingCharacter extends Rectangle implements Drawable{
 		keyReady[index]=value;
 	}
 	/**
-	 * This function gets whether a key is ready
+	 * This function gets whether a key is not ready
 	 * @param index The index of the key
 	 * @return The value of the key
 	 */
-	public boolean getKeyReady(int index) {
-		return keyReady[index];
+	public boolean getKeyNotReady(int index) {
+		return !keyReady[index];
 	}
 	/**
 	 * This function sets the state that the character is in (0 = idle 1 = Attacking 2 = Hurt 3 = crouch 4 = jump 5 = walk forward 6 = walk backward 7 = block 8 = low block)
@@ -569,8 +622,8 @@ public class FightingCharacter extends Rectangle implements Drawable{
 	}
 
 	/**
-	 * This function sets the characters x and y values to it's current x or y value
-	 * added to it's current speed multiplied by time.
+	 * This function sets the characters x and y values to its current x or y value
+	 * added to its current speed multiplied by time.
 	 * @param time The time that has passed
 	 */
 	public void update(double time)
@@ -725,21 +778,21 @@ public class FightingCharacter extends Rectangle implements Drawable{
 
 
 	/**
-	 * This method draws the hitboxes and hurtboxes of the characters
+	 * This method draws the hit boxes and hurt boxes of the characters
 	 */
 	@Override
 	public void render(GraphicsContext gc) {
 		
 		gc.setFill(this.getFill());
 		Ellipse temp;
-		for (int i = 0; i<hitBoxes.size(); i++) {
-			temp = hitBoxes.get(i);
+		for (Ellipse hitBox : hitBoxes) {
+			temp = hitBox;
 			gc.setFill(Color.RED);
-			gc.strokeOval((temp.getCenterX()-temp.getRadiusX())*widthAdjust,(temp.getCenterY()-temp.getRadiusY())*heightAdjust,temp.getRadiusX()*2*widthAdjust,temp.getRadiusY()*2*heightAdjust);
+			gc.strokeOval((temp.getCenterX() - temp.getRadiusX()) * widthAdjust, (temp.getCenterY() - temp.getRadiusY()) * heightAdjust, temp.getRadiusX() * 2 * widthAdjust, temp.getRadiusY() * 2 * heightAdjust);
 		}
-		for (int i = 0; i<hurtBoxes.size(); i++) {
+		for (Rectangle hurtBox : hurtBoxes) {
 			gc.setFill(Color.AQUAMARINE);
-			gc.strokeRect(hurtBoxes.get(i).getX()*widthAdjust, hurtBoxes.get(i).getY()*heightAdjust, hurtBoxes.get(i).getWidth()*widthAdjust,  hurtBoxes.get(i).getHeight()*heightAdjust);
+			gc.strokeRect(hurtBox.getX() * widthAdjust, hurtBox.getY() * heightAdjust, hurtBox.getWidth() * widthAdjust, hurtBox.getHeight() * heightAdjust);
 		}
 		
 	}

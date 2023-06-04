@@ -686,7 +686,7 @@ public class RhyGameScene extends MasterScene{
      * This method converts a file into its various notes, timing points, and loads its music file
      *
      * @param gameFile   - the game file to be converted
-     * @param folderName
+     * @param folderName - the folder name of the song
      */
     public void initRhythm(String gameFile, String folderName) throws IOException {
 

@@ -19,8 +19,9 @@ public abstract class MasterScene{
     static ControllerTemplate controller;
     //capturing screen size of monitor to resize application for any screen size
     Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
-    double widthAdjust = screenSize.getWidth()/1536.0;
-    double heightAdjust = screenSize.getHeight()/864.0;
+    double widthAdjust = Math.min(screenSize.getWidth()/1536.0, screenSize.getHeight()/864.0);
+    double heightAdjust = Math.min(screenSize.getWidth()/1536.0, screenSize.getHeight()/864.0);
+
     static MediaPlayer menuMusic;
 
     /**

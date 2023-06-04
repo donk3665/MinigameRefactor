@@ -120,7 +120,6 @@ public class RumCharSelectScene extends MasterScene {
         //creating scene
         Group main = new Group();
         main.getChildren().addAll(backgroundImage,grid, addTopAnchorPane(SceneEnums.GAME_SELECT),playerChosen,character1Name,character2Name);
-        Scene rumbleCharSelect = new Scene(main);
-        return rumbleCharSelect;
+        return new Scene(main);
     }
 }
