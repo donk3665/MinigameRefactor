@@ -2,22 +2,21 @@ package Scenes;
 
 import SceneControllers.SceneEnums;
 import SceneControllers.SceneTransferData;
+import Scenes.RumGameHelpers.LoadRumGame;
+import Scenes.RumGameHelpers.RumGameRenderer;
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
-import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
-import main.FightingCharacter;
-
+import Scenes.RumGameHelpers.FightingCharacter;
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -36,13 +35,15 @@ public class RumGameScene extends MasterScene{
     static int inputTimer = 0;
     int [] playerWinCounter = new int[2];
     boolean endGame = false;
-    int timerInterval = 0;
+    int roundStartTimer = 0;
     int[] animationCounter = new int[2];
     int logoVanishCounter = 0;
     int[] frameCounterIndex = {0,0};
     MediaPlayer backgroundMusic;
     static RumGameRenderer renderer;
     LoadRumGame loader = new LoadRumGame();
+    AnimationTimer timer;
+    Timer gameTimer;
     @Override
     public Scene run(Stage primaryStage, SceneTransferData data) {
         
@@ -63,7 +64,7 @@ public class RumGameScene extends MasterScene{
         playerWinCounter[1]=-1;
 
         //refreshes the screen
-        AnimationTimer timer = new AnimationTimer() {
+        timer = new AnimationTimer() {
             @Override
             public void handle(long arg0) {
                 renderer.draw(gc, frameCounterIndex, healthBar, playerWinCounter);
@@ -71,17 +72,15 @@ public class RumGameScene extends MasterScene{
         };
         
         //Initializing objects and centering images
-        Timer timer2 = new Timer();
+        gameTimer = new Timer();
         
         characters[1].setFacingRight(-1);
         
         Scene fightingGame = new Scene(renderer.getMainPane());
 
         timer.start();
-
-        //Media music = new Media(new File("src/main/fightingFiles/Blue_Water_Blue_Sky.mp3").toURI().toString());
-        Media music = new Media(Objects.requireNonNull(getClass().getResource("/fightingFiles/baseFiles/audio/Blue_Water_Blue_Sky.mp3")).toExternalForm());
-        backgroundMusic = new MediaPlayer(music);
+        
+        backgroundMusic = new MediaPlayer(loader.loadMusic());
         backgroundMusic.setVolume(0.4);
 
         //event handler for keyboard presses
@@ -104,7 +103,7 @@ public class RumGameScene extends MasterScene{
         /*
          * Plays the media on game start, loops when media finishes
          */
-        timer2.schedule(new TimerTask() {
+        gameTimer.schedule(new TimerTask() {
             @Override
             public void run() {
                 backgroundMusic.play();
@@ -117,246 +116,10 @@ public class RumGameScene extends MasterScene{
         /*
          * Main game loop
          */
-        timer2.scheduleAtFixedRate(new TimerTask() {
+        gameTimer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-
-                //if statement entered when one of the characters runs out of hp (or when game is initialized)
-                if (healthBar[1].getWidth()<=0||healthBar[0].getWidth()<=0||timerInterval>0) {
-
-
-                    if (timerInterval==0) {
-
-                        //adds points to first and/or second player, based on whoever won the round
-                        if (healthBar[1].getWidth()<=0&&healthBar[0].getWidth()<=0) {
-                            playerWinCounter[1]++;
-                            playerWinCounter[0]++;
-                        }
-                        else if (healthBar[1].getWidth()<=0) {
-                            playerWinCounter[0]++;
-                        }
-                        else {
-                            playerWinCounter[1]++;
-
-                        }
-
-
-                        if (playerWinCounter[1]!=0||playerWinCounter[0]!=0) {
-                            //if one player has points, show an image and play a sound
-                            renderer.getResourcePane(0).setImage(renderer.getResource(7));
-                            renderer.getNarrator(6).play();
-                        }
-                        if (playerWinCounter[1]==0&&playerWinCounter[0]==0) {
-                            //if this is during the initialization of the game, skip to player animations
-                            timerInterval=960;
-                        }
-                        //setting up variables
-                        animationCounter[0] = 0;
-                        animationCounter[1] = 0;
-                        healthBar[1].setWidth(500);
-                        healthBar[0].setWidth(500);
-                        timerInterval+=20;
-                    }
-                    else {
-                        timerInterval+=20;
-                        if (timerInterval%80==0&&timerInterval>1000&&(playerWinCounter[0]==0&&playerWinCounter[1]==0)) {
-                            //if this is during initialization of the game, show beginning animations
-                            for (int q = 0; q<2; q++) {
-
-                                //preventing interference with drawing method
-                                characters[q].setState(10);
-
-                                //drawing the animation
-                                characters[q].setImageDisplay(characters[q].getStartingAnimation().getFrame(animationCounter[q]));
-                                if (animationCounter[q]<characters[q].getStartingAnimation().getAnimationTime()-1) {
-                                    animationCounter[q]++;
-                                }
-                                else {
-                                    characters[q].setState(0);
-                                }
-                            }
-                        }
-                        if (timerInterval==1000&&(playerWinCounter[0]!=2&&playerWinCounter[1]!=2)) {
-                            //show image and play a sound
-                            renderer.getResourcePane(0).setImage(renderer.getResource(playerWinCounter[0]+playerWinCounter[1]));
-                            renderer.getNarrator(playerWinCounter[0]+playerWinCounter[1]).play();
-
-                            //resetting characters after round end
-                            int e = 1;
-                            for (int character = 0; character<2; character++) {
-                                if (character==1) {
-                                    e=0;
-                                    characters[character].setFacingRight(-1);
-                                }
-                                else {
-                                    characters[character].setFacingRight(1);
-                                }
-                                characters[character].setImageDisplay(characters[character].getImageCharacter());
-                                characters[character].setXSpeed(0);
-                                characters[character].setYSpeed(0);
-                                characters[character].setX(Math.abs((e*leftBorder+100)+character*(rightBorder-100)-characters[character].getWidth()));
-                                characters[character].setY(downBorder-(characters[character].getHeight()/2));
-                                characters[character].removeHitBox(characters[character].getHitBoxCounter());
-                                characters[character].setHitBoxCounter(0);
-                                characters[character].removeHurtBox(characters[character].getTotalHurtBoxCounter());
-                                characters[character].setHurtBoxCounter(0);
-                                characters[character].addHurtBox(characters[character].getBaseHurtBox());
-                                characters[character].getHurtBox(0).setX(characters[character].getX());
-                                characters[character].getHurtBox(0).setY(characters[character].getY());
-                                characters[character].setIsCrouching(false);
-                                characters[character].setIsActionable(true);
-                                characters[character].setPlayerTimer(0);
-                                characters[character].setHurtBoxCounter(0);
-                                characters[character].setHitCharacter(false);
-                                characters[character].setState(0);
-                                characters[character].setHitstun(0);
-                                //hitStun[character]=0;
-                            }
-
-                        }
-                        else if (timerInterval ==2500) {
-
-                            if (playerWinCounter[1]==2||playerWinCounter[0]==2) {
-                                //play sound and display image if a player won
-                                renderer.getResourcePane(0).setFitHeight(200*heightAdjust);
-                                renderer.getResourcePane(0).setFitWidth(600*widthAdjust);
-                                if (playerWinCounter[1]==2) {
-                                    renderer.getResourcePane(0).setImage(renderer.getResource(10));
-                                    renderer.getNarrator(9).play();
-                                }
-                                else {
-                                    renderer.getResourcePane(0).setImage(renderer.getResource(9));
-                                    renderer.getNarrator(8).play();
-                                }
-                            }
-                            else {
-                                //play normal countdown sound and image
-                                renderer.getResourcePane(0).setImage(renderer.getResource(5));
-                                renderer.getNarrator(3).play();
-                            }
-                        }
-                        else if (timerInterval ==3500&&(playerWinCounter[0]!=2&&playerWinCounter[1]!=2)) {
-                            //play normal countdown sound and image
-                            renderer.getResourcePane(0).setImage(renderer.getResource(4));
-                            renderer.getNarrator(4).play();
-
-                        }
-                        else if (timerInterval==4500&&(playerWinCounter[0]!=2&&playerWinCounter[1]!=2)) {
-                            //play normal countdown sound and image
-                            renderer.getResourcePane(0).setImage(renderer.getResource(3));
-                            renderer.getNarrator(5).play();
-                        }
-                        else if (timerInterval==5500) {
-                            if (playerWinCounter[1]==2||playerWinCounter[0]==2) {
-
-                                //if player won, return to character select screen, suspend all timers
-                                endGame=true;
-                                timer.stop();
-                                timer2.cancel();
-                                backgroundMusic.stop();
-                                Platform.runLater(() -> {
-                                    menuMusic.play();
-                                    SceneTransferData transferData = new SceneTransferData();
-
-                                    controller.changeScenes(SceneEnums.RUM_CHAR_SELECT, transferData);
-                                });
-                            }
-                            else {
-                                //reset player inputs
-                                for (int character= 0; character<2; character++) {
-                                    for (int count = 0; count<7;count++) {
-                                        characters[character].setKeyReady(count, false);
-                                    }
-                                    characters[character].resetAttackInt();
-                                    characters[character].resetMovement();
-                                    characters[character].resetFrameCounters();
-                                }
-
-                                //display an image and sound, allow game to start
-                                renderer.getResourcePane(0).setImage(renderer.getResource(6));
-                                logoVanishCounter+=20;
-                                timerInterval=0;
-                                renderer.getNarrator(7).play();
-                            }
-                        }
-
-
-                    }
-
-                }
-                else {
-
-                    //gravity and friction calculations
-                    for (int i = 0; i<2; i++) {
-                        characters[i].getHurtBox(0).setX(characters[i].getX());
-                        characters[i].getHurtBox(0).setY(characters[i].getY());
-                        if (characters[i].getCentreY()<downBorder) {
-                            characters[i].changeYSpeed(1);
-                        }
-                        else if (characters[i].getCentreY()>=downBorder){
-                            characters[i].setJump(false);
-                            if (characters[i].getXSpeed()>0){
-                                characters[i].changeXSpeed(-1);
-                            }
-                            if (characters[i].getXSpeed()<0){
-                                characters[i].changeXSpeed(1);
-                            }
-                        }
-
-                    }
-
-                    facingDirection();
-                    attackingRevamped(characters[0]);
-                    attackingRevamped(characters[1]);
-                    damageCalculation(healthBar);
-
-                    //hitstun calculations (how long a player cannot do any actions due to being hit)
-                    for (int i = 0; i < 2; i++) {
-                        if (characters[i].getHitstun() > 0) {
-                            characters[i].setIsActionable(false);
-                            characters[i].setState(2);
-                            characters[i].setHitstun(characters[i].getHitstun() - 1 );
-                            if (characters[i].getHitstun()==0) {
-                                characters[i].setIsActionable(true);
-                                characters[i].setIsBlocking(1, false);
-                                characters[i].setIsBlocking(0, false);
-                                characters[i].setState(0);
-                            }
-                        }
-                    }
-
-                    movement(characters[0]);
-                    movement(characters[1]);
-
-
-                    //holds most recent inputs, decays over time
-                    inputTimer++;
-
-                    for (int i = 0; i<2; i++){
-                        if (characters[i].getInputTime().contains(inputTimer)){
-                            int index = characters[i].getInputTime().indexOf(inputTimer);
-                            characters[i].getInputTime().remove(index);
-                            characters[i].getInputs().remove(index);
-                        }
-
-                    }
-
-                    if (inputTimer == 20)
-                    {
-                        inputTimer = 0;
-                    }
-                }
-
-                //removes fight logo after 1000 milliseconds
-                if (logoVanishCounter>0) {
-                    if (logoVanishCounter>=1000) {
-                        renderer.getResourcePane(0).setImage(renderer.getResource(8));
-                        logoVanishCounter=0;
-                    }
-                    else {
-                        logoVanishCounter+=20;
-                    }
-                }
+                gameLoop();
             }
 
         }, 0, 20);
@@ -365,6 +128,264 @@ public class RumGameScene extends MasterScene{
 
 
         return fightingGame;
+    }
+
+    /**
+     * This function performs the setup needed on round start
+     */
+    public void roundStartSetup(){
+        //adds points to first and/or second player, based on whoever won the round
+        if (healthBar[1].getWidth()<=0&&healthBar[0].getWidth()<=0) {
+            playerWinCounter[1]++;
+            playerWinCounter[0]++;
+        }
+        else if (healthBar[1].getWidth()<=0) {
+            playerWinCounter[0]++;
+        }
+        else {
+            playerWinCounter[1]++;
+
+        }
+        if (playerWinCounter[1]!=0||playerWinCounter[0]!=0) {
+            //if one player has points, show an image and play a sound
+            renderer.getResourcePane(0).setImage(renderer.getResource(7));
+            renderer.getNarrator(6).play();
+        }
+        if (playerWinCounter[1]==0&&playerWinCounter[0]==0) {
+            //if this is during the initialization of the game, skip to player animations
+            roundStartTimer=960;
+        }
+        //setting up variables
+        animationCounter[0] = 0;
+        animationCounter[1] = 0;
+        healthBar[1].setWidth(500);
+        healthBar[0].setWidth(500);
+        roundStartTimer+=20;
+    }
+    public void characterStartAnimations(){
+        //if this is during initialization of the game, show beginning animations
+        for (int q = 0; q<2; q++) {
+            //preventing interference with drawing method
+            characters[q].setState(10);
+            //drawing the animation
+            characters[q].setImageDisplay(characters[q].getStartingAnimation().getFrame(animationCounter[q]));
+            if (animationCounter[q]<characters[q].getStartingAnimation().getAnimationTime()-1) {
+                animationCounter[q]++;
+            }
+            else {
+                characters[q].setState(0);
+            }
+        }
+    }
+
+    /**
+     * This function resets the characters to their initial positions and properties on round start
+     */
+    public void resetCharactersToRoundStart(){
+        //resetting characters after round end
+        int e = 1;
+        for (int character = 0; character<2; character++) {
+            if (character==1) {
+                e=0;
+                characters[character].setFacingRight(-1);
+            }
+            else {
+                characters[character].setFacingRight(1);
+            }
+            characters[character].setImageDisplay(characters[character].getImageCharacter());
+            characters[character].setXSpeed(0);
+            characters[character].setYSpeed(0);
+            characters[character].setX(Math.abs((e*leftBorder+100)+character*(rightBorder-100)-characters[character].getWidth()));
+            characters[character].setY(downBorder-(characters[character].getHeight()/2));
+            characters[character].removeHitBox(characters[character].getHitBoxCounter());
+            characters[character].setHitBoxCounter(0);
+            characters[character].removeHurtBox(characters[character].getTotalHurtBoxCounter());
+            characters[character].setHurtBoxCounter(0);
+            characters[character].addHurtBox(characters[character].getBaseHurtBox());
+            characters[character].getHurtBox(0).setX(characters[character].getX());
+            characters[character].getHurtBox(0).setY(characters[character].getY());
+            characters[character].setIsCrouching(false);
+            characters[character].setIsActionable(true);
+            characters[character].setPlayerTimer(0);
+            characters[character].setHurtBoxCounter(0);
+            characters[character].setHitCharacter(false);
+            characters[character].setState(0);
+            characters[character].setHitstun(0);
+        }
+    }
+
+    /**
+     * This function sets up the ending animations when a player has won
+     */
+    public void endingAnimations(){
+        if (roundStartTimer == 2500){
+            //play sound and display image if a player won
+            renderer.getResourcePane(0).setFitHeight(200*heightAdjust);
+            renderer.getResourcePane(0).setFitWidth(600*widthAdjust);
+            if (playerWinCounter[1]==2) {
+                renderer.getResourcePane(0).setImage(renderer.getResource(10));
+                renderer.getNarrator(9).play();
+            }
+            else {
+                renderer.getResourcePane(0).setImage(renderer.getResource(9));
+                renderer.getNarrator(8).play();
+            }
+        }
+        else if (roundStartTimer == 5500){
+            //if player won, return to character select screen, suspend all timers
+            endGame=true;
+            timer.stop();
+            gameTimer.cancel();
+            backgroundMusic.stop();
+            Platform.runLater(() -> {
+                menuMusic.play();
+                SceneTransferData transferData = new SceneTransferData();
+
+                controller.changeScenes(SceneEnums.RUM_CHAR_SELECT, transferData);
+            });
+        }
+    }
+
+    /**
+     * This function sets up the round start animations and narration
+     */
+    public void roundStartAnimations(){
+        if (roundStartTimer%80==0&&roundStartTimer>1000&&(playerWinCounter[0]==0&&playerWinCounter[1]==0)) {
+            characterStartAnimations();
+        }
+        if (roundStartTimer==1000) {
+            //showing the round number and playing the round narration
+            renderer.getResourcePane(0).setImage(renderer.getResource(playerWinCounter[0]+playerWinCounter[1]));
+            renderer.getNarrator(playerWinCounter[0]+playerWinCounter[1]).play();
+            resetCharactersToRoundStart();
+        }
+        else if (roundStartTimer ==2500) {
+            //play normal countdown sound and image
+            renderer.getResourcePane(0).setImage(renderer.getResource(5));
+            renderer.getNarrator(3).play();
+        }
+        else if (roundStartTimer ==3500) {
+            //play normal countdown sound and image
+            renderer.getResourcePane(0).setImage(renderer.getResource(4));
+            renderer.getNarrator(4).play();
+
+        }
+        else if (roundStartTimer==4500) {
+            //play normal countdown sound and image
+            renderer.getResourcePane(0).setImage(renderer.getResource(3));
+            renderer.getNarrator(5).play();
+        }
+        else if (roundStartTimer==5500) {
+            //reset player inputs
+            for (int character= 0; character<2; character++) {
+                for (int count = 0; count<7;count++) {
+                    characters[character].setKeyReady(count, false);
+                }
+                characters[character].resetAttackInt();
+                characters[character].resetMovement();
+                characters[character].resetFrameCounters();
+            }
+
+            //display an image and sound, allow game to start
+            renderer.getResourcePane(0).setImage(renderer.getResource(6));
+            logoVanishCounter+=20;
+            roundStartTimer=0;
+            renderer.getNarrator(7).play();
+        }
+    }
+
+    /**
+     * This function is called when the timers begin for the game
+     */
+    public void gameLoop(){
+        //if statement entered when one of the characters runs out of hp (or when game is initialized)
+        if ((healthBar[1].getWidth()<=0||healthBar[0].getWidth()<=0|| roundStartTimer > 0)) {
+            if (roundStartTimer == 0) {
+                roundStartSetup();
+            }
+            else{
+                roundStartTimer+=20;
+                if (playerWinCounter[1]==2||playerWinCounter[0]==2) {
+                    endingAnimations();
+                }
+                else{
+                    roundStartAnimations();
+                }
+            }
+        }
+        else {
+            gameplayLoop();
+        }
+        //removes fight logo after 1000 milliseconds
+        if (logoVanishCounter>0) {
+            if (logoVanishCounter>=1000) {
+                renderer.getResourcePane(0).setImage(renderer.getResource(8));
+                logoVanishCounter=0;
+            }
+            else {
+                logoVanishCounter+=20;
+            }
+        }
+    }
+
+    /**
+     * This function does the calculations for the actual gameplay of the game
+     */
+    public void gameplayLoop(){
+        //gravity and friction calculations
+        for (int i = 0; i<2; i++) {
+            characters[i].getHurtBox(0).setX(characters[i].getX());
+            characters[i].getHurtBox(0).setY(characters[i].getY());
+            if (characters[i].getCentreY()<downBorder) {
+                characters[i].changeYSpeed(1);
+            }
+            else if (characters[i].getCentreY()>=downBorder){
+                characters[i].setJump(false);
+                if (characters[i].getXSpeed()>0){
+                    characters[i].changeXSpeed(-1);
+                }
+                if (characters[i].getXSpeed()<0){
+                    characters[i].changeXSpeed(1);
+                }
+            }
+
+        }
+
+        facingDirection();
+        attackingRevamped(characters[0]);
+        attackingRevamped(characters[1]);
+        damageCalculation(healthBar);
+
+        //hitstun calculations (how long a player cannot do any actions due to being hit)
+        for (int i = 0; i < 2; i++) {
+            if (characters[i].getHitstun() > 0) {
+                characters[i].setIsActionable(false);
+                characters[i].setState(2);
+                characters[i].setHitstun(characters[i].getHitstun() - 1 );
+                if (characters[i].getHitstun()==0) {
+                    characters[i].setIsActionable(true);
+                    characters[i].setIsBlocking(1, false);
+                    characters[i].setIsBlocking(0, false);
+                    characters[i].setState(0);
+                }
+            }
+        }
+        movement(characters[0]);
+        movement(characters[1]);
+
+        //holds most recent inputs, decays over time
+        inputTimer++;
+        for (int i = 0; i<2; i++){
+            if (characters[i].getInputTime().contains(inputTimer)){
+                int index = characters[i].getInputTime().indexOf(inputTimer);
+                characters[i].getInputTime().remove(index);
+                characters[i].getInputs().remove(index);
+            }
+        }
+        if (inputTimer == 20)
+        {
+            inputTimer = 0;
+        }
     }
     /**
      * This function looks at each hit box that is active and compares them with every active hurt box.
@@ -813,7 +834,7 @@ public class RumGameScene extends MasterScene{
      */
     public void initFighting(String[] loadingCharacters) throws IOException {
 
-        timerInterval = 0;
+        roundStartTimer = 0;
         healthBar[0] = new Rectangle(130, 69, 0, 27);
         healthBar[1] = new Rectangle(1048, 69, 0, 27);
         playerTimer[0] = 0;

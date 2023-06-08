@@ -1,4 +1,4 @@
-package main;
+package Scenes.RhyGameHelpers;
 
 /**
  * This class contains all info for the Note object. The
@@ -163,7 +163,6 @@ public class Note{
 	/**
 	 * This function changes the time that the note will appear at initially
 	 * changing it with the bpm(beats per minute)
-	 * @param scrollSpeed The current bpm and the difference that will be added to the initial time
 	 */
 	public void changeInitialTime(double bpmMultiplier) {
 		initialTime+=bpmMultiplier;

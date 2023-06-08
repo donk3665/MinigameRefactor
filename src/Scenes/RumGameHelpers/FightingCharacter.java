@@ -1,8 +1,7 @@
-package main;
+package Scenes.RumGameHelpers;
 
 import java.util.ArrayList;
 
-import Scenes.RumInputController;
 import interfaces.Drawable;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
@@ -24,62 +23,14 @@ import javafx.scene.shape.Rectangle;
  */
 public class FightingCharacter extends Rectangle implements Drawable{
 
-	public RumInputController getInputController() {
-		return inputController;
-	}
-	public void resetAttackInt(){attackInt = -1;}
 	private final RumInputController inputController;
-
-	public int[] getFrameTotals() {
-		return frameTotals;
-	}
-
 	private final int[] frameTotals = new int[8];
-
-	public int[] getFrameCounters() {
-		return frameCounters;
-	}
-	public void resetFrameCounters(){frameCounters = new int[7];}
-
 	private int [] frameCounters = new int[7];
-	public ArrayList<Integer> getInputTime() {
-		return inputTime;
-	}
 	private final ArrayList<Integer> inputTime = new ArrayList<>();
-
 	private final ArrayList<String> inputs = new ArrayList<>();
-	public ArrayList<String> getInputs() {
-		return inputs;
-	}
-
-	public int getAttackInt() {
-		return attackInt;
-	}
-
-	public void setAttackInt(int attackInt) {
-		if (this.attackInt == -1){this.attackInt = attackInt;}
-	}
-
-	public byte[] getMovement() {
-		return movement;
-	}
-
-	public void resetMovement(){movement = new byte[4];}
-
 	private byte [] movement = new byte[4];
-
 	private int attackInt = -1;
-
-	public int getHitstun() {
-		return hitstun;
-	}
-
-	public void setHitstun(int hitstun) {
-		this.hitstun = hitstun;
-	}
-
 	private int hitstun;
-	
 	private final Attack[] attackList = new Attack[11];
 	private int attackCurrent;
 	private String name;
@@ -775,8 +726,39 @@ public class FightingCharacter extends Rectangle implements Drawable{
 	public boolean getIsCrouching () {
 		return isCrouching;
 	}
-
-
+	public int getHitstun() {
+		return hitstun;
+	}
+	public void setHitstun(int hitstun) {
+		this.hitstun = hitstun;
+	}
+	public int[] getFrameTotals() {
+		return frameTotals;
+	}
+	public int[] getFrameCounters() {
+		return frameCounters;
+	}
+	public void resetFrameCounters(){frameCounters = new int[7];}
+	public void resetAttackInt(){attackInt = -1;}
+	public RumInputController getInputController() {
+		return inputController;
+	}
+	public ArrayList<Integer> getInputTime() {
+		return inputTime;
+	}
+	public ArrayList<String> getInputs() {
+		return inputs;
+	}
+	public int getAttackInt() {
+		return attackInt;
+	}
+	public void setAttackInt(int attackInt) {
+		if (this.attackInt == -1){this.attackInt = attackInt;}
+	}
+	public byte[] getMovement() {
+		return movement;
+	}
+	public void resetMovement(){movement = new byte[4];}
 	/**
 	 * This method draws the hit boxes and hurt boxes of the characters
 	 */

@@ -1,4 +1,4 @@
-package main;
+package Scenes.RumGameHelpers;
 
 import javafx.scene.image.Image;
 import javafx.scene.media.AudioClip;
@@ -127,14 +127,14 @@ public class Attack {
 	}
 	/**
 	 * This function sets a 3d double array to be held in the Attack class
-	 * @param hitBoxes The 3d double array that will be held
+	 * @param hurtBoxes The 3d double array that will be held
 	 */
 	public void setHurtboxes(double[][][]hurtBoxes) {
 		this.hurtBoxes=hurtBoxes;
 	}
 	/**
 	 * This function sets a 2d double array to be held in the Attack class
-	 * @param hitBoxes The 2d double array that will be held
+	 * @param speedChanges The 2d double array that will be held
 	 */
 	public void setSpeedChanges(double[][] speedChanges) {
 		this.speedChanges=speedChanges;

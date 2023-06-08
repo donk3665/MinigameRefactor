@@ -1,11 +1,9 @@
-package Scenes;
+package Scenes.RumGameHelpers;
 
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.media.AudioClip;
-import main.Animation;
-import main.Attack;
-import main.FightingCharacter;
+import javafx.scene.media.Media;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -15,6 +13,9 @@ import java.util.Objects;
 import static Scenes.RumGameScene.*;
 
 public class LoadRumGame {
+    public Media loadMusic(){
+        return new Media(Objects.requireNonNull(getClass().getResource("/fightingFiles/baseFiles/audio/Blue_Water_Blue_Sky.mp3")).toExternalForm());
+    }
     public Image[] loadImageResources(){
         Image[] resources = new Image[15];
         resources[3] = new Image("fightingFiles/baseFiles/images/count1.png");

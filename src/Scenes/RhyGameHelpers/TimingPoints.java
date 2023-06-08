@@ -1,4 +1,4 @@
-package main;
+package Scenes.RhyGameHelpers;
 
 public class TimingPoints {
 	private double startTime;

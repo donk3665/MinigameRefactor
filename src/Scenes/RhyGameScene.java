@@ -19,8 +19,8 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import main.Note;
-import main.TimingPoints;
+import Scenes.RhyGameHelpers.Note;
+import Scenes.RhyGameHelpers.TimingPoints;
 
 import java.io.*;
 import java.util.*;

@@ -1,7 +1,6 @@
-package Scenes;
+package Scenes.RumGameHelpers;
 
 import javafx.scene.input.KeyCode;
-import main.FightingCharacter;
 
 import static Scenes.RumGameScene.downBorder;
 
@@ -14,6 +13,9 @@ public class RumInputController {
         this.character = character;
     }
 
+    /**
+     * This function handles the key inputs of the players
+     */
     public void keyPressed(KeyCode keyCode, int inputTimer) {
         /*
          * These if statements check for specific input and record it. Input for movement and attacks
@@ -82,11 +84,23 @@ public class RumInputController {
             } else if (character.getCentreY() < downBorder) {
                 character.setAttackInt(10);
             } else {
-                character.setAttackInt(6);
+                if (character.getFacingRight() == 1 && character.getMovement()[2] == 2 || character.getFacingRight() == -1 && character.getMovement()[1] == 2){
+                    character.setAttackInt(9);
+                }
+                else if (character.getFacingRight() == 1 && character.getMovement()[1] == 2 || character.getFacingRight() == -1 && character.getMovement()[2] == 2) {
+                    character.setAttackInt(8);
+                }
+                else {
+                    character.setAttackInt(6);
+                }
             }
             character.setKeyReady(6, true);
         }
     }
+
+    /**
+     * This function handles the releasing of the keys by the player
+     */
     public void keyRelease(KeyCode keyCode){
 
         //RELEASE CODE

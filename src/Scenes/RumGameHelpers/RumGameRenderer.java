@@ -1,4 +1,4 @@
-package Scenes;
+package Scenes.RumGameHelpers;
 
 import javafx.scene.Group;
 import javafx.scene.canvas.Canvas;
@@ -9,7 +9,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import main.FightingCharacter;
 
 import static Scenes.MasterScene.heightAdjust;
 import static Scenes.MasterScene.widthAdjust;

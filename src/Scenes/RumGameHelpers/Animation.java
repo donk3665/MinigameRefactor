@@ -1,4 +1,4 @@
-package main;
+package Scenes.RumGameHelpers;
 
 import javafx.scene.image.Image;
 
