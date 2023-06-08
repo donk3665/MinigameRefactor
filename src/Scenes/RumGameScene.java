@@ -4,23 +4,15 @@ import SceneControllers.SceneEnums;
 import SceneControllers.SceneTransferData;
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
-import javafx.scene.layout.Pane;
-import javafx.scene.media.AudioClip;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
-import main.Animation;
-import main.Attack;
 import main.FightingCharacter;
 
 import java.io.*;
@@ -34,10 +26,9 @@ public class RumGameScene extends MasterScene{
 
     //variables and objects for the fighting game
     static FightingCharacter[] characters = new FightingCharacter[2];
-    static double downBorder = 730;
-    static double rightBorder = 1400;
-    static int leftBorder = 100;
-    ImageView[] characterDraw = new ImageView[2];
+    public static final double downBorder = 730;
+    public static final double rightBorder = 1400;
+    public static final int leftBorder = 100;
     int[] playerTimer = new int[2];
     static int []attackIndex = new int[2];
     Rectangle[]healthBar = new Rectangle[2];
@@ -47,21 +38,14 @@ public class RumGameScene extends MasterScene{
     boolean endGame = false;
     int timerInterval = 0;
     int[] animationCounter = new int[2];
-    ImageView[] resourcePane;
-    Image [] resources;
     int logoVanishCounter = 0;
-    static AudioClip[] hitSounds;
-    MediaPlayer backgroundMusic;
-    static AudioClip[] narrator;
     int[] frameCounterIndex = {0,0};
-
-
+    MediaPlayer backgroundMusic;
+    static RumGameRenderer renderer;
+    LoadRumGame loader = new LoadRumGame();
     @Override
     public Scene run(Stage primaryStage, SceneTransferData data) {
-
-        //Initializing resources
-        Image BackgroundImage = new Image("SceneAssets/rumGame/rumbleBackground.png", 1536*widthAdjust, 864*heightAdjust, false, false);
-        ImageView backgroundImage = new ImageView(BackgroundImage);
+        
         try {
             initFighting(data.getPlayers());
         }
@@ -69,115 +53,29 @@ public class RumGameScene extends MasterScene{
             System.err.println("initialization error");
             System.exit(1);
         }
-        Group mainPane = new Group();
-
-        //Initializing all UI Images
-        playerWinCounter[0]=-1;
-        playerWinCounter[1]=-1;
-        resources = new Image[15];
-        resources[3] = new Image("fightingFiles/baseFiles/images/count1.png");
-        resources[4] = new Image("fightingFiles/baseFiles/images/count2.png");
-        resources[5] = new Image("fightingFiles/baseFiles/images/count3.png");
-        resources[6] = new Image("fightingFiles/baseFiles/images/fight.png");
-        resources[7] = new Image("fightingFiles/baseFiles/images/ko.png");
-        resources[0] = new Image("fightingFiles/baseFiles/images/round1.png");
-        resources[1] = new Image("fightingFiles/baseFiles/images/round2.png");
-        resources[2] = new Image("fightingFiles/baseFiles/images/round3.png");
-        resources[8] = new Image("fightingFiles/baseFiles/images/empty.png");
-        resources[9] = new Image("fightingFiles/baseFiles/images/player1.png");
-        resources[10] = new Image("fightingFiles/baseFiles/images/player2.png");
-        resources[11] = new Image("SceneAssets/rumGame/RumblePlayerOne1.png");
-        resources[12] = new Image("SceneAssets/rumGame/RumblePlayerOne2.png");
-        resources[13] = new Image("SceneAssets/rumGame/RumblePlayerTwo1.png");
-        resources[14] = new Image("SceneAssets/rumGame/RumblePlayerTwo2.png");
-
-        resourcePane = new ImageView[5];
-        resourcePane[0] = new ImageView(resources[8]);
-
-        resourcePane[1]= new ImageView(resources[11]);
-        resourcePane[1].setFitWidth(500*widthAdjust);
-        resourcePane[1].setFitHeight(150*heightAdjust);
-
-        resourcePane[2]= new ImageView(resources[12]);
-        resourcePane[2].setFitWidth(500*widthAdjust);
-        resourcePane[2].setFitHeight(150*heightAdjust);
-
-        resourcePane[3]= new ImageView(resources[13]);
-        resourcePane[3].setFitWidth(500*widthAdjust);
-        resourcePane[3].setFitHeight(150*heightAdjust);
-        resourcePane[3].setX(1035*widthAdjust);
-
-        resourcePane[4]= new ImageView(resources[14]);
-        resourcePane[4].setFitWidth(500*widthAdjust);
-        resourcePane[4].setFitHeight(150*heightAdjust);
-        resourcePane[4].setX(1035*widthAdjust);
-
+        
         Canvas canvas = new Canvas(1536*widthAdjust,864*heightAdjust);
         final GraphicsContext gc = canvas.getGraphicsContext2D();
         canvas.setFocusTraversable(true);
 
-        resourcePane[0].setX(500*widthAdjust);
-        resourcePane[0].setY(200*heightAdjust);
-        resourcePane[0].setFitWidth(500*widthAdjust);
-        resourcePane[0].setFitHeight(400*heightAdjust);
-
-
-        hitSounds = new AudioClip[9];
-        //Initializing all sound effects
-        for (int i = 0; i< 9; i++){
-            hitSounds[i]= new AudioClip(Objects.requireNonNull(getClass().getResource("/fightingFiles/baseFiles/audio/hit_"+i+".wav")).toExternalForm());
-            hitSounds[i].setVolume(0.4);
-        }
-
-
-        narrator = new AudioClip[10];
-
-        narrator[0] = new AudioClip(Objects.requireNonNull(getClass().getResource("/fightingFiles/baseFiles/audio/Round1.mp3")).toExternalForm());
-        narrator[1] = new AudioClip(Objects.requireNonNull(getClass().getResource("/fightingFiles/baseFiles/audio/Round2.mp3")).toExternalForm());
-        narrator[2] = new AudioClip(Objects.requireNonNull(getClass().getResource("/fightingFiles/baseFiles/audio/Round3.mp3")).toExternalForm());
-        narrator[3] = new AudioClip(Objects.requireNonNull(getClass().getResource("/fightingFiles/baseFiles/audio/Three.mp3")).toExternalForm());
-        narrator[4] = new AudioClip(Objects.requireNonNull(getClass().getResource("/fightingFiles/baseFiles/audio/Two.mp3")).toExternalForm());
-        narrator[5] = new AudioClip(Objects.requireNonNull(getClass().getResource("/fightingFiles/baseFiles/audio/One.mp3")).toExternalForm());
-        narrator[6] = new AudioClip(Objects.requireNonNull(getClass().getResource("/fightingFiles/baseFiles/audio/KO.mp3")).toExternalForm());
-        narrator[7] = new AudioClip(Objects.requireNonNull(getClass().getResource("/fightingFiles/baseFiles/audio/Fight.mp3")).toExternalForm());
-        narrator[8] = new AudioClip(Objects.requireNonNull(getClass().getResource("/fightingFiles/baseFiles/audio/player1win.wav")).toExternalForm());
-        narrator[9] = new AudioClip(Objects.requireNonNull(getClass().getResource("/fightingFiles/baseFiles/audio/player2win.wav")).toExternalForm());
-
-        for (int i = 0; i< 8; i++){
-            narrator[i].setVolume(0.4);
-        }
-
+        renderer = new RumGameRenderer(loader, characters, canvas);
+        playerWinCounter[0]=-1;
+        playerWinCounter[1]=-1;
 
         //refreshes the screen
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long arg0) {
-                draw2(gc);
+                renderer.draw(gc, frameCounterIndex, healthBar, playerWinCounter);
             }
         };
-
-
+        
         //Initializing objects and centering images
         Timer timer2 = new Timer();
-        characterDraw[0] = new ImageView();
-        characterDraw[1] = new ImageView();
-
-        characterDraw[0].setImage(characters[0].getImageCharacter());
-
+        
         characters[1].setFacingRight(-1);
-        characterDraw[0].setFitWidth(characters[0].getDimensionX()*widthAdjust);
-        characterDraw[0].setFitHeight(characters[0].getDimensionY()*heightAdjust);
-
-        characterDraw[1].setImage(characters[1].getImageCharacter());
-        characterDraw[1].setFitWidth(characters[1].getDimensionX()*widthAdjust);
-        characterDraw[1].setFitHeight(characters[1].getDimensionY()*heightAdjust);
-
-        Pane box = new Pane();
-        box.getChildren().add(characterDraw[0]);
-        box.getChildren().add(characterDraw[1]);
-
-        mainPane.getChildren().addAll(backgroundImage,box,resourcePane[1],resourcePane[3],canvas,resourcePane[0],resourcePane[2],resourcePane[4]);
-        Scene fightingGame = new Scene(mainPane);
+        
+        Scene fightingGame = new Scene(renderer.getMainPane());
 
         timer.start();
 
@@ -185,7 +83,6 @@ public class RumGameScene extends MasterScene{
         Media music = new Media(Objects.requireNonNull(getClass().getResource("/fightingFiles/baseFiles/audio/Blue_Water_Blue_Sky.mp3")).toExternalForm());
         backgroundMusic = new MediaPlayer(music);
         backgroundMusic.setVolume(0.4);
-
 
         //event handler for keyboard presses
 
@@ -211,7 +108,6 @@ public class RumGameScene extends MasterScene{
             @Override
             public void run() {
                 backgroundMusic.play();
-
                 backgroundMusic.setOnEndOfMedia(() -> {
                     backgroundMusic.stop();
                     backgroundMusic.play();
@@ -247,8 +143,8 @@ public class RumGameScene extends MasterScene{
 
                         if (playerWinCounter[1]!=0||playerWinCounter[0]!=0) {
                             //if one player has points, show an image and play a sound
-                            resourcePane[0].setImage(resources[7]);
-                            narrator[6].play();
+                            renderer.getResourcePane(0).setImage(renderer.getResource(7));
+                            renderer.getNarrator(6).play();
                         }
                         if (playerWinCounter[1]==0&&playerWinCounter[0]==0) {
                             //if this is during the initialization of the game, skip to player animations
@@ -282,8 +178,8 @@ public class RumGameScene extends MasterScene{
                         }
                         if (timerInterval==1000&&(playerWinCounter[0]!=2&&playerWinCounter[1]!=2)) {
                             //show image and play a sound
-                            resourcePane[0].setImage(resources[playerWinCounter[0]+playerWinCounter[1]]);
-                            narrator[playerWinCounter[0]+playerWinCounter[1]].play();
+                            renderer.getResourcePane(0).setImage(renderer.getResource(playerWinCounter[0]+playerWinCounter[1]));
+                            renderer.getNarrator(playerWinCounter[0]+playerWinCounter[1]).play();
 
                             //resetting characters after round end
                             int e = 1;
@@ -322,33 +218,33 @@ public class RumGameScene extends MasterScene{
 
                             if (playerWinCounter[1]==2||playerWinCounter[0]==2) {
                                 //play sound and display image if a player won
-                                resourcePane[0].setFitHeight(200*heightAdjust);
-                                resourcePane[0].setFitWidth(600*widthAdjust);
+                                renderer.getResourcePane(0).setFitHeight(200*heightAdjust);
+                                renderer.getResourcePane(0).setFitWidth(600*widthAdjust);
                                 if (playerWinCounter[1]==2) {
-                                    resourcePane[0].setImage(resources[10]);
-                                    narrator[9].play();
+                                    renderer.getResourcePane(0).setImage(renderer.getResource(10));
+                                    renderer.getNarrator(9).play();
                                 }
                                 else {
-                                    resourcePane[0].setImage(resources[9]);
-                                    narrator[8].play();
+                                    renderer.getResourcePane(0).setImage(renderer.getResource(9));
+                                    renderer.getNarrator(8).play();
                                 }
                             }
                             else {
                                 //play normal countdown sound and image
-                                resourcePane[0].setImage(resources[5]);
-                                narrator[3].play();
+                                renderer.getResourcePane(0).setImage(renderer.getResource(5));
+                                renderer.getNarrator(3).play();
                             }
                         }
                         else if (timerInterval ==3500&&(playerWinCounter[0]!=2&&playerWinCounter[1]!=2)) {
                             //play normal countdown sound and image
-                            resourcePane[0].setImage(resources[4]);
-                            narrator[4].play();
+                            renderer.getResourcePane(0).setImage(renderer.getResource(4));
+                            renderer.getNarrator(4).play();
 
                         }
                         else if (timerInterval==4500&&(playerWinCounter[0]!=2&&playerWinCounter[1]!=2)) {
                             //play normal countdown sound and image
-                            resourcePane[0].setImage(resources[3]);
-                            narrator[5].play();
+                            renderer.getResourcePane(0).setImage(renderer.getResource(3));
+                            renderer.getNarrator(5).play();
                         }
                         else if (timerInterval==5500) {
                             if (playerWinCounter[1]==2||playerWinCounter[0]==2) {
@@ -377,10 +273,10 @@ public class RumGameScene extends MasterScene{
                                 }
 
                                 //display an image and sound, allow game to start
-                                resourcePane[0].setImage(resources[6]);
+                                renderer.getResourcePane(0).setImage(renderer.getResource(6));
                                 logoVanishCounter+=20;
                                 timerInterval=0;
-                                narrator[7].play();
+                                renderer.getNarrator(7).play();
                             }
                         }
 
@@ -454,7 +350,7 @@ public class RumGameScene extends MasterScene{
                 //removes fight logo after 1000 milliseconds
                 if (logoVanishCounter>0) {
                     if (logoVanishCounter>=1000) {
-                        resourcePane[0].setImage(resources[8]);
+                        renderer.getResourcePane(0).setImage(renderer.getResource(8));
                         logoVanishCounter=0;
                     }
                     else {
@@ -530,7 +426,7 @@ public class RumGameScene extends MasterScene{
                     characters[dependent].getHurtSound().play();
                 }
                 //play sound effect
-                hitSounds[(int) (Math.random()*9)].play();
+                renderer.getHitSound((int) (Math.random()*9)).play();
                 characters[dependent].setHitstun(characters[i].getAttackCurrent().getHitStun());
 
                 //damage, stun, and knock-back calculations
@@ -910,88 +806,6 @@ public class RumGameScene extends MasterScene{
         independent.update(1);
     }
 
-
-
-    /**
-     * Clears the canvas and renders the characters, health bars and the amount of rounds each character won.
-     * This function checks whether a character is facing right or left and flips the image accordingly. It
-     * also checks what state the character is in and plays the animation for that state.
-     * @param gc - graphics context to call
-     */
-    public void draw2(GraphicsContext gc) {
-
-
-        gc.clearRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
-
-        for (int i = 0; i < 2; i++) {
-
-            //displays characters
-            if (characters[i].getFacingRight()==1) {
-                characterDraw[i].setScaleX(-1);
-            }
-            else{
-                characterDraw[i].setScaleX(1);
-            }
-            characters[i].setHeightAdjust(heightAdjust);
-            characters[i].setWidthAdjust(widthAdjust);
-
-            characterDraw[i].setX((characters[i].getCentreX()-characters[i].getOffsetX())*widthAdjust);
-            characterDraw[i].setY((characters[i].getCentreY()-characters[i].getOffsetY())*heightAdjust);
-
-
-            //various states cause various animation
-            if (characters[i].getState() == 0 && characters[i].getIsActionable()) {
-                frameCounterIndex[i] = 0;
-                characters[i].setImageDisplay(characters[i].getIdleAnimation(characters[i].getFrameCounters()[0]/5));
-            }
-            if (characters[i].getState() == 5  && characters[i].getIsActionable()) {
-                frameCounterIndex[i] = 5;
-                characters[i].setImageDisplay(characters[i].getWalkAnimation(characters[i].getFrameCounters()[5]/4));
-            }
-            if (characters[i].getState() == 6  && characters[i].getIsActionable()) {
-                frameCounterIndex[i] = 6;
-                characters[i].setImageDisplay(characters[i].getBackWalkAnimation(characters[i].getFrameCounters()[6]/4));
-            }
-            if (characters[i].getIsCrouching() && characters[i].getIsActionable()) {
-                characters[i].setImageDisplay(characters[i].getCrouch());
-            }
-            if (characters[i].getCentreY()<downBorder && characters[i].getIsActionable()) {
-                frameCounterIndex[i] = 4;
-                characters[i].setImageDisplay(characters[i].getJumpAnimation(characters[i].getFrameCounters()[4] / 6));
-            }
-            if (characters[i].getState() == 2) {
-                characters[i].setImageDisplay(characters[i].getHurt());
-            }
-            if (characters[i].getIsBlocking(1)) {
-                characters[i].setImageDisplay(characters[i].getBlock());
-            }
-            if (characters[i].getIsBlocking(0)) {
-                characters[i].setImageDisplay(characters[i].getLowBlock());
-            }
-            characters[i].getFrameCounters()[frameCounterIndex[i]]++;
-            if (characters[i].getFrameCounters()[frameCounterIndex[i]] >= characters[i].getFrameTotals()[frameCounterIndex[i]]) {
-                characters[i].getFrameCounters()[frameCounterIndex[i]] = 0;
-            }
-
-            characterDraw[i].setImage(characters[i].getImageDisplay());
-
-            //drawing health bars
-            gc.setFill(Color.RED);
-            gc.fillRect(((healthBar[i].getX()+i*(500-healthBar[i].getWidth())*0.715))*widthAdjust, healthBar[i].getY()*heightAdjust, healthBar[i].getWidth()*0.715*widthAdjust, healthBar[i].getHeight()*heightAdjust);
-            for (int e = 0; e<2; e++) {
-                for (int o = 0; o<playerWinCounter[e]; o++) {
-                    gc.setFill(Color.AQUA);
-                    gc.fillOval((150+50*o-100*o*e+1200*e) * widthAdjust, 115*heightAdjust, 40*widthAdjust, 40*heightAdjust);
-                }
-                for (int o = playerWinCounter[e]; o<2; o++) {
-                    gc.setFill(Color.WHITE);
-                    gc.fillOval((150+50*o+1200*e-100*o*e) * widthAdjust, 115*heightAdjust, 40*widthAdjust, 40*heightAdjust);
-                }
-            }
-
-        }
-    }
-
     /**
      * This function loads 2 files for 2 characters and sets their stats according
      * to the text files.
@@ -1004,222 +818,6 @@ public class RumGameScene extends MasterScene{
         healthBar[1] = new Rectangle(1048, 69, 0, 27);
         playerTimer[0] = 0;
         playerTimer[1] = 0;
-        String[] fileNames = new String[2];
-        fileNames[0] = "/fightingFiles/characters/" + loadingCharacters[0] + "/";
-        fileNames[1] = "/fightingFiles/characters/" + loadingCharacters[1] + "/";
-        BufferedReader br;
-        //loading 2 different characters
-        for (int i = 0; i < 2; i++) {
-            String imagePath = fileNames[i] + "images/";
-            String audioPath = fileNames[i] + "audio/";
-
-            String temp2 = fileNames[i] + loadingCharacters[i] + ".txt";
-
-            br = new BufferedReader(new InputStreamReader(Objects.requireNonNull(getClass().getResourceAsStream(temp2))));
-            String input = br.readLine();
-
-            //loading stats
-            while (!input.equals("[STATS]")) {
-                input = br.readLine();
-            }
-            input = br.readLine();
-            String[] d = input.split(" ");
-            double[] d2 = new double[2];
-            d2[0] = Integer.parseInt(d[0]);
-            d2[1] = Integer.parseInt(d[1]);
-            input = br.readLine();
-            String[] inputArr = input.split(" ");
-            int e = 1;
-
-            KeyCode [] keyArray = {KeyCode.W, KeyCode.A, KeyCode.S, KeyCode.D, KeyCode.Y, KeyCode.U, KeyCode.I};
-            //"W A S D Y U I"
-
-            if (i == 1) {
-                e = 0;
-                keyArray = new KeyCode[]{KeyCode.UP, KeyCode.LEFT, KeyCode.DOWN, KeyCode.RIGHT, KeyCode.COMMA, KeyCode.PERIOD, KeyCode.SLASH};
-                // "38 37 40 39 COMMA PERIOD SLASH";
-            }
-            characters[i] = new FightingCharacter(Math.abs((e * leftBorder + 100) + i * (rightBorder - 100) - Integer.parseInt(inputArr[0])),
-                    downBorder - (Integer.parseInt(inputArr[1]) / 2.0), Integer.parseInt(inputArr[0]), Integer.parseInt(inputArr[1]), keyArray);
-            characters[i].setDimensions(d2);
-            input = br.readLine();
-            characters[i].setWalkSpeed(Integer.parseInt(input));
-            input = br.readLine();
-            Image temp = new Image(Objects.requireNonNull(getClass().getResourceAsStream(imagePath + input)));
-            characters[i].setImageCharacter(temp);
-            characters[i].setImageDisplay(temp);
-            input = br.readLine();
-            characters[i].setOffsetX(Integer.parseInt(input));
-            input = br.readLine();
-            characters[i].setOffsetY(Integer.parseInt(input));
-            input = br.readLine();
-            Animation tempAnimation = new Animation();
-            tempAnimation.setAnimationTime(Integer.parseInt(input));
-            Image[] imageTemp = new Image[Integer.parseInt(input)];
-            for (int q = 0; q < imageTemp.length; q++) {
-                input = br.readLine();
-                imageTemp[q] = new Image(Objects.requireNonNull(getClass().getResourceAsStream(imagePath + input)));
-            }
-            tempAnimation.setFrames(imageTemp);
-            characters[i].setStartingAnimation(tempAnimation);
-            AudioClip[] tempAudio = new AudioClip[3];
-            for (int q = 0; q < 3; q++) {
-                input = br.readLine();
-                tempAudio[q] = new AudioClip(Objects.requireNonNull(getClass().getResource(audioPath + input)).toExternalForm());
-            }
-            characters[i].setHurtSound(tempAudio);
-
-            //loading names and animations
-            while (!input.equals("[NAME]")) {
-                input = br.readLine();
-            }
-            input = br.readLine();
-            characters[i].setName(input);
-            int frames = Integer.parseInt(br.readLine());
-            Image[] idleAnimation = new Image[frames];
-            characters[i].getFrameTotals()[0] = frames * 5;
-            for (int a = 0; a < frames; a++) {
-                input = br.readLine();
-                idleAnimation[a] = new Image(Objects.requireNonNull(getClass().getResourceAsStream(imagePath + input)));
-            }
-            characters[i].setIdleAnimation(idleAnimation);
-            input = br.readLine();
-            characters[i].setCrouch(new Image(Objects.requireNonNull(getClass().getResourceAsStream(imagePath + input))));
-
-            frames = Integer.parseInt(br.readLine());
-            Image[] walkAnimation = new Image[frames];
-            characters[i].getFrameTotals()[5] = frames * 4;
-            for (int a = 0; a < frames; a++) {
-                input = br.readLine();
-                walkAnimation[a] = new Image(Objects.requireNonNull(getClass().getResourceAsStream(imagePath + input)));
-            }
-            characters[i].setWalkAnimation(walkAnimation);
-            frames = Integer.parseInt(br.readLine());
-            Image[] backWalkAnimation = new Image[frames];
-            characters[i].getFrameTotals()[6] = frames * 4;
-            for (int a = 0; a < frames; a++) {
-                input = br.readLine();
-                backWalkAnimation[a] = new Image(Objects.requireNonNull(getClass().getResourceAsStream(imagePath + input)));
-            }
-            characters[i].setBackWalkAnimation(backWalkAnimation);
-
-            frames = Integer.parseInt(br.readLine());
-            Image[] jumpAnimation = new Image[frames];
-            characters[i].getFrameTotals()[4] = frames * 6;
-            for (int a = 0; a < frames; a++) {
-                input = br.readLine();
-                jumpAnimation[a] = new Image(Objects.requireNonNull(getClass().getResourceAsStream(imagePath + input)));
-
-            }
-            characters[i].setJumpAnimation(jumpAnimation);
-            input = br.readLine();
-            characters[i].setBlock(new Image(Objects.requireNonNull(getClass().getResourceAsStream(imagePath + input))));
-
-            input = br.readLine();
-            characters[i].setLowBlock(new Image(Objects.requireNonNull(getClass().getResourceAsStream(imagePath + input))));
-
-            input = br.readLine();
-            characters[i].setHurt(new Image(Objects.requireNonNull(getClass().getResourceAsStream(imagePath + input))));
-
-
-            //loading attacks
-            while (!input.equals("[ATTACKS]")) {
-                input = br.readLine();
-            }
-            int attackNumber = 0;
-            int frameAmount;
-            int numberOfShapes;
-            String[] hitBoxes;
-            String[] hitBoxData;
-            double[][][] hitBoxTotal;
-            double[][][] hurtBoxTotal;
-            double[][] speedChanges;
-            String[] divide;
-            Image[] images;
-            for (int a = 0; a < 11; a++) {
-                Attack tempAttack = characters[i].getAttack(attackNumber);
-                input = br.readLine();
-                attackNumber = Integer.parseInt(input);
-                input = br.readLine();
-                tempAttack.setDamage(Integer.parseInt(input));
-                input = br.readLine();
-                tempAttack.setShieldDamage(Integer.parseInt(input));
-                input = br.readLine();
-                tempAttack.setShieldStun(Integer.parseInt(input));
-                input = br.readLine();
-                tempAttack.setHitStun(Integer.parseInt(input));
-                input = br.readLine();
-                tempAttack.setBlockingType(Integer.parseInt(input));
-                input = br.readLine();
-                tempAttack.setMultihit(Byte.parseByte(input));
-                input = br.readLine();
-                tempAttack.setSfx(new AudioClip(Objects.requireNonNull(getClass().getResource(audioPath+input)).toExternalForm()));
-
-                br.readLine();
-                input = br.readLine();
-                tempAttack.setKnockBackY(Integer.parseInt(input));
-                input = br.readLine();
-                tempAttack.setKnockBackX(Integer.parseInt(input));
-                input = br.readLine();
-                tempAttack.setSelfKnockBack(Integer.parseInt(input));
-                input = br.readLine();
-                frameAmount = Integer.parseInt(input);
-                tempAttack.setFrameTime(frameAmount);
-                input = br.readLine();
-                numberOfShapes = Integer.parseInt(input);
-                hitBoxTotal = new double[frameAmount][numberOfShapes][3];
-                hurtBoxTotal = new double[frameAmount][numberOfShapes][4];
-                images = new Image[frameAmount];
-                speedChanges = new double[frameAmount][2];
-                for (int q = 0; q < frameAmount; q++) {
-
-                    input = br.readLine();
-                    if (input.matches(".*[.].*")) {
-                        images[q - 1] = new Image(Objects.requireNonNull(getClass().getResourceAsStream(imagePath + input)));
-                        q--;
-                        continue;
-                    }
-                    divide = input.split(" ");
-
-                    for (int u = 0; u < 3; u++) {
-                        if (divide[0].equals("NC")) {
-                            hitBoxTotal[q] = hitBoxTotal[q - 1];
-                            hurtBoxTotal[q] = hurtBoxTotal[q - 1];
-                            images[q] = images[q - 1];
-                            speedChanges[q][0] = 0;
-                            speedChanges[q][1] = 0;
-                        } else {
-                            hitBoxes = divide[u].split(":");
-                            for (int w = 0; w < hitBoxes.length; w++) {
-                                hitBoxData = hitBoxes[w].split(",");
-                                if (u == 0) {
-                                    hitBoxTotal[q][w][0] = Integer.parseInt(hitBoxData[0]);
-                                    hitBoxTotal[q][w][1] = Integer.parseInt(hitBoxData[1]);
-                                    hitBoxTotal[q][w][2] = Integer.parseInt(hitBoxData[2]);
-                                } else if (u == 1) {
-                                    hurtBoxTotal[q][w][0] = Integer.parseInt(hitBoxData[0]);
-                                    hurtBoxTotal[q][w][1] = Integer.parseInt(hitBoxData[1]);
-                                    hurtBoxTotal[q][w][2] = Integer.parseInt(hitBoxData[2]);
-                                    hurtBoxTotal[q][w][3] = Integer.parseInt(hitBoxData[3]);
-                                } else {
-                                    speedChanges[q][0] = Integer.parseInt(hitBoxData[0]);
-                                    speedChanges[q][1] = Integer.parseInt(hitBoxData[1]);
-                                }
-                            }
-
-                        }
-
-                    }
-
-                }
-                tempAttack.setImages(images);
-                tempAttack.setHitboxes(hitBoxTotal);
-                tempAttack.setHurtboxes(hurtBoxTotal);
-                tempAttack.setSpeedChanges(speedChanges);
-                br.readLine();
-                attackNumber++;
-            }
-
-        }
+        characters = loader.loadCharacters(loadingCharacters);
     }
 }
