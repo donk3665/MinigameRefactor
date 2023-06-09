@@ -8,10 +8,8 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
-import javafx.scene.control.Label;
 import java.awt.*;
 
 
@@ -75,12 +73,5 @@ public abstract class MasterScene{
         tempButton.setStyle("-fx-background-color: transparent;");
         return tempButton;
     }
-    /**
-     * Function to initialize the rhythm grids
-     */
-    public void initializeRhythmGrid(GridPane grid, Label score, Label combo, Label accuracy){
-        grid.add(score, 0, 0);
-        grid.add(combo, 0, 1);
-        grid.add(accuracy, 0, 2);
-    }
+
 }

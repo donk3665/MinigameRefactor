@@ -42,7 +42,6 @@ public class Note{
 	 * This function returns the time when a hold note ends if it the note
 	 * is indeed a hold note. Otherwise, it returns the time that the note
 	 * can be hit if it is a normal note.
-	 * @return
 	 */
 	public double getLastTime() {
 		if (type==128) {
@@ -84,11 +83,8 @@ public class Note{
 	public boolean getIsDisabled() {
 		return isDisabled;
 	}
-	/*
-	 * Default constructor
-	 */
-	public Note() {
-		
+	public Note(){
+
 	}
 	/**
 	 * A constructor which initializes its initial y position, end y position, initial time,
@@ -104,7 +100,8 @@ public class Note{
 		hitSound = peek.hitSound;
 		endTime = peek.endTime;
 		timePassed = peek.initialTime;
-		
+		isDisabled = peek.getIsDisabled();
+		startClicked = peek.getStartClicked();
 	}
 	/**
 	 * This function sets the y position that the note will be at initially
@@ -228,7 +225,7 @@ public class Note{
 	
 	/**
 	 * This function gets the time a hold note will end at if it is a hold note.
-	 * Otherwise it gets the time the note will be at initially.
+	 * Otherwise, it gets the time the note will be at initially.
 	 * @return The time a hold note/note will end at
 	 */
 	public double getOverallEndTime() {

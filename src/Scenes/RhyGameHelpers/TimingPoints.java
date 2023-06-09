@@ -1,16 +1,11 @@
 package Scenes.RhyGameHelpers;
 
 public class TimingPoints {
-	private double startTime;
-	private double beatLength;
-	private int meter;
-	private int inheritValue;
-	/**
-	 * Default constructor
-	 */
-	TimingPoints(){
+	private final double startTime;
+	private final double beatLength;
+	private final int meter;
+	private final int inheritValue;
 
-	}
 	/**
 	 * A constructor which initializes its startTime, beatLength, meter,
 	 * type, volume, and inherit value. 

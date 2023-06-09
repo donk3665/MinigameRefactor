@@ -6,7 +6,7 @@ import static Scenes.RumGameScene.downBorder;
 
 public class RumInputController {
 
-    KeyCode [] keyCodes ;
+    KeyCode [] keyCodes;
     FightingCharacter character;
     public RumInputController(FightingCharacter character, KeyCode [] keyCode){
         this.keyCodes = keyCode;

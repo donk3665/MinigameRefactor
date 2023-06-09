@@ -18,13 +18,13 @@ public class Attack {
 	private double damage;
 	private int shieldStun;
 	private int hitStun;
-	private double hitBoxes [][][];
-	private double hurtBoxes[][][];
-	private Image images[];
+	private double[][][] hitBoxes;
+	private double[][][] hurtBoxes;
+	private Image[] images;
 	private int frameTime;
 	private double knockBackX;
 	private double knockBackY;
-	private double speedChanges[][];
+	private double[][] speedChanges;
 	private int shieldDamage;
 	private int blockingType;
 	private double selfKnockBack;

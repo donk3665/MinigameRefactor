@@ -21,6 +21,12 @@ public class RhyEndScene extends MasterScene{
     Label P2Combo = new Label("Combo");
     Label P2Accuracy = new Label("Accuracy");
 
+
+    public void initializeRhythmGrid(GridPane grid, Label score, Label combo, Label accuracy){
+        grid.add(score, 0, 0);
+        grid.add(combo, 0, 1);
+        grid.add(accuracy, 0, 2);
+    }
     @Override
     public Scene run(Stage primaryStage, SceneTransferData data){
         long [][] scores = data.getScores();
@@ -55,7 +61,7 @@ public class RhyEndScene extends MasterScene{
         Image winner;
 
         //displaying who won
-        if (scores[0][0]>scores[0][1]) {
+        if (scores[0][0]>scores[1][0]) {
             winner = new Image("/fightingFiles/baseFiles/images/player1.png", 600*widthAdjust, 100*heightAdjust, false, false);
         }
         else{
