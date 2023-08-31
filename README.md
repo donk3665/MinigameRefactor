@@ -7,7 +7,7 @@ To get started, head to the releases tab on the right and download the jar file 
 Run the jar file, and everything else should work. 
 
 If you want to build and compile the program yourself, you'll need a download of javafx. Once downloaded, you will need to run the program with the 
-following VM arguments: --module-path <path-to-your-javafx-lib-folder> --add-modules=javafx.controls,javafx.fxml,javafx.media
+following VM arguments: --module-path \<path-to-your-javafx-lib-folder\> --add-modules=javafx.controls,javafx.fxml,javafx.media
 
 https://github.com/donk3665/MinigameRefactor/assets/78714224/9add9b79-c047-427e-b2c8-013ae18b0088
 
